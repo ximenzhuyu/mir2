@@ -1730,6 +1730,11 @@ public class InIReader
         {
         }
     }
+
+    public List<string> GetAllSections()
+    {
+        return _contents.Where(s => s.StartsWith("[") && s.EndsWith("]")).Select(s => s.Trim('[', ']')).ToList();
+    }
     #endregion
 
     #region Read

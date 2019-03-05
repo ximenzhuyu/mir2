@@ -74,7 +74,7 @@ namespace Client.MirControls
         }
         #endregion
 
-        public MirCheckBox()
+        public MirCheckBox(string uniqueName):base(uniqueName)
         {
             TickedIndex = -1;
             UnTickedIndex = -1;
@@ -84,7 +84,7 @@ namespace Client.MirControls
             Sound = SoundList.ButtonB;
             Click += MirCheckBox_Click;
 
-            _label = new MirLabel
+            _label = new MirLabel("_label")
             {
                 AutoSize = true,
                 NotControl = true,

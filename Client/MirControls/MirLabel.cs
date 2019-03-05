@@ -175,8 +175,9 @@ namespace Client.MirControls
         }
         #endregion
 
-        public MirLabel()
+        public MirLabel(string uniqueName):base(uniqueName)
         {
+            UniqueName = uniqueName;
             DrawControlTexture = true;
             _drawFormat = TextFormatFlags.WordBreak;
 

@@ -40,7 +40,7 @@ namespace Client.MirScenes.Dialogs
         public int CStartIndex = 0;
         public decimal maxPage;
 
-        public GameShopDialog()
+        public GameShopDialog(string uniqueName):base(uniqueName)
         {
             GameScene.GameShopInfoList.Clear();
             Index = 749;
@@ -49,7 +49,7 @@ namespace Client.MirScenes.Dialogs
             Location = Center;
             Sort = true;
 
-            TitleLabel = new MirImageControl
+            TitleLabel = new MirImageControl("TitleLabel")
             {
                 Index = 26,
                 Library = Libraries.Title,
@@ -72,7 +72,7 @@ namespace Client.MirScenes.Dialogs
                 }
             }
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -84,7 +84,7 @@ namespace Client.MirScenes.Dialogs
             };
             CloseButton.Click += (o, e) => Hide();
 
-            totalGold = new MirLabel
+            totalGold = new MirLabel("totalGold")
             {
                 Size = new Size(100, 20),
                 DrawFormat = TextFormatFlags.RightToLeft | TextFormatFlags.Right,
@@ -94,7 +94,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
                 Font = new Font(Settings.FontName, 8F),
             };
-            totalCredits = new MirLabel
+            totalCredits = new MirLabel("totalCredits")
             {
                 Size = new Size(100, 20),
                 DrawFormat = TextFormatFlags.RightToLeft | TextFormatFlags.Right,
@@ -104,7 +104,7 @@ namespace Client.MirScenes.Dialogs
                 Font = new Font(Settings.FontName, 8F)
             };
 
-            UpButton = new MirButton
+            UpButton = new MirButton("UpButton")
             {
                 Index = 197,
                 HoverIndex = 198,
@@ -126,7 +126,7 @@ namespace Client.MirScenes.Dialogs
                 UpdatePositionBar();
             };
 
-            DownButton = new MirButton
+            DownButton = new MirButton("DownButton")
             {
                 Index = 207,
                 HoverIndex = 208,
@@ -148,7 +148,7 @@ namespace Client.MirScenes.Dialogs
                 UpdatePositionBar();
             };
 
-            PositionBar = new MirButton
+            PositionBar = new MirButton("PositionBar")
             {
                 Index = 205,
                 HoverIndex = 206,
@@ -165,7 +165,7 @@ namespace Client.MirScenes.Dialogs
 
 
 
-            FilterBackground = new MirImageControl
+            FilterBackground = new MirImageControl("FilterBackground")
             {
                 Index = 769,
                 Library = Libraries.Title,
@@ -174,7 +174,7 @@ namespace Client.MirScenes.Dialogs
             };
             FilterBackground.MouseWheel += FilterScrolling;
 
-            Search = new MirTextBox
+            Search = new MirTextBox("Search")
             {
                 BackColour = Color.FromArgb(4, 4, 4),
                 ForeColour = Color.White,
@@ -190,7 +190,7 @@ namespace Client.MirScenes.Dialogs
                 GetCategories();
             };
 
-            allItems = new MirButton
+            allItems = new MirButton("allItems")
             {
                 Index = 770,
                 Library = Libraries.Title,
@@ -206,7 +206,7 @@ namespace Client.MirScenes.Dialogs
                 ResetTabs();
                 GetCategories();
             };
-            topItems = new MirButton
+            topItems = new MirButton("topItems")
             {
                 Index = 776,
                 Library = Libraries.Title,
@@ -221,7 +221,7 @@ namespace Client.MirScenes.Dialogs
                 ResetTabs();
                 GetCategories();
             };
-            Deals = new MirButton
+            Deals = new MirButton("Deals")
             {
                 Index = 772,
                 Library = Libraries.Title,
@@ -236,7 +236,7 @@ namespace Client.MirScenes.Dialogs
                 ResetTabs();
                 GetCategories();
             };
-            New = new MirButton
+            New = new MirButton("New")
             {
                 Index = 774,
                 Library = Libraries.Title,
@@ -254,7 +254,7 @@ namespace Client.MirScenes.Dialogs
             };
 
 
-            ALL = new MirButton
+            ALL = new MirButton("ALL")
             {
                 Index = 751,
                 HoverIndex = 752,
@@ -271,7 +271,7 @@ namespace Client.MirScenes.Dialogs
                 GetCategories();
                 ResetClass();
             };
-            War = new MirButton
+            War = new MirButton("War")
             {
                 Index = 754,
                 HoverIndex = 755,
@@ -288,7 +288,7 @@ namespace Client.MirScenes.Dialogs
                 GetCategories();
                 ResetClass();
             };
-            Sin = new MirButton
+            Sin = new MirButton("Sin")
             {
                 Index = 757,
                 HoverIndex = 758,
@@ -305,7 +305,7 @@ namespace Client.MirScenes.Dialogs
                 GetCategories();
                 ResetClass();
             };
-            Tao = new MirButton
+            Tao = new MirButton("Tao")
             {
                 Index = 760,
                 HoverIndex = 761,
@@ -322,7 +322,7 @@ namespace Client.MirScenes.Dialogs
                 GetCategories();
                 ResetClass();
             };
-            Wiz = new MirButton
+            Wiz = new MirButton("Wiz")
             {
                 Index = 763,
                 HoverIndex = 764,
@@ -339,7 +339,7 @@ namespace Client.MirScenes.Dialogs
                 GetCategories();
                 ResetClass();
             };
-            Arch = new MirButton
+            Arch = new MirButton("Arch")
             {
                 Index = 766,
                 HoverIndex = 767,
@@ -357,7 +357,7 @@ namespace Client.MirScenes.Dialogs
                 ResetClass();
             };
 
-            PageNumberLabel = new MirLabel
+            PageNumberLabel = new MirLabel("PageNumberLabel")
             {
                 Text = "",
                 Parent = this,
@@ -367,7 +367,7 @@ namespace Client.MirScenes.Dialogs
                 Font = new Font(Settings.FontName, 7F),
             };
 
-            PreviousButton = new MirButton
+            PreviousButton = new MirButton("PreviousButton")
             {
                 Index = 240,
                 HoverIndex = 241,
@@ -386,7 +386,7 @@ namespace Client.MirScenes.Dialogs
                 UpdateShop();
             };
 
-            NextButton = new MirButton
+            NextButton = new MirButton("NextButton")
             {
                 Index = 243,
                 HoverIndex = 244,
@@ -406,7 +406,7 @@ namespace Client.MirScenes.Dialogs
 
             for (int i = 0; i < Filters.Length; i++)
             {
-                Filters[i] = new MirLabel
+                Filters[i] = new MirLabel("Filters"+i)
                 {
                     Parent = this,
                     Size = new Size(90, 20),
@@ -448,7 +448,7 @@ namespace Client.MirScenes.Dialogs
                 Filters[i].MouseWheel += FilterScrolling;
             }
 
-            Viewer = new GameShopViewer();
+            Viewer = new GameShopViewer("Viewer");
 
         }
 

@@ -18,7 +18,7 @@ namespace Client.MirScenes.Dialogs
         private long ViewTime = 10000;
         private long CurrentTime = 0;
 
-        public ChatNoticeDialog()
+        public ChatNoticeDialog(string uniqueName):base(uniqueName)
         {
             Index = 1361;
             Library = Libraries.Prguse;
@@ -27,7 +27,7 @@ namespace Client.MirScenes.Dialogs
             Location = new Point(Settings.ScreenWidth / 2 - Size.Width / 2, Settings.ScreenHeight / 6 - Size.Height / 2);
             Opacity = 0.7F;
 
-            TextLabel1 = new MirLabel
+            TextLabel1 = new MirLabel("TextLabel1")
             {
                 Text = "",
                 Font = new Font(Settings.FontName, 10F),
@@ -40,7 +40,7 @@ namespace Client.MirScenes.Dialogs
                 OutLineColour = Color.Black,
             };
 
-            TextLabel2 = new MirLabel
+            TextLabel2 = new MirLabel("TextLabel2")
             {
                 Text = "",
                 Font = new Font(Settings.FontName, 15F),
@@ -53,7 +53,7 @@ namespace Client.MirScenes.Dialogs
                 OutLineColour = Color.Black,
             };
 
-            Layout = new MirImageControl
+            Layout = new MirImageControl("Layout")
             {
                 Index = 1360,
                 Library = Libraries.Prguse,

@@ -17,7 +17,7 @@ namespace Client.MirScenes.Dialogs
         private readonly ItemRow[] _itemRows = new ItemRow[3];
         private DateTime _lastRequestTime = DateTime.Now;
 
-        public ItemRentalDialog()
+        public ItemRentalDialog(string uniqueName):base(uniqueName)
         {
             Index = 1;
             Library = Libraries.Prguse3;
@@ -28,7 +28,7 @@ namespace Client.MirScenes.Dialogs
 
             // Title
 
-            var windowTitle = new MirImageControl
+            var windowTitle = new MirImageControl("windowTitle")
             {
                 Index = 0,
                 Library = Libraries.Prguse3,
@@ -38,7 +38,7 @@ namespace Client.MirScenes.Dialogs
 
             // Rented Tab
 
-            var rentedTabButton = new MirButton
+            var rentedTabButton = new MirButton("rentedTabButton")
             {
                 Index = 2,
                 HoverIndex = 2,
@@ -53,7 +53,7 @@ namespace Client.MirScenes.Dialogs
 
             // Borrowed Tab
 
-            var borrowedTabButton = new MirButton
+            var borrowedTabButton = new MirButton("borrowedTabButton")
             {
                 Index = 3,
                 Location = new Point(81, 32),
@@ -66,7 +66,7 @@ namespace Client.MirScenes.Dialogs
 
             // Rent Item Button
 
-            var rentItemButton = new MirButton
+            var rentItemButton = new MirButton("rentItemButton")
             {
                 Index = 4,
                 HoverIndex = 5,
@@ -84,7 +84,7 @@ namespace Client.MirScenes.Dialogs
 
             // Close Button
 
-            var closeButton = new MirButton
+            var closeButton = new MirButton("closeButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -100,7 +100,7 @@ namespace Client.MirScenes.Dialogs
 
             for (var i = 0; i < _itemRows.Length; i++)
             {
-                _itemRows[i] = new ItemRow
+                _itemRows[i] = new ItemRow("_itemRows_"+i)
                 {
                     Parent = this,
                     Location = new Point(0, 78 + i * 21),
@@ -143,9 +143,9 @@ namespace Client.MirScenes.Dialogs
         {
             private readonly MirLabel _itemNameLabel, _rentingPlayerLabel, _returnDateLabel;
 
-            public ItemRow()
+            public ItemRow(string uniqueName):base(uniqueName)
             {
-                _itemNameLabel = new MirLabel
+                _itemNameLabel = new MirLabel("_itemNameLabel")
                 {
                     Size = new Size(128, 20),
                     Location = new Point(5, 0),
@@ -154,7 +154,7 @@ namespace Client.MirScenes.Dialogs
                     NotControl = true,
                 };
 
-                _rentingPlayerLabel = new MirLabel
+                _rentingPlayerLabel = new MirLabel("_rentingPlayerLabel")
                 {
                     Size = new Size(128, 20),
                     Location = new Point(137, 0),
@@ -163,7 +163,7 @@ namespace Client.MirScenes.Dialogs
                     NotControl = true,
                 };
 
-                _returnDateLabel = new MirLabel
+                _returnDateLabel = new MirLabel("_returnDateLabel")
                 {
                     Size = new Size(128, 20),
                     Location = new Point(264, 0),

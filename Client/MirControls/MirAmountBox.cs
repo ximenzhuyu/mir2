@@ -15,7 +15,7 @@ namespace Client.MirControls
         public int ImageIndex;
         public uint Amount, MinAmount, MaxAmount;
 
-        public MirAmountBox(string title, int image, uint max, uint min = 0, uint defaultAmount = 0)
+        public MirAmountBox(string title, int image, uint max, uint min = 0, uint defaultAmount = 0, string uniqueName = "Common.AmountBox") : base(uniqueName)
         {
             ImageIndex = image;
             MaxAmount = max;
@@ -29,7 +29,7 @@ namespace Client.MirControls
 
             Location = new Point((Settings.ScreenWidth - Size.Width) / 2, (Settings.ScreenHeight - Size.Height) / 2);
 
-            TitleLabel = new MirLabel
+            TitleLabel = new MirLabel("TitleLabel")
             {
                 AutoSize = true,
                 Location = new Point(19, 8),
@@ -38,7 +38,7 @@ namespace Client.MirControls
                 Text = title
             };
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -50,7 +50,7 @@ namespace Client.MirControls
             };
             CloseButton.Click += (o, e) => Dispose();
 
-            ItemImage = new MirControl
+            ItemImage = new MirControl("MirAmountBox_ItemImage")
             {
                 Location = new Point(15, 34),
                 Size = new Size(38, 34),
@@ -58,7 +58,7 @@ namespace Client.MirControls
             };
             ItemImage.AfterDraw += (o, e) => DrawItem();
 
-            OKButton = new MirButton
+            OKButton = new MirButton("OKButton")
             {
                 HoverIndex = 201,
                 Index = 200,
@@ -69,7 +69,7 @@ namespace Client.MirControls
             };
             OKButton.Click += (o, e) => Dispose();
 
-            CancelButton = new MirButton
+            CancelButton = new MirButton("CancelButton")
             {
                 HoverIndex = 204,
                 Index = 203,
@@ -80,7 +80,7 @@ namespace Client.MirControls
             };
             CancelButton.Click += (o, e) => Dispose();
 
-            InputTextBox = new MirTextBox
+            InputTextBox = new MirTextBox("InputTextBox")
             {
                 Parent = this,
                 Border = true,
@@ -96,7 +96,7 @@ namespace Client.MirControls
             InputTextBox.TextBox.SelectionLength = InputTextBox.Text.Length;
 
         }
-        public MirAmountBox(string title, int image, string message)
+        public MirAmountBox(string title, int image, string message, string uniqueName = "Common.AmountBox") : base(uniqueName)
         {
             ImageIndex = image;
 
@@ -110,7 +110,7 @@ namespace Client.MirControls
 
 
 
-            TitleLabel = new MirLabel
+            TitleLabel = new MirLabel("TitleLabel")
             {
                 AutoSize = true,
                 Location = new Point(19, 8),
@@ -119,7 +119,7 @@ namespace Client.MirControls
                 Text = title
             };
 
-            TextLabel = new MirLabel
+            TextLabel = new MirLabel("TextLabel")
             {
                 AutoSize = true,
                 Location = new Point(60, 43),
@@ -129,7 +129,7 @@ namespace Client.MirControls
                 Text = message
             };
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -141,7 +141,7 @@ namespace Client.MirControls
             };
             CloseButton.Click += (o, e) => Dispose();
 
-            ItemImage = new MirControl
+            ItemImage = new MirControl("MirAmountBox_ItemImage")
             {
                 Location = new Point(15, 34),
                 Size = new Size(38, 34),
@@ -149,7 +149,7 @@ namespace Client.MirControls
             };
             ItemImage.AfterDraw += (o, e) => DrawItem();
 
-            OKButton = new MirButton
+            OKButton = new MirButton("OKButton")
             {
                 HoverIndex = 201,
                 Index = 200,
@@ -160,7 +160,7 @@ namespace Client.MirControls
             };
             OKButton.Click += (o, e) => Dispose();
 
-            CancelButton = new MirButton
+            CancelButton = new MirButton("CancelButton")
             {
                 HoverIndex = 204,
                 Index = 203,

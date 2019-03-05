@@ -142,8 +142,9 @@ namespace Client.MirControls
 
         #endregion
 
-        public MirImageControl()
+        public MirImageControl(string uniqueName):base(uniqueName)
         {
+            UniqueName = uniqueName;
             _drawImage = true;
             _index = -1;
             ForeColour = Color.White;

@@ -18,7 +18,7 @@ namespace Client.MirScenes.Dialogs
         public MirImageControl TitleLabel;
         public MirButton CloseButton;
 
-        public KeyboardLayoutDialog()
+        public KeyboardLayoutDialog(string uniqueName):base(uniqueName)
         {
             Index = 920;
             Library = Libraries.Prguse;
@@ -27,7 +27,7 @@ namespace Client.MirScenes.Dialogs
             Location = Center;
 
 
-            TitleLabel = new MirImageControl
+            TitleLabel = new MirImageControl("TitleLabel")
             {
                 // Index = 7,
                 Library = Libraries.Title,
@@ -35,7 +35,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this
             };
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,

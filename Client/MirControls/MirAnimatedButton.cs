@@ -215,7 +215,7 @@ namespace Client.MirControls
 
         #endregion
 
-        public MirAnimatedButton()
+        public MirAnimatedButton(string uniqueName):base(uniqueName)
         {
             _loop = true;
             _nextFadeTime = CMain.Time;

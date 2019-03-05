@@ -232,7 +232,7 @@ namespace Client.MirControls
 
         #endregion
 
-        public MirTextBox()
+        public MirTextBox(string uniqueName):base(uniqueName)
         {
             BackColour = Color.Black;
 

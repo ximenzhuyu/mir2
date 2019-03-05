@@ -26,7 +26,7 @@ namespace Client.MirScenes.Dialogs
         public short MarriedDays = 0;
 
 
-        public RelationshipDialog()
+        public RelationshipDialog(string uniqueName):base(uniqueName)
         {
             Index = 583;
             Library = Libraries.Prguse;
@@ -34,7 +34,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
             Location = Center;
 
-            TitleLabel = new MirImageControl
+            TitleLabel = new MirImageControl("TitleLabel")
             {
                 Index = 52,
                 Library = Libraries.Title,
@@ -42,7 +42,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this
             };
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -54,7 +54,7 @@ namespace Client.MirScenes.Dialogs
             };
             CloseButton.Click += (o, e) => Hide();
 
-            AllowButton = new MirButton
+            AllowButton = new MirButton("AllowButton")
             {
                 HoverIndex = 611,
                 Index = 610,
@@ -67,7 +67,7 @@ namespace Client.MirScenes.Dialogs
             };
             AllowButton.Click += (o, e) => Network.Enqueue(new C.ChangeMarriage());
 
-            RequestButton = new MirButton
+            RequestButton = new MirButton("RequestButton")
             {
                 HoverIndex = 601,
                 Index = 600,
@@ -89,7 +89,7 @@ namespace Client.MirScenes.Dialogs
                 Network.Enqueue(new C.MarriageRequest());
             };
 
-            DivorceButton = new MirButton
+            DivorceButton = new MirButton("DivorceButton")
             {
                 HoverIndex = 617,
                 Index = 616,
@@ -111,7 +111,7 @@ namespace Client.MirScenes.Dialogs
                 Network.Enqueue(new C.DivorceRequest());
             };
 
-            MailButton = new MirButton
+            MailButton = new MirButton("MailButton")
             {
                 HoverIndex = 438,
                 Index = 437,
@@ -133,7 +133,7 @@ namespace Client.MirScenes.Dialogs
                 GameScene.Scene.MailComposeLetterDialog.ComposeMail(LoverName);
             };
 
-            WhisperButton = new MirButton
+            WhisperButton = new MirButton("WhisperButton")
             {
                 HoverIndex = 567,
                 Index = 566,
@@ -164,7 +164,7 @@ namespace Client.MirScenes.Dialogs
                 GameScene.Scene.ChatDialog.ChatTextBox.TextBox.SelectionStart = GameScene.Scene.ChatDialog.ChatTextBox.Text.Length;
             };
 
-            LoverNameLabel = new MirLabel
+            LoverNameLabel = new MirLabel("LoverNameLabel")
             {
                 Location = new Point(30, 40),
                 Size = new Size(200, 30),
@@ -176,7 +176,7 @@ namespace Client.MirScenes.Dialogs
                 Font = new Font(Settings.FontName, 10F),
             };
 
-            LoverDateLabel = new MirLabel
+            LoverDateLabel = new MirLabel("LoverDateLabel")
             {
                 Location = new Point(30, 65),
                 Size = new Size(200, 30),
@@ -188,7 +188,7 @@ namespace Client.MirScenes.Dialogs
                 Font = new Font(Settings.FontName, 10F),
             };
 
-            LoverLengthLabel = new MirLabel
+            LoverLengthLabel = new MirLabel("LoverLengthLabel")
             {
                 Location = new Point(30, 90),
                 Size = new Size(200, 30),
@@ -200,7 +200,7 @@ namespace Client.MirScenes.Dialogs
                 Font = new Font(Settings.FontName, 10F),
             };
 
-            LoverOnlineLabel = new MirLabel
+            LoverOnlineLabel = new MirLabel("LoverOnlineLabel")
             {
                 Location = new Point(30, 115),
                 Size = new Size(200, 30),

@@ -14,7 +14,7 @@ namespace Client.MirControls
         public MirMessageBoxButtons Buttons;
         public bool AllowKeyPress = true;
 
-        public MirMessageBox(string message, MirMessageBoxButtons b = MirMessageBoxButtons.OK, bool allowKeys = true)
+        public MirMessageBox(string message, MirMessageBoxButtons b = MirMessageBoxButtons.OK, bool allowKeys = true, string uniqueName = "Common.MirMessageBox"):base(uniqueName)
         {
             DrawImage = true;
             ForeColour = Color.White;
@@ -29,7 +29,7 @@ namespace Client.MirControls
             Location = new Point((Settings.ScreenWidth - Size.Width) / 2, (Settings.ScreenHeight - Size.Height) / 2);
 
 
-            Label = new MirLabel
+            Label = new MirLabel("Label")
             {
                 AutoSize = false,
                // DrawFormat = StringFormatFlags.FitBlackBox,
@@ -43,7 +43,7 @@ namespace Client.MirControls
             switch (Buttons)
             {
                 case MirMessageBoxButtons.OK:
-                    OKButton = new MirButton
+                    OKButton = new MirButton("OKButton")
                     {
                         HoverIndex = 201,
                         Index = 200,
@@ -55,7 +55,7 @@ namespace Client.MirControls
                     OKButton.Click += (o, e) => Dispose();
                     break;
                 case MirMessageBoxButtons.OKCancel:
-                    OKButton = new MirButton
+                    OKButton = new MirButton("OKButton")
                     {
                         HoverIndex = 201,
                         Index = 200,
@@ -65,7 +65,7 @@ namespace Client.MirControls
                         PressedIndex = 202,
                     };
                     OKButton.Click += (o, e) => Dispose();
-                    CancelButton = new MirButton
+                    CancelButton = new MirButton("CancelButton")
                     {
                         HoverIndex = 204,
                         Index = 203,
@@ -77,7 +77,7 @@ namespace Client.MirControls
                     CancelButton.Click += (o, e) => Dispose();
                     break;
                 case MirMessageBoxButtons.YesNo:
-                    YesButton = new MirButton
+                    YesButton = new MirButton("YesButton")
                     {
                         HoverIndex = 207,
                         Index = 206,
@@ -87,7 +87,7 @@ namespace Client.MirControls
                         PressedIndex = 208,
                     };
                     YesButton.Click += (o, e) => Dispose();
-                    NoButton = new MirButton
+                    NoButton = new MirButton("NoButton")
                     {
                         HoverIndex = 211,
                         Index = 210,
@@ -99,7 +99,7 @@ namespace Client.MirControls
                     NoButton.Click += (o, e) => Dispose();
                     break;
                 case MirMessageBoxButtons.YesNoCancel:
-                    YesButton = new MirButton
+                    YesButton = new MirButton("YesButton")
                     {
                         HoverIndex = 207,
                         Index = 206,
@@ -109,7 +109,7 @@ namespace Client.MirControls
                         PressedIndex = 208,
                     };
                     YesButton.Click += (o, e) => Dispose();
-                    NoButton = new MirButton
+                    NoButton = new MirButton("NoButton")
                     {
                         HoverIndex = 211,
                         Index = 210,
@@ -119,7 +119,7 @@ namespace Client.MirControls
                         PressedIndex = 212,
                     };
                     NoButton.Click += (o, e) => Dispose();
-                    CancelButton = new MirButton
+                    CancelButton = new MirButton("CancelButton")
                     {
                         HoverIndex = 204,
                         Index = 203,
@@ -131,7 +131,7 @@ namespace Client.MirControls
                     CancelButton.Click += (o, e) => Dispose();
                     break;
                 case MirMessageBoxButtons.Cancel:
-                    CancelButton = new MirButton
+                    CancelButton = new MirButton("CancelButton")
                     {
                         HoverIndex = 204,
                         Index = 203,

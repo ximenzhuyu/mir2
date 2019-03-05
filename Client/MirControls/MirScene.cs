@@ -11,15 +11,16 @@ namespace Client.MirControls
 {
     public abstract class MirScene : MirControl
     {
-        public static MirScene ActiveScene = new LoginScene();
+        public static MirScene ActiveScene = new LoginScene("LoginScene");
 
         private static MouseButtons _buttons;
         private static long _lastClickTime;
         private static MirControl _clickedControl;
         //private bool _redraw;
 
-        protected MirScene()
+        protected MirScene(string uniqueName) : base(uniqueName)
         {
+            UniqueName = uniqueName;
             DrawControlTexture = true;
             BackColour = Color.Magenta;
             Size = new Size(Settings.ScreenWidth, Settings.ScreenHeight);

@@ -19,7 +19,7 @@ namespace Client.MirScenes.Dialogs
         private readonly MirLabel _nameLabel, _rentalPeriodLabel;
         private readonly MirButton _lockButton, _setRentalPeriodButton, _confirmButton;
         
-        public ItemRentingDialog()
+        public ItemRentingDialog(string uniqueName):base(uniqueName)
         {
             Index = 238;
             Library = Libraries.Prguse;
@@ -30,7 +30,7 @@ namespace Client.MirScenes.Dialogs
 
             // Confirm Button
 
-            _confirmButton = new MirButton
+            _confirmButton = new MirButton("_confirmButton")
             {
                 Index = 10,
                 HoverIndex = 11,
@@ -49,7 +49,7 @@ namespace Client.MirScenes.Dialogs
 
             // Close Button
 
-            var closeButton = new MirButton
+            var closeButton = new MirButton("closeButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -66,7 +66,7 @@ namespace Client.MirScenes.Dialogs
 
             // Lock Button
 
-            _lockButton = new MirButton
+            _lockButton = new MirButton("_lockButton")
             {
                 Index = 250,
                 HoverIndex = 251,
@@ -87,7 +87,7 @@ namespace Client.MirScenes.Dialogs
 
             // Set Rental Period Button
 
-            _setRentalPeriodButton = new MirButton
+            _setRentalPeriodButton = new MirButton("_setRentalPeriodButton")
             {
                 Index = 7,
                 HoverIndex = 8,
@@ -105,7 +105,7 @@ namespace Client.MirScenes.Dialogs
 
             // Name Label
 
-            _nameLabel = new MirLabel
+            _nameLabel = new MirLabel("_nameLabel")
             {
                 Parent = this,
                 Location = new Point(30, 8),
@@ -116,7 +116,7 @@ namespace Client.MirScenes.Dialogs
 
             // Rental Period Label
 
-            _rentalPeriodLabel = new MirLabel
+            _rentalPeriodLabel = new MirLabel("_rentalPeriodLabel")
             {
                 Parent = this,
                 Location = new Point(60, 42),
@@ -242,7 +242,7 @@ namespace Client.MirScenes.Dialogs
 
         private MirItemCell _guestItemCell;
     
-        public GuestItemRentingDialog()
+        public GuestItemRentingDialog(string uniqueName):base(uniqueName)
         {
             Index = 238;
             Library = Libraries.Prguse;
@@ -251,7 +251,7 @@ namespace Client.MirScenes.Dialogs
             Location = new Point(Settings.ScreenWidth - Size.Width - Size.Width / 2, Size.Height * 2 + Size.Height / 2 + 15);
             Sort = true;
 
-            _lockButton = new MirButton
+            _lockButton = new MirButton("_lockButton")
             {
                 Index = 250,
                 Location = new Point(18, 76),
@@ -261,7 +261,7 @@ namespace Client.MirScenes.Dialogs
                 Enabled = false
             };
 
-            _setRentalPeriodButton = new MirButton
+            _setRentalPeriodButton = new MirButton("_setRentalPeriodButton")
             {
                 Index = 7,
                 Location = new Point(46, 76),
@@ -271,7 +271,7 @@ namespace Client.MirScenes.Dialogs
                 Enabled = false
             };
 
-            _confirmButton = new MirButton
+            _confirmButton = new MirButton("_confirmButton")
             {
                 Index = 10,
                 Location = new Point(130, 76),
@@ -281,7 +281,7 @@ namespace Client.MirScenes.Dialogs
                 Enabled = false
             };
 
-            _nameLabel = new MirLabel
+            _nameLabel = new MirLabel("_nameLabel")
             {
                 Parent = this,
                 Location = new Point(30, 8),
@@ -290,7 +290,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            _rentalPeriodLabel = new MirLabel
+            _rentalPeriodLabel = new MirLabel("_rentalPeriodLabel")
             {
                 Parent = this,
                 Location = new Point(60, 42),

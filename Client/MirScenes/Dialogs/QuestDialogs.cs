@@ -35,7 +35,7 @@ namespace Client.MirScenes.Dialogs
 
         public uint CurrentNPCID = 0;
 
-        public QuestListDialog()
+        public QuestListDialog(string uniqueName):base(uniqueName)
         {
             Index = 950;
             Library = Libraries.Prguse;
@@ -43,7 +43,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
             Location = new Point(GameScene.Scene.NPCDialog.Size.Width + 47, 0);
 
-            MirImageControl TitleLabel = new MirImageControl
+            MirImageControl TitleLabel = new MirImageControl("TitleLabel")
             {
                 Index = 14,
                 Library = Libraries.Title,
@@ -53,7 +53,7 @@ namespace Client.MirScenes.Dialogs
 
             #region QuestSelection
 
-            MirButton upQuestButton = new MirButton
+            MirButton upQuestButton = new MirButton("upQuestButton")
             {
                 Index = 951,
                 HoverIndex = 952,
@@ -78,7 +78,7 @@ namespace Client.MirScenes.Dialogs
                 RefreshInterface();
             };
 
-            MirButton downQuestButton = new MirButton
+            MirButton downQuestButton = new MirButton("downQuestButton")
             {
                 Index = 957,
                 HoverIndex = 958,
@@ -106,7 +106,7 @@ namespace Client.MirScenes.Dialogs
 
             #region Buttons
 
-            _acceptButton = new MirButton
+            _acceptButton = new MirButton("_acceptButton")
             {
                 Index = 270,
                 HoverIndex = 271,
@@ -124,7 +124,7 @@ namespace Client.MirScenes.Dialogs
                 //Hide();
             };
 
-            _finishButton = new MirButton
+            _finishButton = new MirButton("_finishButton")
             {
                 Index = 273,
                 HoverIndex = 274,
@@ -150,7 +150,7 @@ namespace Client.MirScenes.Dialogs
                 //Hide();
             };
 
-            MirButton leaveButton = new MirButton
+            MirButton leaveButton = new MirButton("leaveButton")
             {
                 Index = 276,
                 HoverIndex = 277,
@@ -166,7 +166,7 @@ namespace Client.MirScenes.Dialogs
 
             #region Message Area
 
-            MirButton upButton = new MirButton
+            MirButton upButton = new MirButton("upButton")
             {
                 Index = 197,
                 HoverIndex = 198,
@@ -179,7 +179,7 @@ namespace Client.MirScenes.Dialogs
                 Visible = true
             };
 
-            MirButton downButton = new MirButton
+            MirButton downButton = new MirButton("downButton")
             {
                 Index = 207,
                 HoverIndex = 208,
@@ -192,7 +192,7 @@ namespace Client.MirScenes.Dialogs
                 Visible = true
             };
 
-            MirButton positionBar = new MirButton
+            MirButton positionBar = new MirButton("positionBar")
             {
                 Index = 205,
                 HoverIndex = 206,
@@ -205,7 +205,7 @@ namespace Client.MirScenes.Dialogs
                 Visible = false
             };
 
-            Message = new QuestMessage(upButton, downButton, positionBar, 10)
+            Message = new QuestMessage(upButton, downButton, positionBar, 10, "Message")
             {
                 Font = new Font(Settings.FontName, 9F),
                 Parent = this,
@@ -219,7 +219,7 @@ namespace Client.MirScenes.Dialogs
 
             #region Rewards
 
-            Reward = new QuestRewards
+            Reward = new QuestRewards("Reward")
             {
                 Parent = this,
                 Visible = false,
@@ -229,7 +229,7 @@ namespace Client.MirScenes.Dialogs
 
             #endregion
 
-            _availableQuestLabel = new MirLabel
+            _availableQuestLabel = new MirLabel("_availableQuestLabel")
             {
                 Font = new Font(Settings.FontName, 8F),
                 Parent = this,
@@ -237,7 +237,7 @@ namespace Client.MirScenes.Dialogs
                 Location = new Point(210, 8)
             };
 
-            MirButton closeButton = new MirButton
+            MirButton closeButton = new MirButton("closeButton")
             {
                 Index = 360,
                 HoverIndex = 361,
@@ -249,7 +249,7 @@ namespace Client.MirScenes.Dialogs
             };
             closeButton.Click += (o, e) => Hide();
 
-            MirButton helpButton = new MirButton
+            MirButton helpButton = new MirButton("helpButton")
             {
                 Index = 257,
                 HoverIndex = 258,
@@ -346,7 +346,7 @@ namespace Client.MirScenes.Dialogs
                 if (Rows[i] != null)
                     Rows[i].Dispose();
 
-                Rows[i] = new QuestRow
+                Rows[i] = new QuestRow("Rows_"+i)
                 {
                     Quest = Quests[i + StartIndex],
                     Location = new Point(9, 36 + i * 19),
@@ -472,7 +472,7 @@ namespace Client.MirScenes.Dialogs
         public QuestMessage Message;
         public QuestRewards Reward;
 
-        public QuestDetailDialog()
+        public QuestDetailDialog(string uniqueName):base(uniqueName)
         {
             Index = 960;
             Library = Libraries.Prguse;
@@ -480,7 +480,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
             Location = new Point(Settings.ScreenWidth / 2 + 20, 60);
 
-            MirImageControl TitleLabel = new MirImageControl
+            MirImageControl TitleLabel = new MirImageControl("TitleLabel")
             {
                 Index = 16,
                 Library = Libraries.Title,
@@ -490,7 +490,7 @@ namespace Client.MirScenes.Dialogs
 
             #region Message Area
 
-            MirButton upButton = new MirButton
+            MirButton upButton = new MirButton("upButton")
             {
                 Index = 197,
                 HoverIndex = 198,
@@ -503,7 +503,7 @@ namespace Client.MirScenes.Dialogs
                 Visible = true
             };
 
-            MirButton downButton = new MirButton
+            MirButton downButton = new MirButton("downButton")
             {
                 Index = 207,
                 HoverIndex = 208,
@@ -516,7 +516,7 @@ namespace Client.MirScenes.Dialogs
                 Visible = true
             };
 
-            MirButton positionBar = new MirButton
+            MirButton positionBar = new MirButton("positionBar")
             {
                 Index = 205,
                 HoverIndex = 206,
@@ -529,7 +529,7 @@ namespace Client.MirScenes.Dialogs
                 Visible = false
             };
 
-            Message = new QuestMessage(upButton, downButton, positionBar, 16, true)
+            Message = new QuestMessage(upButton, downButton, positionBar, 16, "Message", true)
             {
                 Font = new Font(Settings.FontName, 9F),
                 Parent = this,
@@ -543,7 +543,7 @@ namespace Client.MirScenes.Dialogs
 
             #region Rewards
 
-            Reward = new QuestRewards
+            Reward = new QuestRewards("Reward")
             {
                 Parent = this,
                 Size = new Size(315, 130),
@@ -554,7 +554,7 @@ namespace Client.MirScenes.Dialogs
 
             #region Buttons
 
-            _shareButton = new MirButton
+            _shareButton = new MirButton("_shareButton")
             {
                 Index = 616,
                 HoverIndex = 617,
@@ -569,7 +569,7 @@ namespace Client.MirScenes.Dialogs
                 Network.Enqueue(new C.ShareQuest { QuestIndex = Quest.Id });
             };
 
-            _pauseButton = new MirButton
+            _pauseButton = new MirButton("_pauseButton")
             {
                 Index = 270,
                 HoverIndex = 271,
@@ -581,7 +581,7 @@ namespace Client.MirScenes.Dialogs
                 Visible = false
             };
 
-            _cancelButton = new MirButton
+            _cancelButton = new MirButton("_cancelButton")
             {
                 Index = 203,
                 HoverIndex = 204,
@@ -605,7 +605,7 @@ namespace Client.MirScenes.Dialogs
 
             #endregion
 
-            MirButton closeButton = new MirButton
+            MirButton closeButton = new MirButton("closeButton")
             {
                 Index = 360,
                 HoverIndex = 361,
@@ -617,7 +617,7 @@ namespace Client.MirScenes.Dialogs
             };
             closeButton.Click += (o, e) => Hide();
 
-            //MirButton helpButton = new MirButton
+            //MirButton helpButton = new MirButton("helpButton")
             //{
             //    Index = 257,
             //    HoverIndex = 258,
@@ -664,7 +664,7 @@ namespace Client.MirScenes.Dialogs
         private MirButton _closeButton;
         private MirLabel _takenQuestsLabel;
 
-        public QuestDiaryDialog()
+        public QuestDiaryDialog(string uniqueName):base("QuestDiaryDialog")
         {
             Index = 961;
             Library = Libraries.Prguse;
@@ -672,7 +672,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
             Location = new Point(Settings.ScreenWidth / 2 - 300 - 20, 60);
 
-            MirImageControl TitleLabel = new MirImageControl
+            MirImageControl TitleLabel = new MirImageControl("TitleLabel")
             {
                 Index = 15,
                 Library = Libraries.Title,
@@ -680,7 +680,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this
             };
 
-            _takenQuestsLabel = new MirLabel
+            _takenQuestsLabel = new MirLabel("_takenQuestsLabel")
             {
                 Font = new Font(Settings.FontName, 8F),
                 Parent = this,
@@ -688,7 +688,7 @@ namespace Client.MirScenes.Dialogs
                 Location = new Point(210, 7)
             };
 
-            _closeButton = new MirButton
+            _closeButton = new MirButton("_closeButton")
             {
                 Index = 193,
                 HoverIndex = 194,
@@ -700,7 +700,7 @@ namespace Client.MirScenes.Dialogs
             };
             _closeButton.Click += (o, e) => Hide();
 
-            MirButton closeButton = new MirButton
+            MirButton closeButton = new MirButton("closeButton")
             {
                 Index = 360,
                 HoverIndex = 361,
@@ -732,7 +732,7 @@ namespace Client.MirScenes.Dialogs
 
                 bool expanded = ExpandedGroups.Count <= 0 || ExpandedGroups.Contains(@group.Key);
 
-                QuestGroupQuestItem groupQuest = new QuestGroupQuestItem(group.Key, singleGroup, expanded)
+                QuestGroupQuestItem groupQuest = new QuestGroupQuestItem(group.Key, singleGroup, expanded, "groupQuest")
                 {
                     Parent = this,
                     Visible = true,
@@ -821,7 +821,7 @@ namespace Client.MirScenes.Dialogs
 
         private MirLabel _questNameLabel, _questTaskLabel;
 
-        public QuestTrackingDialog()
+        public QuestTrackingDialog(string uniqueName):base(uniqueName)
         {
             Movable = true;
             Location = new Point(0, 100);
@@ -850,7 +850,7 @@ namespace Client.MirScenes.Dialogs
 
             for (int i = 0; i < questsToTrack.Count; i++)
             {
-                _questNameLabel = new MirLabel
+                _questNameLabel = new MirLabel("_questNameLabel")
                 {
                     Text = questsToTrack[i].QuestInfo.Name,
                     AutoSize = true,
@@ -871,7 +871,7 @@ namespace Client.MirScenes.Dialogs
 
                     string trackedQuest = questToTrack;
 
-                    _questTaskLabel = new MirLabel
+                    _questTaskLabel = new MirLabel("_questTaskLabel")
                     {
                         Text = trackedQuest,
                         AutoSize = true,
@@ -950,14 +950,14 @@ namespace Client.MirScenes.Dialogs
 
         public bool Selected = false;
 
-        public QuestRow()
+        public QuestRow(string uniqueName):base(uniqueName)
         {
             Sound = SoundList.ButtonA;
             Size = new Size(200, 17);
 
             BeforeDraw += QuestRow_BeforeDraw;
 
-            SelectedImage = new MirImageControl
+            SelectedImage = new MirImageControl("SelectedImage")
             {
                 Index = 956,
                 Library = Libraries.Prguse,
@@ -966,7 +966,7 @@ namespace Client.MirScenes.Dialogs
                 Visible = false
             };
 
-            IconImage = new MirImageControl
+            IconImage = new MirImageControl("IconImage")
             {
                 Index = 0,
                 Library = Libraries.Prguse,
@@ -975,7 +975,7 @@ namespace Client.MirScenes.Dialogs
                 Visible = false
             };
 
-            RequirementLabel = new MirLabel
+            RequirementLabel = new MirLabel("RequirementLabel")
             {
                 Location = new Point(20, 0),
                 Size = new Size(178, 17),
@@ -984,7 +984,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            NameLabel = new MirLabel
+            NameLabel = new MirLabel("NameLabel")
             {
                 Location = new Point(60, 0),
                 Size = new Size(140, 17),
@@ -1051,7 +1051,7 @@ namespace Client.MirScenes.Dialogs
 
         private const string TaskTitle = "Tasks", ProgressTitle = "Progress";
 
-        public QuestMessage(MirButton scrollUpButton, MirButton scrollDownButton, MirButton positionBar, int lineCount, bool displayProgress = false)
+        public QuestMessage(MirButton scrollUpButton, MirButton scrollDownButton, MirButton positionBar, int lineCount,string uniqueName, bool displayProgress = false):base(uniqueName)
         {
             ScrollUpButton = scrollUpButton;
             ScrollDownButton = scrollDownButton;
@@ -1261,7 +1261,7 @@ namespace Client.MirScenes.Dialogs
                     }
                 }
 
-                _textLabel[i - TopLine] = new MirLabel
+                _textLabel[i - TopLine] = new MirLabel("_textLabel_" + (i - TopLine))
                 {
                     Font = font,
                     ForeColour = fontColor,
@@ -1313,7 +1313,7 @@ namespace Client.MirScenes.Dialogs
         {
             Color textColour = Color.FromName(colour);
 
-            MirLabel temp = new MirLabel
+            MirLabel temp = new MirLabel("temp")
             {
                 AutoSize = true,
                 Visible = true,
@@ -1352,22 +1352,22 @@ namespace Client.MirScenes.Dialogs
         public static QuestCell[] FixedItems = new QuestCell[5];
         public static QuestCell[] SelectItems = new QuestCell[5];
 
-        public QuestRewards()
+        public QuestRewards(string uniqueName):base(uniqueName)
         {
-            _expLabel = new MirLabel
+            _expLabel = new MirLabel("_expLabel")
             {
                 Size = new Size(75, 20),
                 Location = new Point(40, 0),
                 Parent = this
             };
 
-            _goldLabel = new MirLabel
+            _goldLabel = new MirLabel("_goldLabel")
             {
                 Size = new Size(75, 20),
                 Parent = this
             };
 
-            _creditLabel = new MirLabel
+            _creditLabel = new MirLabel("_creditLabel")
             {
                 Size = new Size(75, 20),
                 Location = new Point(60, 0),
@@ -1484,7 +1484,7 @@ namespace Client.MirScenes.Dialogs
                 {
                     if (i >= quest.RewardsFixedItem.Count) break;
 
-                    FixedItems[i] = new QuestCell
+                    FixedItems[i] = new QuestCell("FixedItems_" + i)
                     {
                         Item = quest.RewardsFixedItem[i].Item,
                         Count = quest.RewardsFixedItem[i].Count,
@@ -1503,7 +1503,7 @@ namespace Client.MirScenes.Dialogs
                 {
                     if (i >= selRewards.Count) break;
 
-                    SelectItems[i] = new QuestCell
+                    SelectItems[i] = new QuestCell("SelectItems_"+i)
                     {
                         Item = selRewards[i].Item,
                         Count = selRewards[i].Count,
@@ -1603,7 +1603,7 @@ namespace Client.MirScenes.Dialogs
 
         private MirLabel CountLabel { get; set; }
 
-        public QuestCell()
+        public QuestCell(string uniqueName):base(uniqueName)
         {
             Size = new Size(32, 32);
         }
@@ -1665,7 +1665,7 @@ namespace Client.MirScenes.Dialogs
 
             if (CountLabel == null || CountLabel.IsDisposed)
             {
-                CountLabel = new MirLabel
+                CountLabel = new MirLabel("CountLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -1713,13 +1713,13 @@ namespace Client.MirScenes.Dialogs
                 SelectedQuestChanged.Invoke(ob, EventArgs.Empty);
         }
 
-        public QuestGroupQuestItem(string group, List<ClientQuestProgress> quests, bool expanded)
+        public QuestGroupQuestItem(string group, List<ClientQuestProgress> quests, bool expanded, string uniqueName):base(uniqueName)
         {
             Group = group;
             Quests = quests;
             Expanded = expanded;
 
-            _expandButton = new MirButton
+            _expandButton = new MirButton("_expandButton")
             {
                 Index = Expanded ? 917 : 918,
                 Library = Libraries.Prguse,
@@ -1730,7 +1730,7 @@ namespace Client.MirScenes.Dialogs
             };
             _expandButton.Click += (o, e) => ChangeExpand();
 
-            _groupLabel = new MirLabel
+            _groupLabel = new MirLabel("_groupLabel")
             {
                 Text = Group,
                 AutoSize = true,
@@ -1744,7 +1744,7 @@ namespace Client.MirScenes.Dialogs
             for (int i = 0; i < Quests.Count; i++)
             {
                 bool Track = Settings.TrackedQuests.Contains(Quests[i].Id) ? true : false;
-                QuestSingleQuestItem singleQuest = new QuestSingleQuestItem(Quests[i])
+                QuestSingleQuestItem singleQuest = new QuestSingleQuestItem(Quests[i], "singleQuest_"+i)
                 {
                     Parent = this,
                     Location = new Point(18, (15 * (i + 1))),
@@ -1834,7 +1834,7 @@ namespace Client.MirScenes.Dialogs
                 SelectedQuestChanged.Invoke(this, EventArgs.Empty);
         }
 
-        public QuestSingleQuestItem(ClientQuestProgress quest)
+        public QuestSingleQuestItem(ClientQuestProgress quest, string uniqueName):base(uniqueName)
         {
             Quest = quest;
             Size = new Size(250, 15);
@@ -1849,7 +1849,7 @@ namespace Client.MirScenes.Dialogs
             BeforeDraw += QuestTaskSingleItem_BeforeDraw;
             AfterDraw += QuestTaskSingleItem_AfterDraw;
 
-            _selectedImage = new MirImageControl
+            _selectedImage = new MirImageControl("_selectedImage")
             {
                 Index = 956,
                 Library = Libraries.Prguse,
@@ -1858,7 +1858,7 @@ namespace Client.MirScenes.Dialogs
                 Visible = false
             };
 
-            _questLabel = new MirLabel
+            _questLabel = new MirLabel("_questLabel")
             {
                 Text = string.Format("{0,-4} {1}", level, name),
                 AutoSize = true,
@@ -1901,7 +1901,7 @@ namespace Client.MirScenes.Dialogs
                 OnSelectedQuestChanged();
             };
 
-            _stateLabel = new MirLabel
+            _stateLabel = new MirLabel("_stateLabel")
             {
                 Text = string.Format("{0}", state),
                 AutoSize = true,

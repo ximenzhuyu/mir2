@@ -39,7 +39,7 @@ namespace Client.MirScenes.Dialogs
         private int _index = 0;
         public int MaximumLines = 8;
 
-        public NPCDialog()
+        public NPCDialog(string uniqueName):base(uniqueName)
         {
             Index = 995;
             Library = Libraries.Prguse;
@@ -51,7 +51,7 @@ namespace Client.MirScenes.Dialogs
 
             Sort = true;
 
-            NameLabel = new MirLabel
+            NameLabel = new MirLabel("NameLabel")
             {
                 Text = "",
                 Parent = this,
@@ -61,7 +61,7 @@ namespace Client.MirScenes.Dialogs
                 AutoSize = true
             };
 
-            UpButton = new MirButton
+            UpButton = new MirButton("UpButton")
             {
                 Index = 197,
                 HoverIndex = 198,
@@ -83,7 +83,7 @@ namespace Client.MirScenes.Dialogs
                 UpdatePositionBar();
             };
 
-            DownButton = new MirButton
+            DownButton = new MirButton("DownButton")
             {
                 Index = 207,
                 HoverIndex = 208,
@@ -105,7 +105,7 @@ namespace Client.MirScenes.Dialogs
                 UpdatePositionBar();
             };
 
-            PositionBar = new MirButton
+            PositionBar = new MirButton("PositionBar")
             {
                 Index = 205,
                 HoverIndex = 206,
@@ -119,7 +119,7 @@ namespace Client.MirScenes.Dialogs
             };
             PositionBar.OnMoving += PositionBar_OnMoving;
 
-            QuestButton = new MirAnimatedButton()
+            QuestButton = new MirAnimatedButton("QuestButton")
             {
                 Animated = true,
                 AnimationCount = 10,
@@ -139,7 +139,7 @@ namespace Client.MirScenes.Dialogs
 
             QuestButton.Click += (o, e) => GameScene.Scene.QuestListDialog.Toggle();
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -151,7 +151,7 @@ namespace Client.MirScenes.Dialogs
             };
             CloseButton.Click += (o, e) => Hide();
 
-            MirButton helpButton = new MirButton
+            MirButton helpButton = new MirButton("helpButton")
             {
                 Index = 257,
                 HoverIndex = 258,
@@ -256,7 +256,7 @@ namespace Client.MirScenes.Dialogs
 
             for (int i = _index; i < lastLine; i++)
             {
-                TextLabel[i] = new MirLabel
+                TextLabel[i] = new MirLabel("TextLabel_"+i)
                 {
                     Font = font,
                     DrawFormat = TextFormatFlags.WordBreak,
@@ -307,7 +307,7 @@ namespace Client.MirScenes.Dialogs
         {
             key = string.Format("[{0}]", key);
 
-            MirLabel temp = new MirLabel
+            MirLabel temp = new MirLabel("temp")
             {
                 AutoSize = true,
                 Visible = true,
@@ -347,7 +347,7 @@ namespace Client.MirScenes.Dialogs
         {
             Color textColour = Color.FromName(colour);
 
-            MirLabel temp = new MirLabel
+            MirLabel temp = new MirLabel("temp")
             {
                 AutoSize = true,
                 Visible = true,
@@ -415,7 +415,7 @@ namespace Client.MirScenes.Dialogs
 
         public PanelType PType;
 
-        public NPCGoodsDialog()
+        public NPCGoodsDialog(string uniqueName):base(uniqueName)
         {
             Index = 1000;
             Library = Libraries.Prguse;
@@ -425,7 +425,7 @@ namespace Client.MirScenes.Dialogs
 
             for (int i = 0; i < Cells.Length; i++)
             {
-                Cells[i] = new MirGoodsCell
+                Cells[i] = new MirGoodsCell("MirGoodsCell_"+i)
                 {
                     Parent = this,
                     Location = new Point(10, 34 + i * 33),
@@ -450,7 +450,7 @@ namespace Client.MirScenes.Dialogs
                 Cells[i].DoubleClick += (o, e) => BuyItem();
             }
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -462,7 +462,7 @@ namespace Client.MirScenes.Dialogs
             };
             CloseButton.Click += (o, e) => Hide();
 
-            BuyButton = new MirButton
+            BuyButton = new MirButton("BuyButton")
             {
                 HoverIndex = 313,
                 Index = 312,
@@ -474,7 +474,7 @@ namespace Client.MirScenes.Dialogs
             };
             BuyButton.Click += (o, e) => BuyItem();
 
-            BuyLabel = new MirImageControl
+            BuyLabel = new MirImageControl("BuyLabel")
             {
                 Index = 27,
                 Library = Libraries.Title,
@@ -483,7 +483,7 @@ namespace Client.MirScenes.Dialogs
             };
 
 
-            UpButton = new MirButton
+            UpButton = new MirButton("UpButton")
             {
                 Index = 197,
                 HoverIndex = 198,
@@ -500,7 +500,7 @@ namespace Client.MirScenes.Dialogs
                 Update();
             };
 
-            DownButton = new MirButton
+            DownButton = new MirButton("DownButton")
             {
                 Index = 207,
                 HoverIndex = 208,
@@ -519,7 +519,7 @@ namespace Client.MirScenes.Dialogs
                 Update();
             };
 
-            PositionBar = new MirButton
+            PositionBar = new MirButton("PositionBar")
             {
                 Index = 205,
                 HoverIndex = 206,
@@ -750,7 +750,7 @@ namespace Client.MirScenes.Dialogs
         public bool Hold;
 
 
-        public NPCDropDialog()
+        public NPCDropDialog(string uniqueName):base(uniqueName)
         {
             Index = 392;
             Library = Libraries.Prguse;
@@ -759,7 +759,7 @@ namespace Client.MirScenes.Dialogs
 
             Click += NPCDropPanel_Click;
 
-            HoldButton = new MirButton
+            HoldButton = new MirButton("HoldButton")
             {
                 HoverIndex = 294,
                 Index = 293,
@@ -771,7 +771,7 @@ namespace Client.MirScenes.Dialogs
             };
             HoldButton.Click += (o, e) => Hold = !Hold;
 
-            ConfirmButton = new MirButton
+            ConfirmButton = new MirButton("ConfirmButton")
             {
                 HoverIndex = 291,
                 Index = 290,
@@ -783,7 +783,7 @@ namespace Client.MirScenes.Dialogs
             };
             ConfirmButton.Click += (o, e) => Confirm();
 
-            InfoLabel = new MirLabel
+            InfoLabel = new MirLabel("InfoLabel")
             {
                 AutoSize = true,
                 Location = new Point(30, 10),
@@ -1183,7 +1183,7 @@ namespace Client.MirScenes.Dialogs
         public static UserItem[] Items = new UserItem[7];
         public static int[] ItemsIdx = new int[7];
 
-        public NPCAwakeDialog()
+        public NPCAwakeDialog(string uniqueName):base(uniqueName)
         {
             Index = 710;
             Library = Libraries.Title;
@@ -1191,7 +1191,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
             Movable = true;
 
-            GoldLabel = new MirLabel
+            GoldLabel = new MirLabel("GoldLabel")
             {
                 AutoSize = true,
                 Location = new Point(112, 354),
@@ -1199,7 +1199,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            NeedItemLabel1 = new MirLabel
+            NeedItemLabel1 = new MirLabel("NeedItemLabel1")
             {
                 AutoSize = true,
                 Location = new Point(67, 317),//
@@ -1207,7 +1207,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            NeedItemLabel2 = new MirLabel
+            NeedItemLabel2 = new MirLabel("NeedItemLabel2")
             {
                 AutoSize = true,
                 Location = new Point(192, 317),//(155, 316),
@@ -1215,7 +1215,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            UpgradeButton = new MirButton
+            UpgradeButton = new MirButton("UpgradeButton")
             {
                 HoverIndex = 713,
                 Index = 712,
@@ -1227,7 +1227,7 @@ namespace Client.MirScenes.Dialogs
             };
             UpgradeButton.Click += (o, e) => Awakening();
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -1314,7 +1314,7 @@ namespace Client.MirScenes.Dialogs
                 ItemSlot = 6,
             };
 
-            SelectAwakeType = new MirDropDownBox()
+            SelectAwakeType = new MirDropDownBox("SelectAwakeType")
             {
                 Parent = this,
                 Location = new Point(35, 141),
@@ -1564,7 +1564,7 @@ namespace Client.MirScenes.Dialogs
 
         public MirButton CraftButton, CloseButton;
 
-        public CraftDialog()
+        public CraftDialog(string uniqueName):base(uniqueName)
         {
             Index = 1002;
             Library = Libraries.Prguse;
@@ -1594,7 +1594,7 @@ namespace Client.MirScenes.Dialogs
                 }
             }
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 Index = 360,
                 HoverIndex = 361,
@@ -1606,7 +1606,7 @@ namespace Client.MirScenes.Dialogs
             };
             CloseButton.Click += (o, e) => Hide();
 
-            CraftButton = new MirButton
+            CraftButton = new MirButton("CraftButton")
             {
                 HoverIndex = 337,
                 Index = 336,
@@ -1794,14 +1794,14 @@ namespace Client.MirScenes.Dialogs
         public MirItemCell[] Grid;
         public MirButton RefineButton;
 
-        public RefineDialog()
+        public RefineDialog(string uniqueName):base(uniqueName)
         {
             Index = 1002;
             Library = Libraries.Prguse;
             Location = new Point(0, 225);
             Sort = true;
 
-            MirImageControl TitleLabel = new MirImageControl
+            MirImageControl TitleLabel = new MirImageControl("TitleLabel")
             {
                 Index = 18,
                 Library = Libraries.Title,
@@ -1871,14 +1871,14 @@ namespace Client.MirScenes.Dialogs
         public MirImageControl LockedPage;
         public MirLabel RentalLabel;
 
-        public StorageDialog()
+        public StorageDialog(string uniqueName):base(uniqueName)
         {
             Index = 586;
             Library = Libraries.Prguse;
             Location = new Point(0, 0);
             Sort = true;
 
-            MirImageControl TitleLabel = new MirImageControl
+            MirImageControl TitleLabel = new MirImageControl("TitleLabel")
             {
                 Index = 0,
                 Library = Libraries.Title,
@@ -1886,7 +1886,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this
             };
 
-            LockedPage = new MirImageControl
+            LockedPage = new MirImageControl("LockedPage")
             {
                 Index = 2443,
                 Library = Libraries.Prguse,
@@ -1895,7 +1895,7 @@ namespace Client.MirScenes.Dialogs
                 Visible = false
             };
 
-            Storage1Button = new MirButton
+            Storage1Button = new MirButton("Storage1Button")
             {
                 HoverIndex = 743,
                 Index = 743,
@@ -1910,7 +1910,7 @@ namespace Client.MirScenes.Dialogs
                 RefreshStorage1();
             };
 
-            Storage2Button = new MirButton
+            Storage2Button = new MirButton("Storage2Button")
             {
                 HoverIndex = 746,
                 Index = 746,
@@ -1925,7 +1925,7 @@ namespace Client.MirScenes.Dialogs
             {
                 RefreshStorage2();
             };
-            RentButton = new MirButton
+            RentButton = new MirButton("RentButton")
             {
                 Index = 483,
                 HoverIndex = 484,
@@ -1952,7 +1952,7 @@ namespace Client.MirScenes.Dialogs
                 messageBox.Show();
             };
 
-            ProtectButton = new MirButton
+            ProtectButton = new MirButton("ProtectButton")
             {
                 HoverIndex = 114,
                 Index = 113,
@@ -1963,7 +1963,7 @@ namespace Client.MirScenes.Dialogs
                 Sound = SoundList.ButtonA,
                 Visible = true
             };
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -1975,7 +1975,7 @@ namespace Client.MirScenes.Dialogs
             };
             CloseButton.Click += (o, e) => Hide();
 
-            RentalLabel = new MirLabel
+            RentalLabel = new MirLabel("RentalLabel")
             {
                 Parent = this,
                 Location = new Point(40, 322),

@@ -218,7 +218,7 @@ namespace Client.MirObjects
             for (int i = 1; i < chat.Count; i++)
                 text += string.Format("\n{0}", chat[i]);
 
-            ChatLabel = new MirLabel
+            ChatLabel = new MirLabel("ChatLabel")
             {
                 AutoSize = true,
                 BackColour = Color.Transparent,
@@ -260,7 +260,7 @@ namespace Client.MirObjects
 
             if (NameLabel != null && !NameLabel.IsDisposed) return;
 
-            NameLabel = new MirLabel
+            NameLabel = new MirLabel("NameLabel")
             {
                 AutoSize = true,
                 BackColour = Color.Transparent,

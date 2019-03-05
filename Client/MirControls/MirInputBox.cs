@@ -12,7 +12,7 @@ namespace Client.MirControls
         public readonly MirTextBox InputTextBox;
 
 
-        public MirInputBox(string message)
+        public MirInputBox(string message, string uniqueName = "Common.MirInputBox") :base(uniqueName)
         {
             Modal = true;
             Movable = false;
@@ -22,7 +22,7 @@ namespace Client.MirControls
 
             Location = new Point((Settings.ScreenWidth - Size.Width) / 2, (Settings.ScreenHeight - Size.Height) / 2);
 
-            CaptionLabel = new MirLabel
+            CaptionLabel = new MirLabel("CaptionLabel")
             {
                 DrawFormat = TextFormatFlags.WordBreak,
                 Location = new Point(25, 25),
@@ -31,7 +31,7 @@ namespace Client.MirControls
                 Text = message,
             };
 
-            InputTextBox = new MirTextBox
+            InputTextBox = new MirTextBox("InputTextBox")
             {
                 Parent = this,
                 Border = true,
@@ -43,7 +43,7 @@ namespace Client.MirControls
             InputTextBox.SetFocus();
             InputTextBox.TextBox.KeyPress += MirInputBox_KeyPress;
 
-            OKButton = new MirButton
+            OKButton = new MirButton("OKButton")
             {
                 HoverIndex = 201,
                 Index = 200,
@@ -53,7 +53,7 @@ namespace Client.MirControls
                 PressedIndex = 202,
             };
 
-            CancelButton = new MirButton
+            CancelButton = new MirButton("CancelButton")
             {
                 HoverIndex = 204,
                 Index = 203,

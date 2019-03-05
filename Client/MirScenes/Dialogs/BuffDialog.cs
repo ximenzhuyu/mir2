@@ -20,7 +20,7 @@ namespace Client.MirScenes.Dialogs
         private const long FadeDelay = 55;
         private const float FadeRate = 0.2f;
 
-        public BuffDialog()
+        public BuffDialog(string uniqueName):base(uniqueName)
         {
             Index = 20;
             Library = Libraries.Prguse2;
@@ -32,7 +32,7 @@ namespace Client.MirScenes.Dialogs
             Opacity = 0f;
             _fadedOut = true;
 
-            _expandCollapseButton = new MirButton
+            _expandCollapseButton = new MirButton("_expandCollapseButton")
             {
                 Index = 7,
                 HoverIndex = 8,
@@ -57,7 +57,7 @@ namespace Client.MirScenes.Dialogs
                 UpdateWindow();
             };
 
-            _buffCountLabel = new MirLabel
+            _buffCountLabel = new MirLabel("_buffCountLabel")
             {
                 Parent = this,
                 AutoSize = true,
@@ -89,7 +89,7 @@ namespace Client.MirScenes.Dialogs
                 buffLibrary = Libraries.Prguse2;
             }
 
-            var image = new MirImageControl
+            var image = new MirImageControl("image")
             {
                 Library = buffLibrary,
                 Parent = this,

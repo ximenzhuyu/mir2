@@ -102,12 +102,12 @@ namespace Client.MirControls
 
         #endregion
 
-        public MirDropDownBox()
+        public MirDropDownBox(string uniqueName) : base(uniqueName)
         {
             BackColour = Color.FromArgb(255,6,6,6);
             ForeColour = Color.White;
             Enabled = false;
-            _label = new MirLabel
+            _label = new MirLabel("_label")
             {
                 Parent = this,
                 Location = new Point(0, 0),
@@ -136,7 +136,7 @@ namespace Client.MirControls
             };
             for (int i = 0; i < _Option.Length; i++)
             {
-                _Option[i] = new MirLabel
+                _Option[i] = new MirLabel("_Option_" + i)
                 {
                     Parent = this,
                     Visible = false,
@@ -158,7 +158,7 @@ namespace Client.MirControls
                         _Option[index].Text = _Items[ScrollIndex + index + MinimumOption];
                 };
             }
-            _DropDownButton = new MirButton
+            _DropDownButton = new MirButton("_DropDownButton")
             {
                 Index = 207,
                 Library = Libraries.Prguse2,
@@ -169,7 +169,7 @@ namespace Client.MirControls
                 Visible = false,
             };
             _DropDownButton.Click += (o, e) => DropDownClick();
-            _ScrollUp = new MirButton
+            _ScrollUp = new MirButton("_ScrollUp")
             {
                 HoverIndex = 2022,
                 Index = 2021,
@@ -180,7 +180,7 @@ namespace Client.MirControls
                 Visible = false
             };
             _ScrollUp.Click += (o, e) => ScrollUp();
-            _ScrollDown = new MirButton
+            _ScrollDown = new MirButton("_ScrollDown")
             {
                 HoverIndex = 2025,
                 Index = 2024,
@@ -192,7 +192,7 @@ namespace Client.MirControls
             };
             _ScrollDown.Click += (o, e) => ScrollDown();
            
-            _ScrollPosition = new MirButton
+            _ScrollPosition = new MirButton("_ScrollPosition")
             {
                 HoverIndex = 2016,
                 Index = 2015,

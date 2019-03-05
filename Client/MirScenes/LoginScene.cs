@@ -31,7 +31,7 @@ namespace Client.MirScenes
 
         public MirImageControl TestLabel, ViolenceLabel, MinorLabel, YouthLabel; 
 
-        public LoginScene()
+        public LoginScene(string uniqueName):base(uniqueName)
         {
 
             SoundManager.PlaySound(SoundList.IntroMusic, true);
@@ -48,19 +48,19 @@ namespace Client.MirScenes
                     Parent = this,
                 };
 
-            _login = new LoginDialog {Parent = _background, Visible = false};
+            _login = new LoginDialog("LoginDialog") {Parent = _background, Visible = false};
             _login.AccountButton.Click += (o, e) =>
                 {
                     _login.Hide();
                     if(_ViewKey != null && !_ViewKey.IsDisposed) _ViewKey.Dispose();
-                    _account = new NewAccountDialog { Parent = _background };
+                    _account = new NewAccountDialog("NewAccountDialog") { Parent = _background };
                     _account.Disposing += (o1, e1) => _login.Show();
                 };
             _login.PassButton.Click += (o, e) =>
                 {
                     _login.Hide();
                     if (_ViewKey != null && !_ViewKey.IsDisposed) _ViewKey.Dispose();
-                    _password = new ChangePasswordDialog { Parent = _background };
+                    _password = new ChangePasswordDialog("ChangePasswordDialog") { Parent = _background };
                     _password.Disposing += (o1, e1) => _login.Show();
                 };
 
@@ -68,10 +68,10 @@ namespace Client.MirScenes
             {
                 if (_ViewKey != null && !_ViewKey.IsDisposed) return;
 
-                _ViewKey = new InputKeyDialog(_login) { Parent = _background };
+                _ViewKey = new InputKeyDialog(_login, "InputKeyDialog") { Parent = _background };
             };
 
-            Version = new MirLabel
+            Version = new MirLabel("Version")
                 {
                     AutoSize = true,
                     BackColour = Color.FromArgb(200, 50, 50, 50),
@@ -82,7 +82,7 @@ namespace Client.MirScenes
                     Text = string.Format("Version: {0}", Application.ProductVersion),
                 };
 
-            TestLabel = new MirImageControl
+            TestLabel = new MirImageControl("TestLabel")
             {
                 Index = 79,
                 Library = Libraries.Prguse,
@@ -335,7 +335,7 @@ namespace Client.MirScenes
             _background.AfterAnimation += (o, e) =>
                 {
                     Dispose();
-                    ActiveScene = new SelectScene(p.Characters);
+                    ActiveScene = new SelectScene(p.Characters, "SelectScene");
                 };
         }
 
@@ -346,7 +346,7 @@ namespace Client.MirScenes
             public MirTextBox AccountIDTextBox, PasswordTextBox;
             private bool _accountIDValid, _passwordValid;
 
-            public LoginDialog()
+            public LoginDialog(string uniqueName):base(uniqueName)
             {
                 Index = 1084;
                 Library = Libraries.Prguse;
@@ -354,7 +354,7 @@ namespace Client.MirScenes
                 PixelDetect = false;
                 Size = new Size(328, 220);
 
-                TitleLabel = new MirImageControl
+                TitleLabel = new MirImageControl("TitleLabel")
                     {
                         Index = 30,
                         Library = Libraries.Title,
@@ -362,7 +362,7 @@ namespace Client.MirScenes
                     };
                 TitleLabel.Location = new Point((Size.Width - TitleLabel.Size.Width)/2, 12);
 
-                AccountIDLabel = new MirImageControl
+                AccountIDLabel = new MirImageControl("AccountIDLabel")
                     {
                         Index = 31,
                         Library = Libraries.Title,
@@ -370,7 +370,7 @@ namespace Client.MirScenes
                         Location = new Point(52, 83),
                     };
 
-                PassLabel = new MirImageControl
+                PassLabel = new MirImageControl("PassLabel")
                     {
                         Index = 32,
                         Library = Libraries.Title,
@@ -378,7 +378,7 @@ namespace Client.MirScenes
                         Location = new Point(43, 105)
                     };
 
-                OKButton = new MirButton
+                OKButton = new MirButton("OKButton")
                     {
                         Enabled = false,
                         Size = new Size(42,42),
@@ -391,7 +391,7 @@ namespace Client.MirScenes
                     };
                 OKButton.Click += (o, e) => Login();
 
-                AccountButton = new MirButton
+                AccountButton = new MirButton("AccountButton")
                     {
                         HoverIndex = 324,
                         Index = 323,
@@ -401,7 +401,7 @@ namespace Client.MirScenes
                         PressedIndex = 325,
                     };
 
-                PassButton = new MirButton
+                PassButton = new MirButton("PassButton")
                     {
                         HoverIndex = 327,
                         Index = 326,
@@ -411,7 +411,7 @@ namespace Client.MirScenes
                         PressedIndex = 328,
                     };
 
-                ViewKeyButton = new MirButton
+                ViewKeyButton = new MirButton("ViewKeyButton")
                 {
                     HoverIndex = 333,
                     Index = 332,
@@ -421,7 +421,7 @@ namespace Client.MirScenes
                     PressedIndex = 334,
                 };
 
-                CloseButton = new MirButton
+                CloseButton = new MirButton("CloseButton")
                     {
                         HoverIndex = 330,
                         Index = 329,
@@ -432,7 +432,7 @@ namespace Client.MirScenes
                     };
                 CloseButton.Click += (o, e) => Program.Form.Close();
 
-                AccountIDTextBox = new MirTextBox
+                AccountIDTextBox = new MirTextBox("AccountIDTextBox")
                     {
                         Location = new Point(85, 85),
                         Parent = this,
@@ -446,7 +446,7 @@ namespace Client.MirScenes
 
 
 
-                PasswordTextBox = new MirTextBox
+                PasswordTextBox = new MirTextBox("PasswordTextBox")
                     {
                         Location = new Point(85, 108),
                         Parent = this,
@@ -588,7 +588,7 @@ namespace Client.MirScenes
             private char[] _letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
             private char[] _numbers = "0123456789".ToCharArray();
 
-            public InputKeyDialog(LoginDialog loginDialog)
+            public InputKeyDialog(LoginDialog loginDialog, string uniqueName):base(uniqueName)
             {
                 _loginDialog = loginDialog;
 
@@ -597,7 +597,7 @@ namespace Client.MirScenes
                 Location = new Point((Client.Settings.ScreenWidth - Size.Width) / 2 + 285, (Client.Settings.ScreenHeight - Size.Height) / 2 + 150);
                 Visible = true;
 
-                KeyEscButton = new MirButton
+                KeyEscButton = new MirButton("KeyEscButton")
                 {
                     Text = "Esc",
                     HoverIndex = 301,
@@ -610,7 +610,7 @@ namespace Client.MirScenes
                 };
                 KeyEscButton.Click += (o, e) => Dispose();
 
-                KeyDelButton = new MirButton
+                KeyDelButton = new MirButton("KeyDelButton")
                 {
                     Text = "Delete",
                     HoverIndex = 304,
@@ -623,7 +623,7 @@ namespace Client.MirScenes
                 };
                 KeyDelButton.Click += (o, e) => SecureKeyDelete();
 
-                KeyEnterButton = new MirButton
+                KeyEnterButton = new MirButton("KeyEnterButton")
                 {
                     Text = "Enter",
                     HoverIndex = 307,
@@ -642,7 +642,7 @@ namespace Client.MirScenes
                     _loginDialog.TextBox_KeyPress(o, arg);
                 };
 
-                KeyRandButton = new MirButton
+                KeyRandButton = new MirButton("KeyRandButton")
                 {
                     Text = "Random",
                     HoverIndex = 310,
@@ -680,7 +680,7 @@ namespace Client.MirScenes
                 {
                     char key = _numbers[i];
 
-                    MirButton numButton = new MirButton
+                    MirButton numButton = new MirButton("numButton")
                     {
                         HoverIndex = 1082,
                         Index = 1081,
@@ -701,7 +701,7 @@ namespace Client.MirScenes
                 {
                     char key = _letters[i];
 
-                    MirButton alphButton = new MirButton
+                    MirButton alphButton = new MirButton("alphButton")
                     {
                         HoverIndex = 1082,
                         Index = 1081,
@@ -795,14 +795,14 @@ namespace Client.MirScenes
                          _answerValid = true;
 
 
-            public NewAccountDialog()
+            public NewAccountDialog(string uniqueName):base(uniqueName)
             {
                 Index = 63;
                 Library = Libraries.Prguse;
                 Size = new Size();
                 Location = new Point((Settings.ScreenWidth - Size.Width) / 2, (Settings.ScreenHeight - Size.Height) / 2);
 
-                CancelButton = new MirButton
+                CancelButton = new MirButton("CancelButton")
                 {
                     HoverIndex = 204,
                     Index = 203,
@@ -813,7 +813,7 @@ namespace Client.MirScenes
                 };
                 CancelButton.Click += (o, e) => Dispose();
 
-                OKButton = new MirButton
+                OKButton = new MirButton("OKButton")
                 {
                     Enabled = false,
                     HoverIndex = 201,
@@ -826,7 +826,7 @@ namespace Client.MirScenes
                 OKButton.Click += (o, e) => CreateAccount();
 
 
-                AccountIDTextBox = new MirTextBox
+                AccountIDTextBox = new MirTextBox("AccountIDTextBox")
                 {
                     Border = true,
                     BorderColour = Color.Gray,
@@ -840,7 +840,7 @@ namespace Client.MirScenes
                 AccountIDTextBox.TextBox.TextChanged += AccountIDTextBox_TextChanged;
                 AccountIDTextBox.TextBox.GotFocus += AccountIDTextBox_GotFocus;
 
-                Password1TextBox = new MirTextBox
+                Password1TextBox = new MirTextBox("Password1TextBox")
                 {
                     Border = true,
                     BorderColour = Color.Gray,
@@ -854,7 +854,7 @@ namespace Client.MirScenes
                 Password1TextBox.TextBox.TextChanged += Password1TextBox_TextChanged;
                 Password1TextBox.TextBox.GotFocus += PasswordTextBox_GotFocus;
 
-                Password2TextBox = new MirTextBox
+                Password2TextBox = new MirTextBox("Password2TextBox")
                 {
                     Border = true,
                     BorderColour = Color.Gray,
@@ -868,7 +868,7 @@ namespace Client.MirScenes
                 Password2TextBox.TextBox.TextChanged += Password2TextBox_TextChanged;
                 Password2TextBox.TextBox.GotFocus += PasswordTextBox_GotFocus;
 
-                UserNameTextBox = new MirTextBox
+                UserNameTextBox = new MirTextBox("UserNameTextBox")
                 {
                     Border = true,
                     BorderColour = Color.Gray,
@@ -882,7 +882,7 @@ namespace Client.MirScenes
                 UserNameTextBox.TextBox.GotFocus += UserNameTextBox_GotFocus;
 
 
-                BirthDateTextBox = new MirTextBox
+                BirthDateTextBox = new MirTextBox("BirthDateTextBox")
                 {
                     Border = true,
                     BorderColour = Color.Gray,
@@ -895,7 +895,7 @@ namespace Client.MirScenes
                 BirthDateTextBox.TextBox.TextChanged += BirthDateTextBox_TextChanged;
                 BirthDateTextBox.TextBox.GotFocus += BirthDateTextBox_GotFocus;
 
-                QuestionTextBox = new MirTextBox
+                QuestionTextBox = new MirTextBox("QuestionTextBox")
                 {
                     Border = true,
                     BorderColour = Color.Gray,
@@ -908,7 +908,7 @@ namespace Client.MirScenes
                 QuestionTextBox.TextBox.TextChanged += QuestionTextBox_TextChanged;
                 QuestionTextBox.TextBox.GotFocus += QuestionTextBox_GotFocus;
 
-                AnswerTextBox = new MirTextBox
+                AnswerTextBox = new MirTextBox("AnswerTextBox")
                 {
                     Border = true,
                     BorderColour = Color.Gray,
@@ -921,7 +921,7 @@ namespace Client.MirScenes
                 AnswerTextBox.TextBox.TextChanged += AnswerTextBox_TextChanged;
                 AnswerTextBox.TextBox.GotFocus += AnswerTextBox_GotFocus;
 
-                EMailTextBox = new MirTextBox
+                EMailTextBox = new MirTextBox("EMailTextBox")
                 {
                     Border = true,
                     BorderColour = Color.Gray,
@@ -935,7 +935,7 @@ namespace Client.MirScenes
                 EMailTextBox.TextBox.GotFocus += EMailTextBox_GotFocus;
 
 
-                Description = new MirLabel
+                Description = new MirLabel("Description")
                 {
                     Border = true,
                     BorderColour = Color.Gray,
@@ -1210,13 +1210,13 @@ namespace Client.MirScenes
                          _newPassword1Valid,
                          _newPassword2Valid;
             
-            public ChangePasswordDialog()
+            public ChangePasswordDialog(string uniqueName):base(uniqueName)
             {
                 Index = 50;
                 Library = Libraries.Prguse;
                 Location = new Point((Settings.ScreenWidth - Size.Width) / 2, (Settings.ScreenHeight - Size.Height) / 2);
 
-                CancelButton = new MirButton
+                CancelButton = new MirButton("CancelButton")
                 {
                     HoverIndex = 111,
                     Index = 110,
@@ -1227,7 +1227,7 @@ namespace Client.MirScenes
                 };
                 CancelButton.Click += (o, e) => Dispose();
 
-                OKButton = new MirButton
+                OKButton = new MirButton("OKButton")
                 {
                     Enabled = false,
                     HoverIndex = 108,
@@ -1240,7 +1240,7 @@ namespace Client.MirScenes
                 OKButton.Click += (o, e) => ChangePassword();
 
 
-                AccountIDTextBox = new MirTextBox
+                AccountIDTextBox = new MirTextBox("AccountIDTextBox")
                 {
                     Border = true,
                     BorderColour = Color.Gray,
@@ -1253,7 +1253,7 @@ namespace Client.MirScenes
                 AccountIDTextBox.TextBox.MaxLength = Globals.MaxAccountIDLength;
                 AccountIDTextBox.TextBox.TextChanged += AccountIDTextBox_TextChanged;
 
-                CurrentPasswordTextBox = new MirTextBox
+                CurrentPasswordTextBox = new MirTextBox("CurrentPasswordTextBox")
                 {
                     Border = true,
                     BorderColour = Color.Gray,
@@ -1266,7 +1266,7 @@ namespace Client.MirScenes
                 };
                 CurrentPasswordTextBox.TextBox.TextChanged += CurrentPasswordTextBox_TextChanged;
 
-                NewPassword1TextBox = new MirTextBox
+                NewPassword1TextBox = new MirTextBox("NewPassword1TextBox")
                 {
                     Border = true,
                     BorderColour = Color.Gray,
@@ -1279,7 +1279,7 @@ namespace Client.MirScenes
                 };
                 NewPassword1TextBox.TextBox.TextChanged += NewPassword1TextBox_TextChanged;
 
-                NewPassword2TextBox = new MirTextBox
+                NewPassword2TextBox = new MirTextBox("NewPassword2TextBox")
                 {
                     Border = true,
                     BorderColour = Color.Gray,

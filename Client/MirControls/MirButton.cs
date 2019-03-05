@@ -136,13 +136,13 @@ namespace Client.MirControls
         }
         #endregion
 
-        public MirButton()
+        public MirButton(string uniqueName):base(uniqueName)
         {
             HoverIndex = -1;
             PressedIndex = -1;
             Sound = SoundList.ButtonB;
 
-            _label = new MirLabel
+            _label = new MirLabel("_label")
                 {
                     NotControl = true,
                     Parent = this,

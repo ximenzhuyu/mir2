@@ -29,7 +29,7 @@ namespace Client.MirScenes.Dialogs
         private int StartIndex = 0;
         private int CurrentPage = 1, PageCount = 1;
 
-        public MailListDialog()
+        public MailListDialog(string uniqueName):base(uniqueName)
         {
             Index = 670;
             Library = Libraries.Title;
@@ -38,7 +38,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
             Location = new Point((Settings.ScreenWidth - Size.Width) - 150, 5);
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -50,7 +50,7 @@ namespace Client.MirScenes.Dialogs
             };
             CloseButton.Click += (o, e) => Hide();
 
-            HelpButton = new MirButton
+            HelpButton = new MirButton("HelpButton")
             {
                 Index = 257,
                 HoverIndex = 258,
@@ -62,7 +62,7 @@ namespace Client.MirScenes.Dialogs
             };
             HelpButton.Click += (o, e) => GameScene.Scene.HelpDialog.DisplayPage("");
 
-            PreviousButton = new MirButton
+            PreviousButton = new MirButton("PreviousButton")
             {
                 Index = 240,
                 HoverIndex = 241,
@@ -85,7 +85,7 @@ namespace Client.MirScenes.Dialogs
                 UpdateInterface();
             };
 
-            PageLabel = new MirLabel
+            PageLabel = new MirLabel("PageLabel")
             {
                 Text = "",
                 Parent = this,
@@ -94,7 +94,7 @@ namespace Client.MirScenes.Dialogs
                 DrawFormat = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter,
             };
 
-            NextButton = new MirButton
+            NextButton = new MirButton("NextButton")
             {
                 Index = 243,
                 HoverIndex = 244,
@@ -117,7 +117,7 @@ namespace Client.MirScenes.Dialogs
             };
 
             #region Action Buttons
-            SendButton = new MirButton
+            SendButton = new MirButton("SendButton")
             {
                 Index = 563,
                 HoverIndex = 564,
@@ -143,7 +143,7 @@ namespace Client.MirScenes.Dialogs
                     inputBox.Show();
                 };
 
-            ReplyButton = new MirButton
+            ReplyButton = new MirButton("ReplyButton")
             {
                 Index = 569,
                 HoverIndex = 570,
@@ -161,7 +161,7 @@ namespace Client.MirScenes.Dialogs
                 GameScene.Scene.MailComposeLetterDialog.ComposeMail(SelectedMail.SenderName);
             };
 
-            ReadButton = new MirButton
+            ReadButton = new MirButton("ReadButton")
             {
                 Index = 572,
                 HoverIndex = 573,
@@ -186,7 +186,7 @@ namespace Client.MirScenes.Dialogs
                 }
             };
 
-            DeleteButton = new MirButton
+            DeleteButton = new MirButton("DeleteButton")
             {
                 Index = 557,
                 HoverIndex = 558,
@@ -220,7 +220,7 @@ namespace Client.MirScenes.Dialogs
                 }
             };
 
-            BlockListButton = new MirButton
+            BlockListButton = new MirButton("BlockListButton")
             {
                 Index = 520,
                 HoverIndex = 521,
@@ -232,7 +232,7 @@ namespace Client.MirScenes.Dialogs
                 Hint = "Block List"
             };
 
-            BugReportButton = new MirButton
+            BugReportButton = new MirButton("BugReportButton")
             {
                 Index = 523,
                 HoverIndex = 524,
@@ -274,7 +274,7 @@ namespace Client.MirScenes.Dialogs
                 if (Rows[i] != null)
                     Rows[i].Dispose();
 
-                Rows[i] = new MailItemRow
+                Rows[i] = new MailItemRow("Row_"+i)
                 {
                     Mail = GameScene.User.Mail[i + StartIndex],
                     Location = new Point(10, 55 + i * 33),
@@ -391,14 +391,14 @@ namespace Client.MirScenes.Dialogs
 
         Size IconArea = new Size(34, 32);
 
-        public MailItemRow()
+        public MailItemRow(string uniqueName):base(uniqueName)
         {
             Sound = SoundList.ButtonA;
             Size = new Size(290, 33);
 
             BeforeDraw += QuestRow_BeforeDraw;
 
-            IconImage = new MirImageControl
+            IconImage = new MirImageControl("IconImage")
             {
                 Index = 0,
                 Library = Libraries.Prguse,
@@ -406,7 +406,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this
             };
 
-            UnreadImage = new MirImageControl
+            UnreadImage = new MirImageControl("UnreadImage")
             {
                 Index = 550,
                 Library = Libraries.Prguse,
@@ -415,7 +415,7 @@ namespace Client.MirScenes.Dialogs
                 Visible = false
             };
 
-            LockedImage = new MirImageControl
+            LockedImage = new MirImageControl("LockedImage")
             {
                 Index = 551,
                 Library = Libraries.Prguse,
@@ -424,7 +424,7 @@ namespace Client.MirScenes.Dialogs
                 Visible = false
             };
 
-            ParcelImage = new MirImageControl
+            ParcelImage = new MirImageControl("ParcelImage")
             {
                 Index = 552,
                 Library = Libraries.Prguse,
@@ -434,7 +434,7 @@ namespace Client.MirScenes.Dialogs
             };
 
 
-            SelectedImage = new MirImageControl
+            SelectedImage = new MirImageControl("SelectedImage")
             {
                 Index = 545,
                 Library = Libraries.Prguse,
@@ -444,7 +444,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true
             };
 
-            SenderLabel = new MirLabel
+            SenderLabel = new MirLabel("SenderLabel")
             {
                 Location = new Point(35, 0),
                 Size = new Size(130, 31),
@@ -453,7 +453,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            MessageLabel = new MirLabel
+            MessageLabel = new MirLabel("MessageLabel")
             {
                 Location = new Point(170, 0),
                 Size = new Size(115, 31),
@@ -561,7 +561,7 @@ namespace Client.MirScenes.Dialogs
         MirTextBox MessageTextBox;
         MirButton SendButton, CancelButton, CloseButton;
 
-        public MailComposeLetterDialog()
+        public MailComposeLetterDialog(string uniqueName):base(uniqueName)
         {
             Index = 671;
             Library = Libraries.Title;
@@ -570,7 +570,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
             Location = new Point(100, 100);
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -583,7 +583,7 @@ namespace Client.MirScenes.Dialogs
             CloseButton.Click += (o, e) => Hide();
 
 
-            RecipientNameLabel = new MirLabel
+            RecipientNameLabel = new MirLabel("RecipientNameLabel")
             {
                 Text = "",
                 Parent = this,
@@ -594,7 +594,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            MessageTextBox = new MirTextBox
+            MessageTextBox = new MirTextBox("MessageTextBox")
             {
                 ForeColour = Color.White,
                 Parent = this,
@@ -605,7 +605,7 @@ namespace Client.MirScenes.Dialogs
 
             MessageTextBox.MultiLine();
 
-            SendButton = new MirButton
+            SendButton = new MirButton("SendButton")
             {
                 Index = 607,
                 HoverIndex = 608,
@@ -621,7 +621,7 @@ namespace Client.MirScenes.Dialogs
                 Hide();
             };
 
-            CancelButton = new MirButton
+            CancelButton = new MirButton("CancelButton")
             {
                 Index = 193,
                 HoverIndex = 194,
@@ -669,7 +669,7 @@ namespace Client.MirScenes.Dialogs
         public uint GiftGoldAmount = 0;
         public bool Stamped = false;
 
-        public MailComposeParcelDialog()
+        public MailComposeParcelDialog(string uniqueName):base(uniqueName)
         {
             Index = 674;
             Library = Libraries.Title;
@@ -678,7 +678,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
             Location = new Point(GameScene.Scene.InventoryDialog.Size.Width + 10, 0);
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -694,7 +694,7 @@ namespace Client.MirScenes.Dialogs
                 Hide();
             };
 
-            RecipientNameLabel = new MirLabel
+            RecipientNameLabel = new MirLabel("RecipientNameLabel")
             {
                 Text = "",
                 Parent = this,
@@ -705,7 +705,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            MessageTextBox = new MirTextBox
+            MessageTextBox = new MirTextBox("MessageTextBox")
             {
                 ForeColour = Color.White,
                 Parent = this,
@@ -716,7 +716,7 @@ namespace Client.MirScenes.Dialogs
 
             MessageTextBox.MultiLine();
 
-            StampButton = new MirButton
+            StampButton = new MirButton("StampButton")
             {
                 Index = 203,
                 HoverIndex = 203,
@@ -732,7 +732,7 @@ namespace Client.MirScenes.Dialogs
                 StampParcel();
             };
 
-            ItemCover = new MirImageControl
+            ItemCover = new MirImageControl("ItemCover")
             {
                 Index = 676,
                 Location = new Point(63, 310),
@@ -755,7 +755,7 @@ namespace Client.MirScenes.Dialogs
                 };
             }
 
-            ParcelCostLabel = new MirLabel
+            ParcelCostLabel = new MirLabel("ParcelCostLabel")
             {
                 DrawFormat = TextFormatFlags.VerticalCenter,
                 Font = new Font(Settings.FontName, 8F),
@@ -764,7 +764,7 @@ namespace Client.MirScenes.Dialogs
                 Size = new Size(143, 15),
             };
 
-            GoldSendLabel = new MirLabel
+            GoldSendLabel = new MirLabel("GoldSendLabel")
             {
                 DrawFormat = TextFormatFlags.VerticalCenter,
                 Font = new Font(Settings.FontName, 8F),
@@ -797,7 +797,7 @@ namespace Client.MirScenes.Dialogs
                 }
             };
 
-            SendButton = new MirButton
+            SendButton = new MirButton("SendButton")
             {
                 Index = 607,
                 HoverIndex = 608,
@@ -812,7 +812,7 @@ namespace Client.MirScenes.Dialogs
                 Network.Enqueue(new C.SendMail { Name = RecipientNameLabel.Text, Message = MessageTextBox.Text, Gold = GiftGoldAmount, ItemsIdx = ItemsIdx, Stamped = Stamped });
             };
 
-            CancelButton = new MirButton
+            CancelButton = new MirButton("CancelButton")
             {
                 Index = 193,
                 HoverIndex = 194,
@@ -952,7 +952,7 @@ namespace Client.MirScenes.Dialogs
 
         public ClientMail Mail;
 
-        public MailReadLetterDialog()
+        public MailReadLetterDialog(string uniqueName):base(uniqueName)
         {
             Index = 672;
             Library = Libraries.Title;
@@ -961,7 +961,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
             Location = new Point(100, 100);
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -973,7 +973,7 @@ namespace Client.MirScenes.Dialogs
             };
             CloseButton.Click += (o, e) => Hide();
 
-            SenderNameLabel = new MirLabel
+            SenderNameLabel = new MirLabel("SenderNameLabel")
             {
                 Parent = this,
                 Font = new Font(Settings.FontName, 8F),
@@ -983,7 +983,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            DateSentLabel = new MirLabel
+            DateSentLabel = new MirLabel("DateSentLabel")
             {
                 Parent = this,
                 Font = new Font(Settings.FontName, 8F),
@@ -993,7 +993,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            MessageLabel = new MirLabel
+            MessageLabel = new MirLabel("MessageLabel")
             {
                 ForeColour = Color.White,
                 Parent = this,
@@ -1002,7 +1002,7 @@ namespace Client.MirScenes.Dialogs
                 Size = new Size(202, 165),
             };
 
-            DeleteButton = new MirButton
+            DeleteButton = new MirButton("DeleteButton")
             {
                 Index = 540,
                 HoverIndex = 541,
@@ -1023,7 +1023,7 @@ namespace Client.MirScenes.Dialogs
                 Hide();
             };
 
-            LockButton = new MirButton
+            LockButton = new MirButton("LockButton")
             {
                 Index = 686,
                 HoverIndex = 687,
@@ -1042,7 +1042,7 @@ namespace Client.MirScenes.Dialogs
                 Network.Enqueue(new C.LockMail { MailID = Mail.MailID, Lock = Mail.Locked });
             };
 
-            CancelButton = new MirButton
+            CancelButton = new MirButton("CancelButton")
             {
                 Index = 193,
                 HoverIndex = 194,
@@ -1089,7 +1089,7 @@ namespace Client.MirScenes.Dialogs
 
         public ClientMail Mail;
 
-        public MailReadParcelDialog()
+        public MailReadParcelDialog(string uniqueName):base(uniqueName)
         {
             Index = 675;
             Library = Libraries.Title;
@@ -1098,7 +1098,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
             Location = new Point(100, 100);
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -1110,7 +1110,7 @@ namespace Client.MirScenes.Dialogs
             };
             CloseButton.Click += (o, e) => Hide();
 
-            SenderNameLabel = new MirLabel
+            SenderNameLabel = new MirLabel("SenderNameLabel")
             {
                 Parent = this,
                 Font = new Font(Settings.FontName, 8F),
@@ -1120,7 +1120,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            DateSentLabel = new MirLabel
+            DateSentLabel = new MirLabel("DateSentLabel")
             {
                 Parent = this,
                 Font = new Font(Settings.FontName, 8F),
@@ -1130,7 +1130,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            MessageLabel = new MirLabel
+            MessageLabel = new MirLabel("MessageLabel")
             {
                 ForeColour = Color.White,
                 Parent = this,
@@ -1139,7 +1139,7 @@ namespace Client.MirScenes.Dialogs
                 Size = new Size(202, 165),
             };
 
-            GoldSendLabel = new MirLabel
+            GoldSendLabel = new MirLabel("GoldSendLabel")
             {
                 DrawFormat = TextFormatFlags.VerticalCenter,
                 Font = new Font(Settings.FontName, 8F),
@@ -1148,7 +1148,7 @@ namespace Client.MirScenes.Dialogs
                 Size = new Size(143, 15),
             };
 
-            CollectButton = new MirButton
+            CollectButton = new MirButton("CollectButton")
             {
                 Index = 370,
                 HoverIndex = 371,
@@ -1163,7 +1163,7 @@ namespace Client.MirScenes.Dialogs
                 Network.Enqueue(new C.CollectParcel { MailID = Mail.MailID }); 
             };
 
-            CancelButton = new MirButton
+            CancelButton = new MirButton("CancelButton")
             {
                 Index = 193,
                 HoverIndex = 194,

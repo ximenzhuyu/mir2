@@ -158,7 +158,7 @@ namespace Client.MirScenes
 
         public long OutputDelay;
 
-        public GameScene()
+        public GameScene(string uniqueName):base(uniqueName)
         {
             MapControl.AutoRun = false;
             MapControl.AutoHit = false;
@@ -176,86 +176,86 @@ namespace Client.MirScenes
 
             KeyDown += GameScene_KeyDown;
 
-            MainDialog = new MainDialog { Parent = this };
-            ChatDialog = new ChatDialog { Parent = this };
-            ChatControl = new ChatControlBar { Parent = this };
-            InventoryDialog = new InventoryDialog { Parent = this };
-            CharacterDialog = new CharacterDialog { Parent = this, Visible = false };
-            BeltDialog = new BeltDialog { Parent = this };
-            StorageDialog = new StorageDialog { Parent = this, Visible = false };
-            CraftDialog = new CraftDialog { Parent = this, Visible = false };
-            MiniMapDialog = new MiniMapDialog { Parent = this };
-            InspectDialog = new InspectDialog { Parent = this, Visible = false };
-            OptionDialog = new OptionDialog { Parent = this, Visible = false };
-            MenuDialog = new MenuDialog { Parent = this, Visible = false };
-            NPCDialog = new NPCDialog { Parent = this, Visible = false };
-            NPCGoodsDialog = new NPCGoodsDialog { Parent = this, Visible = false };
-            NPCDropDialog = new NPCDropDialog { Parent = this, Visible = false };
-            NPCAwakeDialog = new NPCAwakeDialog { Parent = this, Visible = false };
+            MainDialog = new MainDialog("MainDialog") { Parent = this };
+            ChatDialog = new ChatDialog("ChatDialog") { Parent = this };
+            ChatControl = new ChatControlBar("ChatControlBar") { Parent = this };
+            InventoryDialog = new InventoryDialog("InventoryDialog") { Parent = this };
+            CharacterDialog = new CharacterDialog("CharacterDialog") { Parent = this, Visible = false };
+            BeltDialog = new BeltDialog("BeltDialog") { Parent = this };
+            StorageDialog = new StorageDialog("StorageDialog") { Parent = this, Visible = false };
+            CraftDialog = new CraftDialog("CraftDialog") { Parent = this, Visible = false };
+            MiniMapDialog = new MiniMapDialog("MiniMapDialog") { Parent = this };
+            InspectDialog = new InspectDialog("InspectDialog") { Parent = this, Visible = false };
+            OptionDialog = new OptionDialog("OptionDialog") { Parent = this, Visible = false };
+            MenuDialog = new MenuDialog("MenuDialog") { Parent = this, Visible = false };
+            NPCDialog = new NPCDialog("NPCDialog") { Parent = this, Visible = false };
+            NPCGoodsDialog = new NPCGoodsDialog("NPCGoodsDialog") { Parent = this, Visible = false };
+            NPCDropDialog = new NPCDropDialog("NPCDropDialog") { Parent = this, Visible = false };
+            NPCAwakeDialog = new NPCAwakeDialog("NPCAwakeDialog") { Parent = this, Visible = false };
 
-            HelpDialog = new HelpDialog { Parent = this, Visible = false };
+            HelpDialog = new HelpDialog("HelpDialog") { Parent = this, Visible = false };
             
-            MountDialog = new MountDialog { Parent = this, Visible = false };
-            FishingDialog = new FishingDialog { Parent = this, Visible = false };
-            FishingStatusDialog = new FishingStatusDialog { Parent = this, Visible = false };
+            MountDialog = new MountDialog("MountDialog") { Parent = this, Visible = false };
+            FishingDialog = new FishingDialog("FishingDialog") { Parent = this, Visible = false };
+            FishingStatusDialog = new FishingStatusDialog("FishingStatusDialog") { Parent = this, Visible = false };
             
-            GroupDialog = new GroupDialog { Parent = this, Visible = false };
-            GuildDialog = new GuildDialog { Parent = this, Visible = false };
+            GroupDialog = new GroupDialog("GroupDialog") { Parent = this, Visible = false };
+            GuildDialog = new GuildDialog("GuildDialog") { Parent = this, Visible = false };
 
-            BigMapDialog = new BigMapDialog { Parent = this, Visible = false };
-            TrustMerchantDialog = new TrustMerchantDialog { Parent = this, Visible = false };
-            CharacterDuraPanel = new CharacterDuraPanel { Parent = this, Visible = false };
-            DuraStatusPanel = new DuraStatusDialog { Parent = this, Visible = true };
-            TradeDialog = new TradeDialog { Parent = this, Visible = false };
-            GuestTradeDialog = new GuestTradeDialog { Parent = this, Visible = false };
+            BigMapDialog = new BigMapDialog("BigMapDialog") { Parent = this, Visible = false };
+            TrustMerchantDialog = new TrustMerchantDialog("TrustMerchantDialog") { Parent = this, Visible = false };
+            CharacterDuraPanel = new CharacterDuraPanel("CharacterDuraPanel") { Parent = this, Visible = false };
+            DuraStatusPanel = new DuraStatusDialog("DuraStatusDialog") { Parent = this, Visible = true };
+            TradeDialog = new TradeDialog("TradeDialog") { Parent = this, Visible = false };
+            GuestTradeDialog = new GuestTradeDialog("GuestTradeDialog") { Parent = this, Visible = false };
 
             //SkillBarDialog = new SkillBarDialog { Parent = this, Visible = false };
-            SkillBarDialog Bar1 = new SkillBarDialog { Parent = this, Visible = false, BarIndex = 0 };
+            SkillBarDialog Bar1 = new SkillBarDialog("SkillBarDialog") { Parent = this, Visible = false, BarIndex = 0 };
             SkillBarDialogs.Add(Bar1);
-            SkillBarDialog Bar2 = new SkillBarDialog { Parent = this, Visible = false, BarIndex = 1 };
+            SkillBarDialog Bar2 = new SkillBarDialog("SkillBarDialog") { Parent = this, Visible = false, BarIndex = 1 };
             SkillBarDialogs.Add(Bar2);
-            ChatOptionDialog = new ChatOptionDialog { Parent = this, Visible = false };
-            ChatNoticeDialog = new ChatNoticeDialog { Parent = this, Visible = false };
+            ChatOptionDialog = new ChatOptionDialog("ChatOptionDialog") { Parent = this, Visible = false };
+            ChatNoticeDialog = new ChatNoticeDialog("ChatNoticeDialog") { Parent = this, Visible = false };
 
-            QuestListDialog = new QuestListDialog { Parent = this, Visible = false };
-            QuestDetailDialog = new QuestDetailDialog {Parent = this, Visible = false};
-            QuestTrackingDialog = new QuestTrackingDialog { Parent = this, Visible = false };
-            QuestLogDialog = new QuestDiaryDialog {Parent = this, Visible = false};
+            QuestListDialog = new QuestListDialog("QuestListDialog") { Parent = this, Visible = false };
+            QuestDetailDialog = new QuestDetailDialog("QuestDetailDialog") {Parent = this, Visible = false};
+            QuestTrackingDialog = new QuestTrackingDialog("QuestTrackingDialog") { Parent = this, Visible = false };
+            QuestLogDialog = new QuestDiaryDialog("QuestLogDialog") {Parent = this, Visible = false};
 
-            RankingDialog = new RankingDialog { Parent = this, Visible = false };
+            RankingDialog = new RankingDialog("RankingDialog") { Parent = this, Visible = false };
 
-            MailListDialog = new MailListDialog { Parent = this, Visible = false };
-            MailComposeLetterDialog = new MailComposeLetterDialog { Parent = this, Visible = false };
-            MailComposeParcelDialog = new MailComposeParcelDialog { Parent = this, Visible = false };
-            MailReadLetterDialog = new MailReadLetterDialog { Parent = this, Visible = false };
-            MailReadParcelDialog = new MailReadParcelDialog { Parent = this, Visible = false };
+            MailListDialog = new MailListDialog("MailListDialog") { Parent = this, Visible = false };
+            MailComposeLetterDialog = new MailComposeLetterDialog("MailComposeLetterDialog") { Parent = this, Visible = false };
+            MailComposeParcelDialog = new MailComposeParcelDialog("MailComposeParcelDialog") { Parent = this, Visible = false };
+            MailReadLetterDialog = new MailReadLetterDialog("MailReadLetterDialog") { Parent = this, Visible = false };
+            MailReadParcelDialog = new MailReadParcelDialog("MailReadParcelDialog") { Parent = this, Visible = false };
 
-            IntelligentCreatureDialog = new IntelligentCreatureDialog { Parent = this, Visible = false };
-            IntelligentCreatureOptionsDialog = new IntelligentCreatureOptionsDialog { Parent = this, Visible = false };
-            IntelligentCreatureOptionsGradeDialog = new IntelligentCreatureOptionsGradeDialog { Parent = this, Visible = false };
+            IntelligentCreatureDialog = new IntelligentCreatureDialog("IntelligentCreatureDialog") { Parent = this, Visible = false };
+            IntelligentCreatureOptionsDialog = new IntelligentCreatureOptionsDialog("IntelligentCreatureOptionsDialog") { Parent = this, Visible = false };
+            IntelligentCreatureOptionsGradeDialog = new IntelligentCreatureOptionsGradeDialog("IntelligentCreatureOptionsGradeDialog") { Parent = this, Visible = false };
 
-            RefineDialog = new RefineDialog { Parent = this, Visible = false };
-            RelationshipDialog = new RelationshipDialog { Parent = this, Visible = false };
-            FriendDialog = new FriendDialog { Parent = this, Visible = false };
-            MemoDialog = new MemoDialog { Parent = this, Visible = false };
-            MentorDialog = new MentorDialog { Parent = this, Visible = false };
-            GameShopDialog = new GameShopDialog { Parent = this, Visible = false };
+            RefineDialog = new RefineDialog("RefineDialog") { Parent = this, Visible = false };
+            RelationshipDialog = new RelationshipDialog("RelationshipDialog") { Parent = this, Visible = false };
+            FriendDialog = new FriendDialog("FriendDialog") { Parent = this, Visible = false };
+            MemoDialog = new MemoDialog("MemoDialog") { Parent = this, Visible = false };
+            MentorDialog = new MentorDialog("MentorDialog") { Parent = this, Visible = false };
+            GameShopDialog = new GameShopDialog("GameShopDialog") { Parent = this, Visible = false };
 
-            ReportDialog = new ReportDialog { Parent = this, Visible = false };
+            ReportDialog = new ReportDialog("ReportDialog") { Parent = this, Visible = false };
 
-            ItemRentingDialog = new ItemRentingDialog { Parent = this, Visible = false };
-            ItemRentDialog = new ItemRentDialog { Parent = this, Visible = false };
-            GuestItemRentingDialog = new GuestItemRentingDialog { Parent = this, Visible = false };
-            GuestItemRentDialog = new GuestItemRentDialog { Parent = this, Visible = false };
-            ItemRentalDialog = new ItemRentalDialog { Parent = this, Visible = false };
+            ItemRentingDialog = new ItemRentingDialog("ItemRentingDialog") { Parent = this, Visible = false };
+            ItemRentDialog = new ItemRentDialog("ItemRentDialog") { Parent = this, Visible = false };
+            GuestItemRentingDialog = new GuestItemRentingDialog("GuestItemRentingDialog") { Parent = this, Visible = false };
+            GuestItemRentDialog = new GuestItemRentDialog("GuestItemRentDialog") { Parent = this, Visible = false };
+            ItemRentalDialog = new ItemRentalDialog("ItemRentalDialog") { Parent = this, Visible = false };
 
-            BuffsDialog = new BuffDialog {Parent = this, Visible = true};
+            BuffsDialog = new BuffDialog("BuffDialog") {Parent = this, Visible = true};
 
             //not added yet
-            KeyboardLayoutDialog = new KeyboardLayoutDialog { Parent = this, Visible = false };
+            KeyboardLayoutDialog = new KeyboardLayoutDialog("KeyboardLayoutDialog") { Parent = this, Visible = false };
 
             for (int i = 0; i < OutputLines.Length; i++)
-                OutputLines[i] = new MirLabel
+                OutputLines[i] = new MirLabel("GameScene_Outline_" + i)
                 {
                     AutoSize = true,
                     BackColour = Color.Transparent,
@@ -1672,7 +1672,7 @@ namespace Client.MirScenes
         {
             if (MapControl != null && !MapControl.IsDisposed)
                 MapControl.Dispose();
-            MapControl = new MapControl { FileName = Path.Combine(Settings.MapPath, p.FileName + ".map"), Title = p.Title, MiniMap = p.MiniMap, BigMap = p.BigMap, Lights = p.Lights, Lightning = p.Lightning, Fire = p.Fire, MapDarkLight = p.MapDarkLight, Music = p.Music };
+            MapControl = new MapControl("MapControl") { FileName = Path.Combine(Settings.MapPath, p.FileName + ".map"), Title = p.Title, MiniMap = p.MiniMap, BigMap = p.BigMap, Lights = p.Lights, Lightning = p.Lightning, Fire = p.Fire, MapDarkLight = p.MapDarkLight, Music = p.Music };
             MapControl.LoadMap();
             InsertControl(0, MapControl);
         }
@@ -2500,7 +2500,7 @@ namespace Client.MirScenes
             User = null;
             if (Settings.Resolution != 800)
                 CMain.SetResolution(800, 600);
-            ActiveScene = new SelectScene(p.Characters);
+            ActiveScene = new SelectScene(p.Characters, "SelectScene");
 
             Dispose();
         }
@@ -5506,7 +5506,7 @@ namespace Client.MirScenes
             HoverItem = item;
             ItemInfo realItem = Functions.GetRealItem(item.Info, level, job, ItemInfoList);
 
-            MirLabel nameLabel = new MirLabel
+            MirLabel nameLabel = new MirLabel("GameScene_NameLabel")
             {
                 AutoSize = true,
                 ForeColour = GradeNameColor(HoverItem.Info.Grade),
@@ -5581,7 +5581,7 @@ namespace Client.MirScenes
                 "\n" + "W " + HoverItem.Weight + text;
             }
 
-            MirLabel etcLabel = new MirLabel
+            MirLabel etcLabel = new MirLabel("NameInfoLabel_EtcLabel")
             {
                 AutoSize = true,
                 ForeColour = Color.White,
@@ -5595,7 +5595,7 @@ namespace Client.MirScenes
                 Math.Max(ItemLabel.Size.Height, etcLabel.DisplayRectangle.Bottom + 4));
 
             #region OUTLINE
-            MirControl outLine = new MirControl
+            MirControl outLine = new MirControl("GameScene_Outline")
             {
                 BackColour = Color.FromArgb(255, 50, 50, 50),
                 Border = true,
@@ -5655,7 +5655,7 @@ namespace Client.MirScenes
             {
                 count++;
                 text = string.Format("Adds {0}Durability", minValue / 1000);
-                MirLabel DuraLabel = new MirLabel
+                MirLabel DuraLabel = new MirLabel("DuraLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.White,
@@ -5683,7 +5683,7 @@ namespace Client.MirScenes
                     text = string.Format(addValue > 0 ? "DC + {0}~{1} (+{2})" : "DC + {0}~{1}", minValue, maxValue + addValue, addValue);
                 else
                     text = string.Format("Adds {0}DC",minValue + maxValue + addValue);
-                MirLabel DCLabel = new MirLabel
+                MirLabel DCLabel = new MirLabel("DCLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -5713,7 +5713,7 @@ namespace Client.MirScenes
                     text = string.Format(addValue > 0 ? "MC + {0}~{1} (+{2})" : "MC + {0}~{1}", minValue, maxValue + addValue, addValue);
                 else
                     text = string.Format("Adds {0}MC", minValue + maxValue + addValue);
-                MirLabel MCLabel = new MirLabel
+                MirLabel MCLabel = new MirLabel("MCLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -5743,7 +5743,7 @@ namespace Client.MirScenes
                     text = string.Format(addValue > 0 ? "SC + {0}~{1} (+{2})" : "SC + {0}~{1}", minValue, maxValue + addValue, addValue);
                 else
                     text = string.Format("Adds {0}SC", minValue + maxValue + addValue);
-                MirLabel SCLabel = new MirLabel
+                MirLabel SCLabel = new MirLabel("SCLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -5783,7 +5783,7 @@ namespace Client.MirScenes
                     text = string.Format(minValue + addValue > 0 ? "Luck + {0}" : "Curse + {0}", Math.Abs(minValue + addValue));
                 }
 
-                MirLabel LUCKLabel = new MirLabel
+                MirLabel LUCKLabel = new MirLabel("LUCKLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -5814,7 +5814,7 @@ namespace Client.MirScenes
                     text = string.Format(addValue > 0 ? "Accuracy: + {0} (+{1})" : "Accuracy: + {0}", minValue + addValue, addValue);
                 else
                     text = string.Format("Adds {0}Accuracy", minValue + maxValue + addValue);
-                MirLabel ACCLabel = new MirLabel
+                MirLabel ACCLabel = new MirLabel("ACCLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -5840,7 +5840,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                MirLabel HOLYLabel = new MirLabel
+                MirLabel HOLYLabel = new MirLabel("HOLYLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -5877,7 +5877,7 @@ namespace Client.MirScenes
                 }
                 else
                     text = string.Format("Adds {0}A.Speed", minValue + maxValue + addValue);
-                MirLabel ASPEEDLabel = new MirLabel
+                MirLabel ASPEEDLabel = new MirLabel("ASPEEDLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -5907,7 +5907,7 @@ namespace Client.MirScenes
                     text = string.Format(addValue > 0 ? "Freezing: + {0} (+{1})" : "Freezing: + {0}", minValue + addValue, addValue);
                 else
                     text = string.Format("Adds {0}Freezing", minValue + maxValue + addValue);
-                MirLabel FREEZINGLabel = new MirLabel
+                MirLabel FREEZINGLabel = new MirLabel("FREEZINGLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -5937,7 +5937,7 @@ namespace Client.MirScenes
                     text = string.Format(addValue > 0 ? "Poison: + {0} (+{1})" : "Poison: + {0}", minValue + addValue, addValue);
                 else
                     text = string.Format("Adds {0}Poison", minValue + maxValue + addValue);
-                MirLabel POISONLabel = new MirLabel
+                MirLabel POISONLabel = new MirLabel("POISONLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -5963,7 +5963,7 @@ namespace Client.MirScenes
             if ((minValue > 0 || maxValue > 0 || addValue > 0) && (realItem.Type != ItemType.Gem))
             {
                 count++;                    
-                MirLabel CRITICALRATELabel = new MirLabel
+                MirLabel CRITICALRATELabel = new MirLabel("CRITICALRATELabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -5994,7 +5994,7 @@ namespace Client.MirScenes
             if ((minValue > 0 || maxValue > 0 || addValue > 0) && (realItem.Type != ItemType.Gem))
             {
                 count++;
-                MirLabel CRITICALDAMAGELabel = new MirLabel
+                MirLabel CRITICALDAMAGELabel = new MirLabel("CRITICALDAMAGELabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6020,7 +6020,7 @@ namespace Client.MirScenes
             if ((minValue > 0 || maxValue > 0 || addValue > 0) && (realItem.Type != ItemType.Gem))
             {
                 count++;
-                MirLabel ReflectLabel = new MirLabel
+                MirLabel ReflectLabel = new MirLabel("ReflectLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6045,7 +6045,7 @@ namespace Client.MirScenes
             if ((minValue > 0 || maxValue > 0 || addValue > 0) && (realItem.Type != ItemType.Gem))
             {
                 count++;
-                MirLabel HPdrainLabel = new MirLabel
+                MirLabel HPdrainLabel = new MirLabel("HPdrainLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6066,7 +6066,7 @@ namespace Client.MirScenes
                 ItemLabel.Size = new Size(ItemLabel.Size.Width, ItemLabel.Size.Height + 4);
 
                 #region OUTLINE
-                MirControl outLine = new MirControl
+                MirControl outLine = new MirControl("AttackInfoLabel_Outline")
                 {
                     BackColour = Color.FromArgb(255, 50, 50, 50),
                     Border = true,
@@ -6138,7 +6138,7 @@ namespace Client.MirScenes
                     text = string.Format(addValue > 0 ? "AC + {0}~{1} (+{2})" : "AC + {0}~{1}", minValue, maxValue + addValue, addValue);
                 else
                     text = string.Format("Adds {0} AC", minValue + maxValue + addValue);
-                MirLabel ACLabel = new MirLabel
+                MirLabel ACLabel = new MirLabel("ACLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6184,7 +6184,7 @@ namespace Client.MirScenes
                     text = string.Format(addValue > 0 ? "MAC + {0}~{1} (+{2})" : "MAC + {0}~{1}", minValue, maxValue + addValue, addValue);
                 else
                     text = string.Format("Adds {0} MAC", minValue + maxValue + addValue);
-                MirLabel MACLabel = new MirLabel
+                MirLabel MACLabel = new MirLabel("MACLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6215,7 +6215,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                MirLabel MAXHPLabel = new MirLabel
+                MirLabel MAXHPLabel = new MirLabel("MAXHPLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6243,7 +6243,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                MirLabel MAXMPLabel = new MirLabel
+                MirLabel MAXMPLabel = new MirLabel("MAXMPLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6271,7 +6271,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                MirLabel MAXHPRATELabel = new MirLabel
+                MirLabel MAXHPRATELabel = new MirLabel("MAXHPRATELabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6296,7 +6296,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                MirLabel MAXMPRATELabel = new MirLabel
+                MirLabel MAXMPRATELabel = new MirLabel("MAXMPRATELabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6321,7 +6321,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                MirLabel MAXACRATE = new MirLabel
+                MirLabel MAXACRATE = new MirLabel("MAXACRATE")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6346,7 +6346,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                MirLabel MAXMACRATELabel = new MirLabel
+                MirLabel MAXMACRATELabel = new MirLabel("MAXMACRATELabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6371,7 +6371,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                MirLabel HEALTH_RECOVERYLabel = new MirLabel
+                MirLabel HEALTH_RECOVERYLabel = new MirLabel("HEALTH_RECOVERYLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6397,7 +6397,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                MirLabel MANA_RECOVERYLabel = new MirLabel
+                MirLabel MANA_RECOVERYLabel = new MirLabel("MANA_RECOVERYLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6423,7 +6423,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                MirLabel POISON_RECOVERYabel = new MirLabel
+                MirLabel POISON_RECOVERYabel = new MirLabel("POISON_RECOVERYabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6449,7 +6449,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                MirLabel AGILITYLabel = new MirLabel
+                MirLabel AGILITYLabel = new MirLabel("AGILITYLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6475,7 +6475,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                MirLabel STRONGLabel = new MirLabel
+                MirLabel STRONGLabel = new MirLabel("STRONGLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6505,7 +6505,7 @@ namespace Client.MirScenes
                     text = string.Format(addValue > 0 ? "Poison Resist + {0} (+{1})" : "Poison Resist + {0}", minValue + addValue, addValue);
                 else
                     text = string.Format("Adds {0} Poison Resist", minValue + maxValue + addValue);
-                MirLabel POISON_RESISTLabel = new MirLabel
+                MirLabel POISON_RESISTLabel = new MirLabel("POISON_RESISTLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6535,7 +6535,7 @@ namespace Client.MirScenes
                     text = string.Format(addValue > 0 ? "Magic Resist + {0} (+{1})" : "Magic Resist + {0}", minValue + addValue, addValue);
                 else
                     text = string.Format("Adds {0} Magic Resist", minValue + maxValue + addValue);
-                MirLabel MAGIC_RESISTLabel = new MirLabel
+                MirLabel MAGIC_RESISTLabel = new MirLabel("MAGIC_RESISTLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6557,7 +6557,7 @@ namespace Client.MirScenes
                 ItemLabel.Size = new Size(ItemLabel.Size.Width, ItemLabel.Size.Height + 4);
                 
                 #region OUTLINE
-                MirControl outLine = new MirControl
+                MirControl outLine = new MirControl("DefenceInfoLabel_Outline")
                 {
                     BackColour = Color.FromArgb(255, 50, 50, 50),
                     Border = true,
@@ -6601,7 +6601,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                MirLabel HANDWEIGHTLabel = new MirLabel
+                MirLabel HANDWEIGHTLabel = new MirLabel("HANDWEIGHTLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6627,7 +6627,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                MirLabel WEARWEIGHTLabel = new MirLabel
+                MirLabel WEARWEIGHTLabel = new MirLabel("WEARWEIGHTLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6653,7 +6653,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                MirLabel BAGWEIGHTLabel = new MirLabel
+                MirLabel BAGWEIGHTLabel = new MirLabel("BAGWEIGHTLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6678,7 +6678,7 @@ namespace Client.MirScenes
             if (minValue > 0 || maxValue > 0 || addValue > 0)
             {
                 count++;
-                MirLabel BAGWEIGHTLabel = new MirLabel
+                MirLabel BAGWEIGHTLabel = new MirLabel("BAGWEIGHTLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6702,7 +6702,7 @@ namespace Client.MirScenes
             if (HoverItem.Info.Type == ItemType.Potion && HoverItem.Info.Durability > 0)
             {
                 count++;
-                MirLabel TNRLabel = new MirLabel
+                MirLabel TNRLabel = new MirLabel("TNRLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6719,7 +6719,7 @@ namespace Client.MirScenes
             if (HoverItem.Info.Type == ItemType.Transform && HoverItem.Info.Durability > 0)
             {
                 count++;
-                MirLabel TNRLabel = new MirLabel
+                MirLabel TNRLabel = new MirLabel("TNRLabel")
                 {
                     AutoSize = true,
                     ForeColour = addValue > 0 ? Color.Cyan : Color.White,
@@ -6740,7 +6740,7 @@ namespace Client.MirScenes
                 ItemLabel.Size = new Size(ItemLabel.Size.Width, ItemLabel.Size.Height + 4);
 
                 #region OUTLINE
-                MirControl outLine = new MirControl
+                MirControl outLine = new MirControl("WeightInfoLabel_Outline")
                 {
                     BackColour = Color.FromArgb(255, 50, 50, 50),
                     Border = true,
@@ -6776,7 +6776,7 @@ namespace Client.MirScenes
             if (HoverItem.Awake.getAwakeLevel() > 0)
             {
                 count++;
-                MirLabel AWAKENAMELabel = new MirLabel
+                MirLabel AWAKENAMELabel = new MirLabel("AWAKENAMELabel")
                 {
                     AutoSize = true,
                     ForeColour = GradeNameColor(HoverItem.Info.Grade),
@@ -6796,7 +6796,7 @@ namespace Client.MirScenes
             if (HoverItem.Awake.getAwakeValue() > 0)
             {
                 count++;
-                MirLabel AWAKE_TOTAL_VALUELabel = new MirLabel
+                MirLabel AWAKE_TOTAL_VALUELabel = new MirLabel("AWAKE_TOTAL_VALUELabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.White,
@@ -6818,7 +6818,7 @@ namespace Client.MirScenes
                 count++;
                 for (int i = 0; i < HoverItem.Awake.getAwakeLevel(); i++)
                 {
-                    MirLabel AWAKE_LEVEL_VALUELabel = new MirLabel
+                    MirLabel AWAKE_LEVEL_VALUELabel = new MirLabel("AWAKE_LEVEL_VALUELabel")
                     {
                         AutoSize = true,
                         ForeColour = Color.White,
@@ -6840,7 +6840,7 @@ namespace Client.MirScenes
                 ItemLabel.Size = new Size(ItemLabel.Size.Width, ItemLabel.Size.Height + 4);
 
                 #region OUTLINE
-                MirControl outLine = new MirControl
+                MirControl outLine = new MirControl("AwakeInfoLabel_Outline")
                 {
                     BackColour = Color.FromArgb(255, 50, 50, 50),
                     Border = true,
@@ -6945,7 +6945,7 @@ namespace Client.MirScenes
                         break;
                 }
 
-                MirLabel LEVELLabel = new MirLabel
+                MirLabel LEVELLabel = new MirLabel("LEVELLabel")
                 {
                     AutoSize = true,
                     ForeColour = colour,
@@ -6991,7 +6991,7 @@ namespace Client.MirScenes
                         break;
                 }
 
-                MirLabel CLASSLabel = new MirLabel
+                MirLabel CLASSLabel = new MirLabel("CLASSLabel")
                 {
                     AutoSize = true,
                     ForeColour = colour,
@@ -7012,7 +7012,7 @@ namespace Client.MirScenes
                 ItemLabel.Size = new Size(ItemLabel.Size.Width, ItemLabel.Size.Height + 4);
 
                 #region OUTLINE
-                MirControl outLine = new MirControl
+                MirControl outLine = new MirControl("NeedInfoLabel_OutLine")
                 {
                     BackColour = Color.FromArgb(255, 50, 50, 50),
                     Border = true,
@@ -7049,7 +7049,7 @@ namespace Client.MirScenes
             if (HoverItem.Info.Bind != BindMode.none && HoverItem.Info.Bind.HasFlag(BindMode.DontDeathdrop))
             {
                 count++;
-                MirLabel DONT_DEATH_DROPLabel = new MirLabel
+                MirLabel DONT_DEATH_DROPLabel = new MirLabel("DONT_DEATH_DROPLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -7070,7 +7070,7 @@ namespace Client.MirScenes
             if (HoverItem.Info.Bind != BindMode.none && HoverItem.Info.Bind.HasFlag(BindMode.DontDrop))
             {
                 count++;
-                MirLabel DONT_DROPLabel = new MirLabel
+                MirLabel DONT_DROPLabel = new MirLabel("DONT_DROPLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -7091,7 +7091,7 @@ namespace Client.MirScenes
             if (HoverItem.Info.Bind != BindMode.none && HoverItem.Info.Bind.HasFlag(BindMode.DontUpgrade))
             {
                 count++;
-                MirLabel DONT_UPGRADELabel = new MirLabel
+                MirLabel DONT_UPGRADELabel = new MirLabel("DONT_UPGRADELabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -7112,7 +7112,7 @@ namespace Client.MirScenes
             if (HoverItem.Info.Bind != BindMode.none && HoverItem.Info.Bind.HasFlag(BindMode.DontSell))
             {
                 count++;
-                MirLabel DONT_SELLLabel = new MirLabel
+                MirLabel DONT_SELLLabel = new MirLabel("DONT_SELLLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -7133,7 +7133,7 @@ namespace Client.MirScenes
             if (HoverItem.Info.Bind != BindMode.none && HoverItem.Info.Bind.HasFlag(BindMode.DontTrade))
             {
                 count++;
-                MirLabel DONT_TRADELabel = new MirLabel
+                MirLabel DONT_TRADELabel = new MirLabel("DONT_TRADELabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -7154,7 +7154,7 @@ namespace Client.MirScenes
             if (HoverItem.Info.Bind != BindMode.none && HoverItem.Info.Bind.HasFlag(BindMode.DontStore))
             {
                 count++;
-                MirLabel DONT_STORELabel = new MirLabel
+                MirLabel DONT_STORELabel = new MirLabel("DONT_STORELabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -7175,7 +7175,7 @@ namespace Client.MirScenes
             if (HoverItem.Info.Bind != BindMode.none && HoverItem.Info.Bind.HasFlag(BindMode.DontRepair))
             {
                 count++;
-                MirLabel DONT_REPAIRLabel = new MirLabel
+                MirLabel DONT_REPAIRLabel = new MirLabel("DONT_REPAIRLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -7196,7 +7196,7 @@ namespace Client.MirScenes
             if (HoverItem.Info.Bind != BindMode.none && HoverItem.Info.Bind.HasFlag(BindMode.NoSRepair))
             {
                 count++;
-                MirLabel DONT_REPAIRLabel = new MirLabel
+                MirLabel DONT_REPAIRLabel = new MirLabel("DONT_REPAIRLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -7217,7 +7217,7 @@ namespace Client.MirScenes
             if (HoverItem.Info.Bind != BindMode.none && HoverItem.Info.Bind.HasFlag(BindMode.BreakOnDeath))
             {
                 count++;
-                MirLabel DONT_REPAIRLabel = new MirLabel
+                MirLabel DONT_REPAIRLabel = new MirLabel("DONT_REPAIRLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -7238,7 +7238,7 @@ namespace Client.MirScenes
             if (HoverItem.Info.Bind != BindMode.none && HoverItem.Info.Bind.HasFlag(BindMode.DestroyOnDrop))
             {
                 count++;
-                MirLabel DONT_DODLabel = new MirLabel
+                MirLabel DONT_DODLabel = new MirLabel("DONT_DODLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -7259,7 +7259,7 @@ namespace Client.MirScenes
             if (HoverItem.Info.Bind != BindMode.none && HoverItem.Info.Bind.HasFlag(BindMode.NoWeddingRing))
             {
                 count++;
-                MirLabel No_WedLabel = new MirLabel
+                MirLabel No_WedLabel = new MirLabel("No_WedLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -7280,7 +7280,7 @@ namespace Client.MirScenes
             if ((HoverItem.Info.Bind.HasFlag(BindMode.BindOnEquip)) & HoverItem.SoulBoundId == -1)
             {
                 count++;
-                MirLabel BOELabel = new MirLabel
+                MirLabel BOELabel = new MirLabel("BOELabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -7296,7 +7296,7 @@ namespace Client.MirScenes
             else if (HoverItem.SoulBoundId != -1)
             {
                 count++;
-                MirLabel BOELabel = new MirLabel
+                MirLabel BOELabel = new MirLabel("BOELabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -7317,7 +7317,7 @@ namespace Client.MirScenes
             if ((!HoverItem.Info.NeedIdentify || HoverItem.Identified) && HoverItem.Cursed)
             {
                 count++;
-                MirLabel CURSEDLabel = new MirLabel
+                MirLabel CURSEDLabel = new MirLabel("CURSEDLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -7348,7 +7348,7 @@ namespace Client.MirScenes
                 {
                     Text = "Can be used on: ";
                 }
-                MirLabel GemUseOn = new MirLabel
+                MirLabel GemUseOn = new MirLabel("GemUseOn")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -7365,7 +7365,7 @@ namespace Client.MirScenes
                 count++;
                 if (HoverItem.Info.Unique.HasFlag(SpecialItemMode.Paralize))
                 {
-                    MirLabel GemWeapon = new MirLabel
+                    MirLabel GemWeapon = new MirLabel("GemWeapon")
                     {
                         AutoSize = true,
                         ForeColour = Color.White,
@@ -7383,7 +7383,7 @@ namespace Client.MirScenes
                 count++;
                 if (HoverItem.Info.Unique.HasFlag(SpecialItemMode.Teleport))
                 {
-                    MirLabel GemArmour = new MirLabel
+                    MirLabel GemArmour = new MirLabel("GemArmour")
                     {
                         AutoSize = true,
                         ForeColour = Color.White,
@@ -7401,7 +7401,7 @@ namespace Client.MirScenes
                 count++;
                 if (HoverItem.Info.Unique.HasFlag(SpecialItemMode.Clearring))
                 {
-                    MirLabel Gemhelmet = new MirLabel
+                    MirLabel Gemhelmet = new MirLabel("Gemhelmet")
                     {
                         AutoSize = true,
                         ForeColour = Color.White,
@@ -7419,7 +7419,7 @@ namespace Client.MirScenes
                 count++;
                 if (HoverItem.Info.Unique.HasFlag(SpecialItemMode.Protection))
                 {
-                    MirLabel Gemnecklace = new MirLabel
+                    MirLabel Gemnecklace = new MirLabel("Gemnecklace")
                     {
                         AutoSize = true,
                         ForeColour = Color.White,
@@ -7437,7 +7437,7 @@ namespace Client.MirScenes
                 count++;
                 if (HoverItem.Info.Unique.HasFlag(SpecialItemMode.Revival))
                 {
-                    MirLabel GemBracelet = new MirLabel
+                    MirLabel GemBracelet = new MirLabel("GemBracelet")
                     {
                         AutoSize = true,
                         ForeColour = Color.White,
@@ -7455,7 +7455,7 @@ namespace Client.MirScenes
                 count++;
                 if (HoverItem.Info.Unique.HasFlag(SpecialItemMode.Muscle))
                 {
-                    MirLabel GemRing = new MirLabel
+                    MirLabel GemRing = new MirLabel("GemRing")
                     {
                         AutoSize = true,
                         ForeColour = Color.White,
@@ -7473,7 +7473,7 @@ namespace Client.MirScenes
                 count++;
                 if (HoverItem.Info.Unique.HasFlag(SpecialItemMode.Flame))
                 {
-                    MirLabel Gemamulet = new MirLabel
+                    MirLabel Gemamulet = new MirLabel("Gemamulet")
                     {
                         AutoSize = true,
                         ForeColour = Color.White,
@@ -7491,7 +7491,7 @@ namespace Client.MirScenes
                 count++;
                 if (HoverItem.Info.Unique.HasFlag(SpecialItemMode.Healing))
                 {
-                    MirLabel Gembelt = new MirLabel
+                    MirLabel Gembelt = new MirLabel("Gembelt")
                     {
                         AutoSize = true,
                         ForeColour = Color.White,
@@ -7509,7 +7509,7 @@ namespace Client.MirScenes
                 count++;
                 if (HoverItem.Info.Unique.HasFlag(SpecialItemMode.Probe))
                 {
-                    MirLabel Gemboots = new MirLabel
+                    MirLabel Gemboots = new MirLabel("Gemboots")
                     {
                         AutoSize = true,
                         ForeColour = Color.White,
@@ -7527,7 +7527,7 @@ namespace Client.MirScenes
                 count++;
                 if (HoverItem.Info.Unique.HasFlag(SpecialItemMode.Skill))
                 {
-                    MirLabel Gemstone = new MirLabel
+                    MirLabel Gemstone = new MirLabel("Gemstone")
                     {
                         AutoSize = true,
                         ForeColour = Color.White,
@@ -7545,7 +7545,7 @@ namespace Client.MirScenes
                 count++;
                 if (HoverItem.Info.Unique.HasFlag(SpecialItemMode.NoDuraLoss))
                 {
-                    MirLabel Gemtorch = new MirLabel
+                    MirLabel Gemtorch = new MirLabel("Gemtorch")
                     {
                         AutoSize = true,
                         ForeColour = Color.White,
@@ -7591,7 +7591,7 @@ namespace Client.MirScenes
                 double remainingSeconds = (HoverItem.ExpireInfo.ExpiryDate - DateTime.Now).TotalSeconds;
 
                 count++;
-                MirLabel EXPIRELabel = new MirLabel
+                MirLabel EXPIRELabel = new MirLabel("EXPIRELabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,
@@ -7611,7 +7611,7 @@ namespace Client.MirScenes
             {
 
                 count++;
-                MirLabel OWNERLabel = new MirLabel
+                MirLabel OWNERLabel = new MirLabel("OWNERLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.DarkKhaki,
@@ -7627,7 +7627,7 @@ namespace Client.MirScenes
                 double remainingTime = (HoverItem.RentalInformation.ExpiryDate - DateTime.Now).TotalSeconds;
 
                 count++;
-                MirLabel RENTALLabel = new MirLabel
+                MirLabel RENTALLabel = new MirLabel("RENTALLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Khaki,
@@ -7644,7 +7644,7 @@ namespace Client.MirScenes
             {
                 count++;
                 var remainingTime = (HoverItem.RentalInformation.ExpiryDate - DateTime.Now).TotalSeconds;
-                var RentalLockLabel = new MirLabel
+                var RentalLockLabel = new MirLabel("RentalLockLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.DarkKhaki,
@@ -7663,7 +7663,7 @@ namespace Client.MirScenes
                 ItemLabel.Size = new Size(ItemLabel.Size.Width, ItemLabel.Size.Height + 4);
 
                 #region OUTLINE
-                MirControl outLine = new MirControl
+                MirControl outLine = new MirControl("BindInfoLabel_Outline")
                 {
                     BackColour = Color.FromArgb(255, 50, 50, 50),
                     Border = true,
@@ -7716,7 +7716,7 @@ namespace Client.MirScenes
                         break;
                 }
                 count++;
-                MirLabel GEMLabel = new MirLabel
+                MirLabel GEMLabel = new MirLabel("GEMLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.White,
@@ -7737,7 +7737,7 @@ namespace Client.MirScenes
             if (realItem.StackSize > 1 && realItem.Type != ItemType.Gem)
             {
                 count++;
-                MirLabel SPLITUPLabel = new MirLabel
+                MirLabel SPLITUPLabel = new MirLabel("GEMLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.White,
@@ -7758,7 +7758,7 @@ namespace Client.MirScenes
                 ItemLabel.Size = new Size(ItemLabel.Size.Width, ItemLabel.Size.Height + 4);
 
                 #region OUTLINE
-                MirControl outLine = new MirControl
+                MirControl outLine = new MirControl("outLine")
                 {
                     BackColour = Color.FromArgb(255, 50, 50, 50),
                     Border = true,
@@ -7830,7 +7830,7 @@ namespace Client.MirScenes
             {
                 count++;
 
-                MirLabel IDLabel = new MirLabel
+                MirLabel IDLabel = new MirLabel("IDLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.DarkKhaki,
@@ -7843,7 +7843,7 @@ namespace Client.MirScenes
                 ItemLabel.Size = new Size(Math.Max(ItemLabel.Size.Width, IDLabel.DisplayRectangle.Right + 4),
                     Math.Max(ItemLabel.Size.Height, IDLabel.DisplayRectangle.Bottom));
 
-                MirLabel TOOLTIPLabel = new MirLabel
+                MirLabel TOOLTIPLabel = new MirLabel("IDLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Khaki,
@@ -7864,7 +7864,7 @@ namespace Client.MirScenes
                 ItemLabel.Size = new Size(ItemLabel.Size.Width, ItemLabel.Size.Height + 4);
 
                 #region OUTLINE
-                MirControl outLine = new MirControl
+                MirControl outLine = new MirControl("outLine")
                 {
                     BackColour = Color.FromArgb(255, 50, 50, 50),
                     Border = true,
@@ -7901,7 +7901,7 @@ namespace Client.MirScenes
             HoverItem = item;
             ItemInfo realItem = Functions.GetRealItem(item.Info, level, job, ItemInfoList);
 
-            ItemLabel = new MirControl
+            ItemLabel = new MirControl("ItemLabel")
             {
                 BackColour = Color.FromArgb(255, 50, 50, 50),
                 Border = true,
@@ -7953,7 +7953,7 @@ namespace Client.MirScenes
 
             if (MailLabel != null && !MailLabel.IsDisposed) return;
 
-            MailLabel = new MirControl
+            MailLabel = new MirControl("MailLabel")
             {
                 BackColour = Color.FromArgb(255, 50, 50, 50),
                 Border = true,
@@ -7964,7 +7964,7 @@ namespace Client.MirScenes
                 Opacity = 0.7F
             };
 
-            MirLabel nameLabel = new MirLabel
+            MirLabel nameLabel = new MirLabel("nameLabel")
             {
                 AutoSize = true,
                 ForeColour = Color.Yellow,
@@ -7977,7 +7977,7 @@ namespace Client.MirScenes
             MailLabel.Size = new Size(Math.Max(MailLabel.Size.Width, nameLabel.DisplayRectangle.Right + 4),
                 Math.Max(MailLabel.Size.Height, nameLabel.DisplayRectangle.Bottom));
 
-            MirLabel dateLabel = new MirLabel
+            MirLabel dateLabel = new MirLabel("dateLabel")
             {
                 AutoSize = true,
                 ForeColour = Color.White,
@@ -7992,7 +7992,7 @@ namespace Client.MirScenes
 
             if (mail.Gold > 0)
             {
-                MirLabel goldLabel = new MirLabel
+                MirLabel goldLabel = new MirLabel("goldLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.White,
@@ -8006,7 +8006,7 @@ namespace Client.MirScenes
                 Math.Max(MailLabel.Size.Height, goldLabel.DisplayRectangle.Bottom));
             }
 
-            MirLabel openedLabel = new MirLabel
+            MirLabel openedLabel = new MirLabel("openedLabel")
             {
                 AutoSize = true,
                 ForeColour = Color.Red,
@@ -8029,7 +8029,7 @@ namespace Client.MirScenes
 
             if (MemoLabel != null && !MemoLabel.IsDisposed) return;
 
-            MemoLabel = new MirControl
+            MemoLabel = new MirControl("MemoLabel")
             {
                 BackColour = Color.FromArgb(255, 50, 50, 50),
                 Border = true,
@@ -8040,7 +8040,7 @@ namespace Client.MirScenes
                 Opacity = 0.7F
             };
 
-            MirLabel memoLabel = new MirLabel
+            MirLabel memoLabel = new MirLabel("memoLabel")
             {
                 AutoSize = true,
                 ForeColour = Color.White,
@@ -8378,7 +8378,7 @@ namespace Client.MirScenes
         
         public static List<Effect> Effects = new List<Effect>();
 
-        public MapControl()
+        public MapControl(string uniqueName) : base(uniqueName)
         {
             MapButtons = MouseButtons.None;
 

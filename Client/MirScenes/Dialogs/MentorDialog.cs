@@ -24,7 +24,7 @@ namespace Client.MirScenes.Dialogs
         public bool MentorOnline;
         public long MenteeEXP;
 
-        public MentorDialog()
+        public MentorDialog(string uniqueName):base(uniqueName)
         {
             Index = 170;
             Library = Libraries.Prguse;
@@ -33,7 +33,7 @@ namespace Client.MirScenes.Dialogs
             Location = Center;
 
 
-            TitleLabel = new MirImageControl
+            TitleLabel = new MirImageControl("TitleLabel")
             {
                 Index = 51,
                 Library = Libraries.Title,
@@ -43,7 +43,7 @@ namespace Client.MirScenes.Dialogs
 
 
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -55,7 +55,7 @@ namespace Client.MirScenes.Dialogs
             };
             CloseButton.Click += (o, e) => Hide();
 
-            AllowButton = new MirButton
+            AllowButton = new MirButton("AllowButton")
             {
                 HoverIndex = 115,
                 Index = 114,
@@ -85,7 +85,7 @@ namespace Client.MirScenes.Dialogs
             };
 
 
-            AddButton = new MirButton
+            AddButton = new MirButton("AddButton")
             {
                 HoverIndex = 214,
                 Index = 213,
@@ -118,7 +118,7 @@ namespace Client.MirScenes.Dialogs
 
             };
 
-            RemoveButton = new MirButton
+            RemoveButton = new MirButton("RemoveButton")
             {
                 HoverIndex = 217,
                 Index = 216,
@@ -146,7 +146,7 @@ namespace Client.MirScenes.Dialogs
 
             };
 
-            MentorNameLabel = new MirLabel
+            MentorNameLabel = new MirLabel("MentorNameLabel")
             {
                 Location = new Point(20, 58),
                 Size = new Size(200, 30),
@@ -158,7 +158,7 @@ namespace Client.MirScenes.Dialogs
                 Font = new Font(Settings.FontName, 10F),
             };
 
-            MentorLevelLabel = new MirLabel
+            MentorLevelLabel = new MirLabel("MentorLevelLabel")
             {
                 Location = new Point(170, 58),
                 Size = new Size(200, 30),
@@ -170,7 +170,7 @@ namespace Client.MirScenes.Dialogs
                 Font = new Font(Settings.FontName, 10F),
             };
 
-            MentorOnlineLabel = new MirLabel
+            MentorOnlineLabel = new MirLabel("MentorOnlineLabel")
             {
                 Location = new Point(125, 58),
                 Size = new Size(200, 30),
@@ -184,7 +184,7 @@ namespace Client.MirScenes.Dialogs
                 Text = "ONLINE",
             };
 
-            StudentNameLabel = new MirLabel
+            StudentNameLabel = new MirLabel("StudentNameLabel")
             {
                 Location = new Point(20, 112),
                 Size = new Size(200, 30),
@@ -196,7 +196,7 @@ namespace Client.MirScenes.Dialogs
                 Font = new Font(Settings.FontName, 10F),
             };
 
-            StudentLevelLabel = new MirLabel
+            StudentLevelLabel = new MirLabel("StudentLevelLabel")
             {
                 Location = new Point(170, 111),
                 Size = new Size(200, 30),
@@ -208,7 +208,7 @@ namespace Client.MirScenes.Dialogs
                 Font = new Font(Settings.FontName, 10F),
             };
 
-            StudentOnlineLabel = new MirLabel
+            StudentOnlineLabel = new MirLabel("StudentOnlineLabel")
             {
                 Location = new Point(125, 112),
                 Size = new Size(200, 30),
@@ -222,7 +222,7 @@ namespace Client.MirScenes.Dialogs
                 Text = "ONLINE",
             };
 
-            MentorLabel = new MirLabel
+            MentorLabel = new MirLabel("MentorLabel")
             {
                 Location = new Point(15, 41),
                 Size = new Size(200, 30),
@@ -235,7 +235,7 @@ namespace Client.MirScenes.Dialogs
                 Text = "MENTOR",
             };
 
-            StudentLabel = new MirLabel
+            StudentLabel = new MirLabel("StudentLabel")
             {
                 Location = new Point(15, 94),
                 Size = new Size(200, 30),
@@ -248,7 +248,7 @@ namespace Client.MirScenes.Dialogs
                 Text = "MENTEE",
             };
 
-            MenteeEXPLabel = new MirLabel
+            MenteeEXPLabel = new MirLabel("MenteeEXPLabel")
             {
                 Location = new Point(15, 147),
                 Size = new Size(200, 30),

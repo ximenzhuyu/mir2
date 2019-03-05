@@ -19,7 +19,7 @@ namespace Client.MirScenes.Dialogs
         MirButton SendButton, CloseButton;
         MirTextBox MessageArea;
 
-        public ReportDialog()
+        public ReportDialog(string uniqueName):base(uniqueName)
         {
             Index = 1633;
             Library = Libraries.Prguse;
@@ -27,7 +27,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
             Location = Center;
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -39,7 +39,7 @@ namespace Client.MirScenes.Dialogs
             };
             CloseButton.Click += (o, e) => Hide();
 
-            ReportType = new MirDropDownBox()
+            ReportType = new MirDropDownBox("ReportType")
             {
                 Parent = this,
                 Location = new Point(12, 35),
@@ -52,7 +52,7 @@ namespace Client.MirScenes.Dialogs
             ReportType.Items.Add("Submit Bug");
             ReportType.Items.Add("Report Player");
 
-            MessageArea = new MirTextBox
+            MessageArea = new MirTextBox("MessageArea")
             {
                 Parent = this,
                 Location = new Point(12, 57),
@@ -62,7 +62,7 @@ namespace Client.MirScenes.Dialogs
 
             MessageArea.MultiLine();
 
-            SendButton = new MirButton
+            SendButton = new MirButton("SendButton")
             {
                 Parent = this,
                 Library = Libraries.Title,

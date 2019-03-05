@@ -19,7 +19,7 @@ namespace Client.MirScenes.Dialogs
 
         public bool AllFiltersOff = true;
 
-        public ChatOptionDialog()
+        public ChatOptionDialog(string uniqueName):base(uniqueName)
         {
             Index = 466;
             Library = Libraries.Title;
@@ -30,7 +30,7 @@ namespace Client.MirScenes.Dialogs
 
             BeforeDraw += ChatFilterPanel_BeforeDraw;
 
-            FilterTabButton = new MirButton
+            FilterTabButton = new MirButton("FilterTabButton")
             {
                 Index = 463,
                 PressedIndex = 462,
@@ -41,7 +41,7 @@ namespace Client.MirScenes.Dialogs
             };
             FilterTabButton.Click += (o, e) => SwitchTab(0);
 
-            ChatTabButton = new MirButton
+            ChatTabButton = new MirButton("ChatTabButton")
             {
                 Index = 464,
                 PressedIndex = 465,
@@ -52,7 +52,7 @@ namespace Client.MirScenes.Dialogs
             };
             ChatTabButton.Click += (o, e) => SwitchTab(1);
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -66,7 +66,7 @@ namespace Client.MirScenes.Dialogs
 
             #region Filters
 
-            AllButton = new MirButton
+            AllButton = new MirButton("AllButton")
             {
                 Index = 2087,
                 Library = Libraries.Prguse,
@@ -77,7 +77,7 @@ namespace Client.MirScenes.Dialogs
             };
             AllButton.Click += (o, e) => ToggleAllFilters();
 
-            GeneralButton = new MirButton
+            GeneralButton = new MirButton("GeneralButton")
             {
                 Index = 2071,
                 Library = Libraries.Prguse,
@@ -91,7 +91,7 @@ namespace Client.MirScenes.Dialogs
                 CheckAllFilters();
             };
 
-            WhisperButton = new MirButton
+            WhisperButton = new MirButton("WhisperButton")
             {
                 Index = 2075,
                 Library = Libraries.Prguse,
@@ -105,7 +105,7 @@ namespace Client.MirScenes.Dialogs
                 CheckAllFilters();
             };
 
-            ShoutButton = new MirButton
+            ShoutButton = new MirButton("ShoutButton")
             {
                 Index = 2073,
                 Library = Libraries.Prguse,
@@ -119,7 +119,7 @@ namespace Client.MirScenes.Dialogs
                 CheckAllFilters();
             };
 
-            SystemButton = new MirButton
+            SystemButton = new MirButton("SystemButton")
             {
                 Index = 2085,
                 Library = Libraries.Prguse,
@@ -133,7 +133,7 @@ namespace Client.MirScenes.Dialogs
                 CheckAllFilters();
             };
 
-            LoverButton = new MirButton
+            LoverButton = new MirButton("LoverButton")
             {
                 Index = 2077,
                 Library = Libraries.Prguse,
@@ -147,7 +147,7 @@ namespace Client.MirScenes.Dialogs
                 CheckAllFilters();
             };
 
-            MentorButton = new MirButton
+            MentorButton = new MirButton("MentorButton")
             {
                 Index = 2079,
                 Library = Libraries.Prguse,
@@ -161,7 +161,7 @@ namespace Client.MirScenes.Dialogs
                 CheckAllFilters();
             };
 
-            GroupButton = new MirButton
+            GroupButton = new MirButton("GroupButton")
             {
                 Index = 2081,
                 Library = Libraries.Prguse,
@@ -175,7 +175,7 @@ namespace Client.MirScenes.Dialogs
                 CheckAllFilters();
             };
 
-            GuildButton = new MirButton
+            GuildButton = new MirButton("GuildButton")
             {
                 Index = 2083,
                 Library = Libraries.Prguse,
@@ -193,7 +193,7 @@ namespace Client.MirScenes.Dialogs
 
             #region Transparency
 
-            TransparencyOffButton = new MirButton
+            TransparencyOffButton = new MirButton("TransparencyOffButton")
             {
                 Index = 471,
                 HoverIndex = 472,
@@ -210,7 +210,7 @@ namespace Client.MirScenes.Dialogs
                 UpdateTransparency();
             };
 
-            TransparencyOnButton = new MirButton
+            TransparencyOnButton = new MirButton("TransparencyOnButton")
             {
                 Index = 474,
                 HoverIndex = 475,

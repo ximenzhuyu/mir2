@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using Client.MirGraphics;
 using Client.MirSounds;
@@ -12,7 +14,8 @@ namespace Client.MirControls
     public class MirControl : IDisposable
     {
         public static MirControl ActiveControl, MouseControl;
-        
+        public string UniqueName { get; set; }
+        public bool OverrideConfigLoaded { get; set; } = false;
         public virtual Point DisplayLocation { get { return Parent == null ? Location : Parent.DisplayLocation.Add(Location); } }
         public Rectangle DisplayRectangle { get { return new Rectangle(DisplayLocation, Size); } }
 
@@ -20,6 +23,27 @@ namespace Client.MirControls
         public bool Blending { get; set; }
         public float BlendingRate { get; set; }
         public BlendMode BlendMode { get; set; }
+
+        private string _uiConfigOverrideKey;
+        public string UIConfigOverrideKey
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_uiConfigOverrideKey))
+                {
+                    _uiConfigOverrideKey = UniqueName;
+                    var parent = Parent;
+                    while (parent != null)
+                    {
+                        if (_uiConfigOverrideKey.StartsWith("Common.")) break;
+                        _uiConfigOverrideKey = parent.UniqueName +"."+ _uiConfigOverrideKey;
+                        parent = parent.Parent;
+                    }
+                }
+
+                return _uiConfigOverrideKey;
+            }
+        }
 
         #region Back Colour
         private Color _backColour;
@@ -677,14 +701,41 @@ namespace Client.MirControls
             Redraw();
         }
 
-        public MirControl()
+        public MirControl(string uniqueName)
         {
+            UniqueName = uniqueName;
             Controls = new List<MirControl>();
             _opacity = 1F;
             _enabled = true;
             _foreColour = Color.White;
             _visible = true;
             _sound = SoundList.None;
+            BeforeShown += OnBeforeShown;
+        }
+
+        private void OnBeforeShown(object sender, EventArgs e)
+        {
+            if (!OverrideConfigLoaded)
+            {
+                var _override = ControlConfigOverride.GetOverride(UIConfigOverrideKey);
+                if (_override != null)
+                {
+                    Location = new Point(_override.PositionX, _override.PositionY);
+                    if (this is MirImageControl imageControl)
+                    {
+                        imageControl.Index = _override.Index;
+                        var lib = typeof(Libraries).GetFields(BindingFlags.Public | BindingFlags.Static)
+                            .Where(f => f.FieldType == typeof(MLibrary) &&
+                                        f.Name == _override.LibFile)
+                            .Select(f => (MLibrary)f.GetValue(null)).FirstOrDefault();
+                        if (lib != null)
+                        {
+                            imageControl.Library = lib;
+                        }
+                    }
+                }
+                OverrideConfigLoaded = true;
+            }
         }
 
         public virtual void Draw()

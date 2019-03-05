@@ -34,7 +34,7 @@ namespace Client.MirObjects
 
             if (DamageLabel == null)
             {
-                DamageLabel = new MirLabel
+                DamageLabel = new MirLabel("DamageLabel")
                 {
                     AutoSize = true,
                     BackColour = Color.Transparent,

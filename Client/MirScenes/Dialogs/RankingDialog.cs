@@ -26,7 +26,7 @@ namespace Client.MirScenes.Dialogs
         public long[] LastRequest = new long[6];
 
 
-        public RankingDialog()
+        public RankingDialog(string uniqueName):base(uniqueName)
         {
             Index = 1329;
             Library = Libraries.Prguse2;
@@ -35,7 +35,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
             Location = new Point((800 - Size.Width) / 2, (600 - Size.Height) / 2);
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -47,7 +47,7 @@ namespace Client.MirScenes.Dialogs
             };
             CloseButton.Click += (o, e) => Hide();
 
-            AllButton = new MirButton
+            AllButton = new MirButton("AllButton")
             {
                 Index = 751,
                 PressedIndex = 752,
@@ -60,7 +60,7 @@ namespace Client.MirScenes.Dialogs
 
             };
             AllButton.Click += (o, e) => RequestRanks(0);
-            TaoButton = new MirButton
+            TaoButton = new MirButton("TaoButton")
             {
                 Index = 760,
                 PressedIndex = 761,
@@ -72,7 +72,7 @@ namespace Client.MirScenes.Dialogs
                 Sound = SoundList.ButtonA,
             };
             TaoButton.Click += (o, e) => RequestRanks(3);
-            WarButton = new MirButton
+            WarButton = new MirButton("WarButton")
             {
                 Index = 754,
                 PressedIndex = 755,
@@ -84,7 +84,7 @@ namespace Client.MirScenes.Dialogs
                 Sound = SoundList.ButtonA,
             };
             WarButton.Click += (o, e) => RequestRanks(1);
-            WizButton = new MirButton
+            WizButton = new MirButton("WizButton")
             {
                 Index = 763,
                 PressedIndex = 764,
@@ -96,7 +96,7 @@ namespace Client.MirScenes.Dialogs
                 Sound = SoundList.ButtonA,
             };
             WizButton.Click += (o, e) => RequestRanks(2);
-            SinButton = new MirButton
+            SinButton = new MirButton("SinButton")
             {
                 Index = 757,
                 PressedIndex = 758,
@@ -108,7 +108,7 @@ namespace Client.MirScenes.Dialogs
                 Sound = SoundList.ButtonA,
             };
             SinButton.Click += (o, e) => RequestRanks(4);
-            ArchButton = new MirButton
+            ArchButton = new MirButton("ArchButton")
             {
                 Index = 766,
                 PressedIndex = 767,
@@ -121,7 +121,7 @@ namespace Client.MirScenes.Dialogs
             };
             ArchButton.Click += (o, e) => RequestRanks(5);
 
-            NextButton = new MirButton
+            NextButton = new MirButton("NextButton")
             {
                 Index = 207,
                 HoverIndex = 208,
@@ -133,7 +133,7 @@ namespace Client.MirScenes.Dialogs
             };
             NextButton.Click += (o, e) => Move(1);
             
-            PrevButton = new MirButton
+            PrevButton = new MirButton("PrevButton")
             {
                 Index = 197,
                 HoverIndex = 198,
@@ -145,7 +145,7 @@ namespace Client.MirScenes.Dialogs
             };
             PrevButton.Click += (o, e) => Move(-1);
 
-            MyRank = new MirLabel
+            MyRank = new MirLabel("MyRank")
             {
                 Text = "",
                 Parent = this,
@@ -161,7 +161,7 @@ namespace Client.MirScenes.Dialogs
 
             for (int i = 0; i < Rows.Count(); i++)
             {
-                Rows[i] = new RankingRow() 
+                Rows[i] = new RankingRow("Rows_"+i) 
                 { 
                     Parent = this, 
                     Location = new Point(32, 98 + i * 15),
@@ -264,14 +264,14 @@ namespace Client.MirScenes.Dialogs
             public MirLabel RankLabel, NameLabel, LevelLabel, ClassLabel;
             public long Index;
 
-            public RankingRow()
+            public RankingRow(string uniqueName):base(uniqueName)
             {
                 Sound = SoundList.ButtonA;
                 BorderColour = Color.Lime;
                 Visible = false;
                 Click += (o, e) => Inspect();
 
-                RankLabel = new MirLabel
+                RankLabel = new MirLabel("RankLabel")
                 {
                     Location = new Point(0, 0),
                     AutoSize = true,
@@ -279,7 +279,7 @@ namespace Client.MirScenes.Dialogs
                     Parent = this,
                     NotControl = true,
                 };
-                NameLabel = new MirLabel
+                NameLabel = new MirLabel("NameLabel")
                 {
                     Location = new Point(55, 0),
                     AutoSize = true,
@@ -288,7 +288,7 @@ namespace Client.MirScenes.Dialogs
                     NotControl = true,
                 };
 
-                ClassLabel = new MirLabel
+                ClassLabel = new MirLabel("ClassLabel")
                 {
                     Location = new Point(150, 0),
                     AutoSize = true,
@@ -297,7 +297,7 @@ namespace Client.MirScenes.Dialogs
                     NotControl = true,
                 };
 
-                LevelLabel = new MirLabel
+                LevelLabel = new MirLabel("LevelLabel")
                 {
                     Location = new Point(220, 0),
                     AutoSize = true,

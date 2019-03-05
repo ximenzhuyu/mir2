@@ -3788,7 +3788,7 @@ namespace Client.MirObjects
 
             OldNameColor = NameColour;
 
-            TempLabel = new MirLabel
+            TempLabel = new MirLabel("TempLabel")
             {
                 AutoSize = true,
                 BackColour = Color.Transparent,

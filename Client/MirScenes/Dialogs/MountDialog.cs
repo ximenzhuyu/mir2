@@ -23,7 +23,7 @@ namespace Client.MirScenes.Dialogs
 
         public int StartIndex = 0;
 
-        public MountDialog()
+        public MountDialog(string uniqueName):base(uniqueName)
         {
             Index = 167;
             Library = Libraries.Prguse;
@@ -32,14 +32,14 @@ namespace Client.MirScenes.Dialogs
             Location = new Point(10, 30);
             BeforeDraw += MountDialog_BeforeDraw;
 
-            MountName = new MirLabel
+            MountName = new MirLabel("MountName")
             {
                 Location = new Point(30, 10),
                 DrawFormat = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter,
                 Parent = this,
                 NotControl = true,
             };
-            MountLoyalty = new MirLabel
+            MountLoyalty = new MirLabel("MountLoyalty")
             {
                 Location = new Point(30, 30),
                 DrawFormat = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter,
@@ -47,7 +47,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            MountButton = new MirButton
+            MountButton = new MirButton("MountButton")
             {
                 Library = Libraries.Prguse,
                 Parent = this,
@@ -62,7 +62,7 @@ namespace Client.MirScenes.Dialogs
                 }
             };
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -73,7 +73,7 @@ namespace Client.MirScenes.Dialogs
             };
             CloseButton.Click += (o, e) => Hide();
 
-            HelpButton = new MirButton
+            HelpButton = new MirButton("HelpButton")
             {
                 Index = 257,
                 HoverIndex = 258,

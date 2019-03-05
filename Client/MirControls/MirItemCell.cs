@@ -175,7 +175,7 @@ namespace Client.MirControls
 
         #endregion
 
-        public MirItemCell()
+        public MirItemCell(string uniqueName = "Common.MirItemCell"):base(uniqueName)
         {
             Size = new Size(36, 32);
             GridType = MirGridType.None;
@@ -2067,7 +2067,7 @@ namespace Client.MirControls
 
             if (CountLabel == null || CountLabel.IsDisposed)
             {
-                CountLabel = new MirLabel
+                CountLabel = new MirLabel("CountLabel")
                 {
                     AutoSize = true,
                     ForeColour = Color.Yellow,

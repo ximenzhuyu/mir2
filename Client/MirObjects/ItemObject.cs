@@ -137,7 +137,7 @@ namespace Client.MirObjects
             }
             if (NameLabel != null && !NameLabel.IsDisposed) return;
 
-            NameLabel = new MirControls.MirLabel
+            NameLabel = new MirControls.MirLabel("NameLabel")
             {
                 AutoSize = true,
                 BorderColour = Color.Black,

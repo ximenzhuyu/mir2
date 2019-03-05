@@ -15,12 +15,13 @@ namespace Client.MirControls
         public bool usePearls = false;//pearl currency
         public bool Recipe = false;
 
-        public MirGoodsCell()
+        public MirGoodsCell(string uniqueName) : base(uniqueName)
         {
+            UniqueName = uniqueName;
             Size = new Size(205, 32);
             BorderColour = Color.Lime;
 
-            NameLabel = new MirLabel
+            NameLabel = new MirLabel("NameLabel")
                 {
                     AutoSize = true,
                     Parent = this,
@@ -28,7 +29,7 @@ namespace Client.MirControls
                     Location = new Point(44, 0),
                 };
 
-            CountLabel = new MirLabel
+            CountLabel = new MirLabel("CountLabel")
             {
                 AutoSize = true,
                 Parent = this,
@@ -38,7 +39,7 @@ namespace Client.MirControls
                 ForeColour = Color.Yellow,
             };
 
-            PriceLabel = new MirLabel
+            PriceLabel = new MirLabel("CountLabel")
                 {
                     AutoSize = true,
                     Parent = this,

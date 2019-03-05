@@ -23,7 +23,7 @@ namespace Client.MirScenes.Dialogs
 
         public MirControl FishingRod;
 
-        public FishingDialog()
+        public FishingDialog(string uniqueName) : base(uniqueName)
         {
             Index = 1340;
             Library = Libraries.Prguse;
@@ -32,7 +32,7 @@ namespace Client.MirScenes.Dialogs
             Location = Center;
             BeforeDraw += FishingDialog_BeforeDraw;
 
-            TitleLabel = new MirLabel
+            TitleLabel = new MirLabel("TitleLabel")
             {
                 Location = new Point(10, 4),
                 DrawFormat = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter,
@@ -41,7 +41,7 @@ namespace Client.MirScenes.Dialogs
                 Size = new Size(180, 20),
             };
 
-            FishingRod = new MirControl
+            FishingRod = new MirControl("FishingRod")
             {
                 Parent = this,
                 Location = new Point(0, 30),
@@ -49,7 +49,7 @@ namespace Client.MirScenes.Dialogs
             };
             FishingRod.BeforeDraw += FishingRod_BeforeDraw;
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -183,7 +183,7 @@ namespace Client.MirScenes.Dialogs
         private bool _autoCast = false;
         public bool bEscExit = false;
 
-        public FishingStatusDialog()
+        public FishingStatusDialog(string uniqueName) : base(uniqueName)
         {
             Index = 1341;
             Library = Libraries.Prguse;
@@ -193,7 +193,7 @@ namespace Client.MirScenes.Dialogs
             Location = new Point((Settings.ScreenWidth - Size.Width) / 2, 300);
             BeforeDraw += FishingStatusDialog_BeforeDraw;
 
-            ChanceBar = new MirControl
+            ChanceBar = new MirControl("ChanceBar")
             {
                 Parent = this,
                 Location = new Point(14, 64),
@@ -201,7 +201,7 @@ namespace Client.MirScenes.Dialogs
             };
             ChanceBar.BeforeDraw += ChanceBar_BeforeDraw;
 
-            ChanceLabel = new MirLabel
+            ChanceLabel = new MirLabel("ChanceLabel")
             {
                 Location = new Point(14, 62),
                 Size = new Size(216, 12),
@@ -210,7 +210,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            ProgressBar = new MirControl
+            ProgressBar = new MirControl("ProgressBar")
             {
                 Parent = this,
                 Location = new Point(14, 79),
@@ -218,7 +218,7 @@ namespace Client.MirScenes.Dialogs
             };
             ProgressBar.BeforeDraw += ProgressBar_BeforeDraw;
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -233,7 +233,7 @@ namespace Client.MirScenes.Dialogs
                 Cancel();
             };
 
-            FishDisableButton = new MirImageControl
+            FishDisableButton = new MirImageControl("FishDisableButton")
             {
                 Index = 149,
                 Location = new Point(47, 95),
@@ -242,7 +242,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true
             };
 
-            FishButton = new MirAnimatedButton()
+            FishButton = new MirAnimatedButton("FishButton")
             {
                 Animated = true,
                 AnimationCount = 10,
@@ -261,7 +261,7 @@ namespace Client.MirScenes.Dialogs
                 Network.Enqueue(new C.FishingCast { CastOut = false });
             };
 
-            AutoCastButton = new MirButton
+            AutoCastButton = new MirButton("AutoCastButton")
             {
                 Index = 180,
                 HoverIndex = 181,
@@ -284,7 +284,7 @@ namespace Client.MirScenes.Dialogs
                 }
             };
 
-            AutoCastBox = new MirImageControl
+            AutoCastBox = new MirImageControl("AutoCastBox")
             {
                 Index = 1343,
                 Location = new Point(172, 95),
@@ -292,7 +292,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this
             };
 
-            ESCExitButton = new MirButton
+            ESCExitButton = new MirButton("ESCExitButton")
             {
                 Index = 1346,
                 HoverIndex = 1346,
@@ -308,7 +308,7 @@ namespace Client.MirScenes.Dialogs
                 ESCTick.Visible = bEscExit;
             };
 
-            ESCTick = new MirImageControl
+            ESCTick = new MirImageControl("ESCTick")
             {
                 Index = 1347,
                 Location = new Point(135, 41),
@@ -318,7 +318,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            ESCExit = new MirImageControl
+            ESCExit = new MirImageControl("ESCExit")
             {
                 Index = 45,
                 Location = new Point(150, 40),

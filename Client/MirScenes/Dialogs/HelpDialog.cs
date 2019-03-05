@@ -26,7 +26,7 @@ namespace Client.MirScenes.Dialogs
 
         public int CurrentPageNumber = 0;
 
-        public HelpDialog()
+        public HelpDialog(string uniqueName):base(uniqueName)
         {
             Index = 920;
             Library = Libraries.Prguse;
@@ -35,7 +35,7 @@ namespace Client.MirScenes.Dialogs
 
             Location = Center;
 
-            MirImageControl TitleLabel = new MirImageControl
+            MirImageControl TitleLabel = new MirImageControl("TitleLabel")
             {
                 Index = 57,
                 Library = Libraries.Title,
@@ -43,7 +43,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this
             };
 
-            PreviousButton = new MirButton
+            PreviousButton = new MirButton("PreviousButton")
             {
                 Index = 240,
                 HoverIndex = 241,
@@ -63,7 +63,7 @@ namespace Client.MirScenes.Dialogs
                 DisplayPage(CurrentPageNumber);
             };
 
-            NextButton = new MirButton
+            NextButton = new MirButton("NextButton")
             {
                 Index = 243,
                 HoverIndex = 244,
@@ -83,7 +83,7 @@ namespace Client.MirScenes.Dialogs
                 DisplayPage(CurrentPageNumber);
             };
 
-            PageLabel = new MirLabel
+            PageLabel = new MirLabel("PageLabel")
             {
                 Text = "",
                 Font = new Font(Settings.FontName, 9F),
@@ -94,7 +94,7 @@ namespace Client.MirScenes.Dialogs
                 Size = new Size(80, 20)
             };
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -304,11 +304,11 @@ namespace Client.MirScenes.Dialogs
     {
         protected List<ShortcutInfo> Shortcuts = new List<ShortcutInfo>();
 
-        public ShortcutInfoPage()
+        public ShortcutInfoPage(string uniqueName = "ShortcutInfoPage") :base(uniqueName)
         {
             Visible = false;
 
-            MirLabel shortcutTitleLabel = new MirLabel
+            MirLabel shortcutTitleLabel = new MirLabel("shortcutTitleLabel")
             {
                 Text = "Shortcuts",
                 DrawFormat = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter,
@@ -320,7 +320,7 @@ namespace Client.MirScenes.Dialogs
                 Size = new Size(100, 30)
             };
 
-            MirLabel infoTitleLabel = new MirLabel
+            MirLabel infoTitleLabel = new MirLabel("infoTitleLabel")
             {
                 Text = "Information",
                 DrawFormat = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter,
@@ -339,7 +339,7 @@ namespace Client.MirScenes.Dialogs
 
             for (int i = 0; i < Shortcuts.Count; i++)
             {
-                MirLabel shortcutLabel = new MirLabel
+                MirLabel shortcutLabel = new MirLabel("shortcutLabel")
                 {
                     Text = Shortcuts[i].Shortcut,
                     ForeColour = Color.Yellow,
@@ -351,7 +351,7 @@ namespace Client.MirScenes.Dialogs
                     Size = new Size(95, 23),
                 };
 
-                MirLabel informationLabel = new MirLabel
+                MirLabel informationLabel = new MirLabel("informationLabel")
                 {
                     Text = Shortcuts[i].Information,
                     DrawFormat = TextFormatFlags.VerticalCenter,
@@ -374,7 +374,7 @@ namespace Client.MirScenes.Dialogs
 
         public MirLabel PageTitleLabel;
 
-        public HelpPage(string title, int imageID, MirControl page)
+        public HelpPage(string title, int imageID, MirControl page, string uniqueName = "Common.HelpPage"):base(uniqueName)
         {
             Title = title;
             ImageID = imageID;
@@ -385,7 +385,7 @@ namespace Client.MirScenes.Dialogs
 
             BeforeDraw += HelpPage_BeforeDraw;
 
-            PageTitleLabel = new MirLabel
+            PageTitleLabel = new MirLabel("PageTitleLabel")
             {
                 Text = Title,
                 Font = new Font(Settings.FontName, 10F, FontStyle.Bold),

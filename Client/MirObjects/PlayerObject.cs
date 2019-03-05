@@ -5181,7 +5181,7 @@ namespace Client.MirObjects
 
             if (NameLabel != null && !NameLabel.IsDisposed && GuildLabel != null && !GuildLabel.IsDisposed) return;
 
-            NameLabel = new MirLabel
+            NameLabel = new MirLabel("NameLabel")
             {
                 AutoSize = true,
                 BackColour = Color.Transparent,
@@ -5193,7 +5193,7 @@ namespace Client.MirObjects
             NameLabel.Disposing += (o, e) => LabelList.Remove(NameLabel);
             LabelList.Add(NameLabel);
             
-            GuildLabel = new MirLabel
+            GuildLabel = new MirLabel("GuildLabel")
             {
                 AutoSize = true,
                 BackColour = Color.Transparent,

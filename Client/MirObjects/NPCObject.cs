@@ -636,7 +636,7 @@ namespace Client.MirObjects
 
             if (TempLabel != null && !TempLabel.IsDisposed) return;
 
-            TempLabel = new MirLabel
+            TempLabel = new MirLabel("TempLabel")
             {
                 AutoSize = true,
                 BackColour = Color.Transparent,

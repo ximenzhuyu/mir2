@@ -30,7 +30,7 @@ namespace Client.MirScenes.Dialogs
         public int StartIndex = 0;
         public int Page = 0;
 
-        public FriendDialog()
+        public FriendDialog(string uniqueName) : base(uniqueName)
         {
             Index = 199;
             Library = Libraries.Title;
@@ -38,7 +38,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
             Location = Center;
 
-            TitleLabel = new MirImageControl
+            TitleLabel = new MirImageControl("TitleLabel")
             {
                 Index = 6,
                 Library = Libraries.Title,
@@ -46,7 +46,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this
             };
 
-            FriendLabel = new MirImageControl
+            FriendLabel = new MirImageControl("FriendLabel")
             {
                 Index = 163,
                 Library = Libraries.Title,
@@ -60,7 +60,7 @@ namespace Client.MirScenes.Dialogs
                 UpdateDisplay();
             };
 
-            BlacklistLabel = new MirImageControl
+            BlacklistLabel = new MirImageControl("BlacklistLabel")
             {
                 Index = 167,
                 Library = Libraries.Title,
@@ -74,7 +74,7 @@ namespace Client.MirScenes.Dialogs
                 UpdateDisplay();
             };
 
-            PageNumberLabel = new MirLabel
+            PageNumberLabel = new MirLabel("PageNumberLabel")
             {
                 Text = "",
                 Parent = this,
@@ -85,7 +85,7 @@ namespace Client.MirScenes.Dialogs
 
             #region Buttons
 
-            PreviousButton = new MirButton
+            PreviousButton = new MirButton("PreviousButton")
             {
                 Index = 240,
                 HoverIndex = 241,
@@ -104,7 +104,7 @@ namespace Client.MirScenes.Dialogs
                 Update();
             };
 
-            NextButton = new MirButton
+            NextButton = new MirButton("NextButton")
             {
                 Index = 243,
                 HoverIndex = 244,
@@ -124,7 +124,7 @@ namespace Client.MirScenes.Dialogs
                 Update();
             };
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -136,7 +136,7 @@ namespace Client.MirScenes.Dialogs
             };
             CloseButton.Click += (o, e) => Hide();
 
-            AddButton = new MirButton
+            AddButton = new MirButton("AddButton")
             {
                 Index = 554,
                 HoverIndex = 555,
@@ -162,7 +162,7 @@ namespace Client.MirScenes.Dialogs
                 inputBox.Show();
             };
 
-            RemoveButton = new MirButton
+            RemoveButton = new MirButton("RemoveButton")
             {
                 Index = 557,
                 HoverIndex = 558,
@@ -187,7 +187,7 @@ namespace Client.MirScenes.Dialogs
                 messageBox.Show();
             };
 
-            MemoButton = new MirButton
+            MemoButton = new MirButton("MemoButton")
             {
                 Index = 560,
                 HoverIndex = 561,
@@ -205,7 +205,7 @@ namespace Client.MirScenes.Dialogs
                 GameScene.Scene.MemoDialog.Show();
             };
 
-            EmailButton = new MirButton
+            EmailButton = new MirButton("EmailButton")
             {
                 Index = 563,
                 HoverIndex = 564,
@@ -222,7 +222,7 @@ namespace Client.MirScenes.Dialogs
                 GameScene.Scene.MailComposeLetterDialog.ComposeMail(SelectedFriend.Name);
             };
 
-            WhisperButton = new MirButton
+            WhisperButton = new MirButton("WhisperButton")
             {
                 Index = 566,
                 HoverIndex = 567,
@@ -311,7 +311,7 @@ namespace Client.MirScenes.Dialogs
                 if (Rows[i] != null)
                     Rows[i].Dispose();
 
-                Rows[i] = new FriendRow
+                Rows[i] = new FriendRow("Row" + i)
                 {
                     Friend = filteredFriends[i + StartIndex],
                     Location = new Point((i % 2) * 115 + 16, 55 + ((i) / 2) * 22),
@@ -401,14 +401,14 @@ namespace Client.MirScenes.Dialogs
 
         public bool Selected = false;
 
-        public FriendRow()
+        public FriendRow(string uniqueName) : base(uniqueName)
         {
             Sound = SoundList.ButtonA;
             Size = new Size(115, 17);
 
             BeforeDraw += FriendRow_BeforeDraw;
 
-            NameLabel = new MirLabel
+            NameLabel = new MirLabel("NameLabel")
             {
                 Location = new Point(0, 0),
                 Size = new Size(115, 17),
@@ -483,7 +483,7 @@ namespace Client.MirScenes.Dialogs
 
         public ClientFriend Friend;
 
-        public MemoDialog()
+        public MemoDialog(string uniqueName) : base(uniqueName)
         {
             Index = 209;
             Library = Libraries.Title;
@@ -491,7 +491,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
             Location = Center;
 
-            MemoTextBox = new MirTextBox
+            MemoTextBox = new MirTextBox("MemoTextBox")
             {
                 ForeColour = Color.White,
                 Parent = this,
@@ -501,7 +501,7 @@ namespace Client.MirScenes.Dialogs
             };
             MemoTextBox.MultiLine();
 
-            OKButton = new MirButton
+            OKButton = new MirButton("OKButton")
             {
                 Index = 382,
                 HoverIndex = 383,
@@ -517,7 +517,7 @@ namespace Client.MirScenes.Dialogs
                 Hide();
             };
 
-            CancelButton = new MirButton
+            CancelButton = new MirButton("CancelButton")
             {
                 Index = 385,
                 HoverIndex = 386,
@@ -531,7 +531,7 @@ namespace Client.MirScenes.Dialogs
 
             #region Buttons
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,

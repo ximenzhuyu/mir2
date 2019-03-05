@@ -35,14 +35,14 @@ namespace Client.MirScenes.Dialogs
         public static AuctionRow Selected;
         public AuctionRow[] Rows = new AuctionRow[10];
 
-        public TrustMerchantDialog()
+        public TrustMerchantDialog(string uniqueName):base(uniqueName)
         {
             Index = 670;
             Library = Libraries.Prguse;
             Sort = true;
 
 
-            TitleLabel = new MirImageControl
+            TitleLabel = new MirImageControl("TitleLabel")
             {
                 Index = 24,
                 Library = Libraries.Title,
@@ -50,7 +50,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this
             };
 
-            SearchTextBox = new MirTextBox
+            SearchTextBox = new MirTextBox("SearchTextBox")
             {
                 Location = new Point(19, 329),
                 Parent = this,
@@ -62,7 +62,7 @@ namespace Client.MirScenes.Dialogs
             SearchTextBox.TextBox.KeyUp += SearchTextBox_KeyUp;
             SearchTextBox.TextBox.KeyDown += SearchTextBox_KeyDown;
 
-            FindButton = new MirButton
+            FindButton = new MirButton("FindButton")
             {
                 HoverIndex = 481,
                 Index = 480,
@@ -88,7 +88,7 @@ namespace Client.MirScenes.Dialogs
                 });
             };
 
-            RefreshButton = new MirButton
+            RefreshButton = new MirButton("RefreshButton")
             {
                 HoverIndex = 664,
                 Index = 663,
@@ -111,7 +111,7 @@ namespace Client.MirScenes.Dialogs
             };
 
 
-            MailButton = new MirButton
+            MailButton = new MirButton("MailButton")
             {
                 HoverIndex = 667,
                 Index = 666,
@@ -123,7 +123,7 @@ namespace Client.MirScenes.Dialogs
                 Visible = false
             };
 
-            BuyButton = new MirButton
+            BuyButton = new MirButton("BuyButton")
             {
                 HoverIndex = 484,
                 Index = 483,
@@ -169,7 +169,7 @@ namespace Client.MirScenes.Dialogs
             };
 
 
-            BackButton = new MirButton
+            BackButton = new MirButton("BackButton")
             {
                 Index = 398,
                 Location = new Point(189, 298),
@@ -186,7 +186,7 @@ namespace Client.MirScenes.Dialogs
                 UpdateInterface();
             };
 
-            NextButton = new MirButton
+            NextButton = new MirButton("NextButton")
             {
                 Index = 396,
                 Location = new Point(283, 298),
@@ -209,7 +209,7 @@ namespace Client.MirScenes.Dialogs
 
             };
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -221,7 +221,7 @@ namespace Client.MirScenes.Dialogs
             };
             CloseButton.Click += (o, e) => Hide();
 
-            PageLabel = new MirLabel
+            PageLabel = new MirLabel("PageLabel")
             {
                 Location = new Point(207, 298),
                 Size = new Size(70, 18),
@@ -232,7 +232,7 @@ namespace Client.MirScenes.Dialogs
             };
 
 
-            NameLabel = new MirLabel
+            NameLabel = new MirLabel("NameLabel")
             {
                 AutoSize = true,
                 ForeColour = Color.Yellow,
@@ -240,14 +240,14 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 NotControl = true,
             };
-            TotalPriceLabel = new MirLabel
+            TotalPriceLabel = new MirLabel("TotalPriceLabel")
             {
                 AutoSize = true,
                 Location = new Point(20, 256),
                 Parent = this,
                 NotControl = true,
             };
-            SplitPriceLabel = new MirLabel
+            SplitPriceLabel = new MirLabel("SplitPriceLabel")
             {
                 AutoSize = true,
                 Location = new Point(20, 272),
@@ -255,7 +255,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            DateLabel = new MirLabel
+            DateLabel = new MirLabel("DateLabel")
             {
                 AutoSize = true,
                 Location = new Point(250, 245),
@@ -264,7 +264,7 @@ namespace Client.MirScenes.Dialogs
                 Text = "Start Date:"
             };
 
-            ExpireLabel = new MirLabel
+            ExpireLabel = new MirLabel("ExpireLabel")
             {
                 AutoSize = true,
                 Location = new Point(250, 265),
@@ -273,7 +273,7 @@ namespace Client.MirScenes.Dialogs
                 Text = "Expire Date:"
             };
 
-            ItemLabel = new MirLabel
+            ItemLabel = new MirLabel("ItemLabel")
             {
                 Location = new Point(7, 32),
                 Size = new Size(142, 22),
@@ -283,7 +283,7 @@ namespace Client.MirScenes.Dialogs
                 Text = "Item",
             };
 
-            PriceLabel = new MirLabel
+            PriceLabel = new MirLabel("PriceLabel")
             {
                 Location = new Point(148, 32),
                 Size = new Size(180, 22),
@@ -293,7 +293,7 @@ namespace Client.MirScenes.Dialogs
                 Text = "Price",
             };
 
-            SellerLabel = new MirLabel
+            SellerLabel = new MirLabel("SellerLabel")
             {
                 Location = new Point(327, 32),
                 Size = new Size(150, 22),
@@ -305,7 +305,7 @@ namespace Client.MirScenes.Dialogs
 
             for (int i = 0; i < Rows.Length; i++)
             {
-                Rows[i] = new AuctionRow
+                Rows[i] = new AuctionRow("Rows_" + i)
                 {
                     Location = new Point(8, 54 + i * 18),
                     Parent = this
@@ -477,21 +477,21 @@ namespace Client.MirScenes.Dialogs
             public ClientAuction Listing;
             public MirLabel NameLabel, PriceLabel, SellerLabel;
 
-            public AuctionRow()
+            public AuctionRow(string uniqueName) : base(uniqueName)
             {
                 Sound = SoundList.ButtonA;
 
                 Size = new Size(468, 17);
                 BorderColour = Color.Lime;
 
-                NameLabel = new MirLabel
+                NameLabel = new MirLabel("NameLabel")
                 {
                     Size = new Size(140, 17),
                     DrawFormat = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter,
                     Parent = this,
                     NotControl = true,
                 };
-                PriceLabel = new MirLabel
+                PriceLabel = new MirLabel("PriceLabel")
                 {
                     Location = new Point(141, 0),
                     Size = new Size(178, 17),
@@ -500,7 +500,7 @@ namespace Client.MirScenes.Dialogs
                     NotControl = true,
                 };
 
-                SellerLabel = new MirLabel
+                SellerLabel = new MirLabel("SellerLabel")
                 {
                     Location = new Point(320),
                     Size = new Size(148, 17),

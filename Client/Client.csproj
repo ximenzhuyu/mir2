@@ -172,6 +172,7 @@
     <Compile Include="MirControls\MirScene.cs" />
     <Compile Include="MirControls\MirScrollingLabel.cs" />
     <Compile Include="MirControls\MirTextBox.cs" />
+    <Compile Include="MirControls\ControlConfigOverride.cs" />
     <Compile Include="MirGraphics\DXManager.cs" />
     <Compile Include="MirGraphics\MLibrary.cs" />
     <Compile Include="MirObjects\Damage.cs" />
@@ -225,6 +226,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="UIEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditForm.Designer.cs">
+      <DependentUpon>UIEditForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AMain.resx">
       <DependentUpon>AMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -238,6 +245,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditForm.resx">
+      <DependentUpon>UIEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="Properties\Settings.settings">

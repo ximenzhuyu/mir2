@@ -20,7 +20,7 @@ namespace Client.MirControls
         public List<string> CurrentLines = new List<string>();
         public int VisibleLines = 8;
 
-        public MirScrollingLabel()
+        public MirScrollingLabel(string uniqueName) : base(uniqueName)
         {
             _textLabel = new MirLabel[12];
             _textButtons = new List<MirLabel>();
@@ -46,7 +46,7 @@ namespace Client.MirControls
 
             for (int i = Index; i < lastLine; i++)
             {
-                _textLabel[i - Index] = new MirLabel
+                _textLabel[i - Index] = new MirLabel("_textLabel_" + i)
                 {
                     Font = Font,
                     DrawFormat = TextFormatFlags.WordBreak,
@@ -96,7 +96,7 @@ namespace Client.MirControls
         {
             Color textColour = Color.FromName(colour);
 
-            MirLabel temp = new MirLabel
+            MirLabel temp = new MirLabel("temp")
             {
                 AutoSize = true,
                 Visible = true,

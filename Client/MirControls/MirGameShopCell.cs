@@ -24,7 +24,7 @@ namespace Client.MirControls
         public MirLabel quantity;
         public GameShopViewer Viewer;
 
-        public GameShopCell()
+        public GameShopCell(string uniqueName = "Common.GameShopCell"):base(uniqueName)
         {
             Size = new Size(125, 146);
             Index = 750;
@@ -36,7 +36,7 @@ namespace Client.MirControls
                 ShowItem = null;
             };
 
-            nameLabel = new MirLabel
+            nameLabel = new MirLabel("nameLabel")
             {
                 Size = new Size(125, 15),
                 DrawFormat = TextFormatFlags.HorizontalCenter,
@@ -46,7 +46,7 @@ namespace Client.MirControls
                 Font = new Font(Settings.FontName, 8F),
             };
 
-            goldLabel = new MirLabel
+            goldLabel = new MirLabel("goldLabel")
             {
                 Size = new Size(95, 20),
                 DrawFormat = TextFormatFlags.RightToLeft | TextFormatFlags.Right,
@@ -56,7 +56,7 @@ namespace Client.MirControls
                 Font = new Font(Settings.FontName, 8F)
             };
 
-            gpLabel = new MirLabel
+            gpLabel = new MirLabel("gpLabel")
             {
                 Size = new Size(95, 20),
                 DrawFormat = TextFormatFlags.RightToLeft | TextFormatFlags.Right,
@@ -66,7 +66,7 @@ namespace Client.MirControls
                 Font = new Font(Settings.FontName, 8F)
             };
 
-            StockLabel = new MirLabel
+            StockLabel = new MirLabel("StockLabel")
             {
                 Size = new Size(40, 20),
                 Location = new Point(53, 37),
@@ -77,7 +77,7 @@ namespace Client.MirControls
                 Text = "STOCK:"
             };
 
-            stockLabel = new MirLabel
+            stockLabel = new MirLabel("stockLabel")
             {
                 Size = new Size(20, 20),
                 DrawFormat = TextFormatFlags.HorizontalCenter,
@@ -87,7 +87,7 @@ namespace Client.MirControls
                 Font = new Font(Settings.FontName, 7F),
             };
 
-            countLabel = new MirLabel
+            countLabel = new MirLabel("countLabel")
             {
                 Size = new Size(30, 20),
                 DrawFormat = TextFormatFlags.Right,
@@ -98,7 +98,7 @@ namespace Client.MirControls
             };
 
 
-            BuyItem = new MirButton
+            BuyItem = new MirButton("BuyItem")
             {
                 Index = 778,
                 HoverIndex = 779,
@@ -113,7 +113,7 @@ namespace Client.MirControls
                 BuyProduct();
             };
 
-            PreviewItem = new MirButton
+            PreviewItem = new MirButton("PreviewItem")
             {
                 Index = 781,
                 HoverIndex = 782,
@@ -127,7 +127,7 @@ namespace Client.MirControls
             PreviewItem.Click += (o, e) =>
                 {
                     GameScene.Scene.GameShopDialog.Viewer.Dispose();
-                    GameScene.Scene.GameShopDialog.Viewer = new GameShopViewer
+                    GameScene.Scene.GameShopDialog.Viewer = new GameShopViewer("Viewer")
                     {
                         Parent = GameScene.Scene.GameShopDialog,
                         Visible = true,
@@ -138,7 +138,7 @@ namespace Client.MirControls
                 };
 
 
-            quantityUp = new MirButton
+            quantityUp = new MirButton("quantityUp")
             {
                 Index = 243,
                 HoverIndex = 244,
@@ -158,7 +158,7 @@ namespace Client.MirControls
                 if (Item.Stock != 0 && Quantity > Item.Stock) Quantity = (byte)Item.Stock;
             };
 
-            quantityDown = new MirButton
+            quantityDown = new MirButton("quantityDown")
             {
                 Index = 240,
                 HoverIndex = 241,
@@ -177,7 +177,7 @@ namespace Client.MirControls
                 if (Quantity <= 1 || Quantity > 99) Quantity = 1;
             };
 
-            quantity = new MirLabel
+            quantity = new MirLabel("quantity")
             {
                 Size = new Size(20, 13),
                 DrawFormat = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter,
@@ -313,7 +313,7 @@ namespace Client.MirControls
         public MirButton RightDirection, LeftDirection, CloseButton;
 
 
-        public GameShopViewer()
+        public GameShopViewer(string uniqueName):base(uniqueName)
         {
             Index = 785;// 314;
             Library = Libraries.Title;// Libraries.Prguse2;
@@ -324,7 +324,7 @@ namespace Client.MirControls
             //Visible = false;
             //};
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 362,
                 Index = 361,
@@ -393,7 +393,7 @@ namespace Client.MirControls
                 NotControl = true,
             };
 
-            RightDirection = new MirButton
+            RightDirection = new MirButton("RightDirection")
             {
                 Index = 243,
                 HoverIndex = 244,
@@ -411,7 +411,7 @@ namespace Client.MirControls
                 UpdateViewer();
             };
 
-            LeftDirection = new MirButton
+            LeftDirection = new MirButton("LeftDirection")
             {
                 Index = 240,
                 HoverIndex = 241,

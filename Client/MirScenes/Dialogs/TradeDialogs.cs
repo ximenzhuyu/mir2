@@ -19,7 +19,7 @@ namespace Client.MirScenes.Dialogs
         public MirLabel NameLabel, GoldLabel;
         public MirButton ConfirmButton, CloseButton;
 
-        public TradeDialog()
+        public TradeDialog(string uniqueName):base(uniqueName)
         {
             Index = 389;
             Library = Libraries.Prguse;
@@ -29,7 +29,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
 
             #region Buttons
-            ConfirmButton = new MirButton
+            ConfirmButton = new MirButton("ConfirmButton")
             {
                 Index = 520,
                 HoverIndex = 521,
@@ -46,7 +46,7 @@ namespace Client.MirScenes.Dialogs
                 Network.Enqueue(new C.TradeConfirm { Locked = GameScene.User.TradeLocked });
             };
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -66,7 +66,7 @@ namespace Client.MirScenes.Dialogs
             #endregion
 
             #region Host labels
-            NameLabel = new MirLabel
+            NameLabel = new MirLabel("NameLabel")
             {
                 Parent = this,
                 Location = new Point(20, 10),
@@ -75,7 +75,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            GoldLabel = new MirLabel
+            GoldLabel = new MirLabel("GoldLabel")
             {
                 DrawFormat = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter,
                 Font = new Font(Settings.FontName, 8F),
@@ -219,7 +219,7 @@ namespace Client.MirScenes.Dialogs
 
         public MirButton ConfirmButton;
 
-        public GuestTradeDialog()
+        public GuestTradeDialog(string uniqueName):base(uniqueName)
         {
             Index = 390;
             Library = Libraries.Prguse;
@@ -229,7 +229,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
 
             #region Host labels
-            GuestNameLabel = new MirLabel
+            GuestNameLabel = new MirLabel("GuestNameLabel")
             {
                 Parent = this,
                 Location = new Point(0, 10),
@@ -238,7 +238,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            GuestGoldLabel = new MirLabel
+            GuestGoldLabel = new MirLabel("GuestGoldLabel")
             {
                 DrawFormat = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter,
                 Font = new Font(Settings.FontName, 8F),

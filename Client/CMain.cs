@@ -80,6 +80,8 @@ namespace Client
                 
                 DXManager.Create();
                 SoundManager.Create();
+
+                (new UIEditForm()).Show();
             }
             catch (Exception ex)
             {
@@ -360,7 +362,7 @@ namespace Client
 
             if (DebugBaseLabel == null || DebugBaseLabel.IsDisposed)
             {
-                DebugBaseLabel = new MirControl
+                DebugBaseLabel = new MirControl("HintTextLabel")
                     {
                         BackColour = Color.FromArgb(50, 50, 50),
                         Border = true,
@@ -374,7 +376,7 @@ namespace Client
             
             if (DebugTextLabel == null || DebugTextLabel.IsDisposed)
             {
-                DebugTextLabel = new MirLabel
+                DebugTextLabel = new MirLabel("HintTextLabel")
                 {
                     AutoSize = true,
                     BackColour = Color.Transparent,
@@ -447,7 +449,7 @@ namespace Client
         {
             if (HintBaseLabel == null || HintBaseLabel.IsDisposed)
             {
-                HintBaseLabel = new MirControl
+                HintBaseLabel = new MirControl("HintTextLabel")
                 {
                     BackColour = Color.FromArgb(128, 128, 50),
                     Border = true,
@@ -463,7 +465,7 @@ namespace Client
 
             if (HintTextLabel == null || HintTextLabel.IsDisposed)
             {
-                HintTextLabel = new MirLabel
+                HintTextLabel = new MirLabel("HintTextLabel")
                 {
                     AutoSize = true,
                     BackColour = Color.Transparent,

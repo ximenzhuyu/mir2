@@ -23,7 +23,7 @@ namespace Client.MirScenes.Dialogs
         public MirButton SwitchButton, CloseButton, AddButton, DelButton;
         public MirLabel[] GroupMembers;
 
-        public GroupDialog()
+        public GroupDialog(string uniqueName):base(uniqueName)
         {
             Index = 120;
             Library = Libraries.Prguse;
@@ -33,7 +33,7 @@ namespace Client.MirScenes.Dialogs
 
             GroupMembers = new MirLabel[Globals.MaxGroup];
 
-            GroupMembers[0] = new MirLabel
+            GroupMembers[0] = new MirLabel("GroupMembers_0")
             {
                 AutoSize = true,
                 Location = new Point(16, 33),
@@ -43,7 +43,7 @@ namespace Client.MirScenes.Dialogs
 
             for (int i = 1; i < GroupMembers.Length; i++)
             {
-                GroupMembers[i] = new MirLabel
+                GroupMembers[i] = new MirLabel("GroupMembers_"+i)
                 {
                     AutoSize = true,
                     Location = new Point(((i + 1) % 2) * 100 + 16, 55 + ((i - 1) / 2) * 20),
@@ -54,7 +54,7 @@ namespace Client.MirScenes.Dialogs
 
 
 
-            TitleLabel = new MirImageControl
+            TitleLabel = new MirImageControl("TitleLabel")
             {
                 Index = 5,
                 Library = Libraries.Title,
@@ -62,7 +62,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this
             };
 
-            CloseButton = new MirButton
+            CloseButton = new MirButton("CloseButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -74,7 +74,7 @@ namespace Client.MirScenes.Dialogs
             };
             CloseButton.Click += (o, e) => Hide();
 
-            SwitchButton = new MirButton
+            SwitchButton = new MirButton("SwitchButton")
             {
                 HoverIndex = 115,
                 Index = 114,
@@ -86,7 +86,7 @@ namespace Client.MirScenes.Dialogs
             };
             SwitchButton.Click += (o, e) => Network.Enqueue(new C.SwitchGroup { AllowGroup = !AllowGroup });
 
-            AddButton = new MirButton
+            AddButton = new MirButton("AddButton")
             {
                 HoverIndex = 134,
                 Index = 133,
@@ -98,7 +98,7 @@ namespace Client.MirScenes.Dialogs
             };
             AddButton.Click += (o, e) => AddMember();
 
-            DelButton = new MirButton
+            DelButton = new MirButton("DelButton")
             {
                 HoverIndex = 137,
                 Index = 136,

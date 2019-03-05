@@ -15,7 +15,7 @@ namespace Client.MirScenes.Dialogs
         private readonly MirLabel _nameLabel, _rentalPriceLabel;
         private readonly MirButton _lockButton, _rentalPriceButton;
 
-        public ItemRentDialog()
+        public ItemRentDialog(string uniqueName):base(uniqueName)
         {
             Index = 238;
             Library = Libraries.Prguse;
@@ -24,7 +24,7 @@ namespace Client.MirScenes.Dialogs
             Location = new Point(Settings.ScreenWidth - Size.Width - Size.Width / 2, Size.Height + Size.Height / 2);
             Sort = true;
 
-            var closeButton = new MirButton
+            var closeButton = new MirButton("closeButton")
             {
                 HoverIndex = 361,
                 Index = 360,
@@ -39,7 +39,7 @@ namespace Client.MirScenes.Dialogs
                 CancelItemRental();
             };
 
-            _lockButton = new MirButton
+            _lockButton = new MirButton("_lockButton")
             {
                 Index = 250,
                 HoverIndex = 251,
@@ -58,7 +58,7 @@ namespace Client.MirScenes.Dialogs
                 Network.Enqueue(new C.ItemRentalLockFee());
             };
 
-            _rentalPriceButton = new MirButton
+            _rentalPriceButton = new MirButton("_rentalPriceButton")
             {
                 Index = 28,
                 Location = new Point(18, 46),
@@ -89,7 +89,7 @@ namespace Client.MirScenes.Dialogs
                 GameScene.PickedUpGold = false;
             };
 
-            _nameLabel = new MirLabel
+            _nameLabel = new MirLabel("_nameLabel")
             {
                 Parent = this,
                 Location = new Point(30, 8),
@@ -98,7 +98,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            _rentalPriceLabel = new MirLabel
+            _rentalPriceLabel = new MirLabel("_rentalPriceLabel")
             {
                 Parent = this,
                 Location = new Point(60, 42),
@@ -211,7 +211,7 @@ namespace Client.MirScenes.Dialogs
         private uint _guestGold;
         private bool _guestGoldLocked;
 
-        public GuestItemRentDialog()
+        public GuestItemRentDialog(string uniqueName):base(uniqueName)
         {
             Index = 238;
             Library = Libraries.Prguse;
@@ -220,7 +220,7 @@ namespace Client.MirScenes.Dialogs
             Location = new Point(Settings.ScreenWidth - Size.Width - Size.Width / 2, Size.Height + Size.Height / 2);
             Sort = true;
 
-            _lockButton = new MirButton
+            _lockButton = new MirButton("_lockButton")
             {
                 Index = 250,
                 Location = new Point(22, 76),
@@ -230,7 +230,7 @@ namespace Client.MirScenes.Dialogs
                 Enabled = false
             };
 
-            _rentalPriceButton = new MirButton
+            _rentalPriceButton = new MirButton("_rentalPriceButton")
             {
                 Index = 28,
                 Location = new Point(18, 46),
@@ -240,7 +240,7 @@ namespace Client.MirScenes.Dialogs
                 Enabled = false
             };
 
-            _nameLabel = new MirLabel
+            _nameLabel = new MirLabel("_nameLabel")
             {
                 Parent = this,
                 Location = new Point(30, 8),
@@ -249,7 +249,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
             };
 
-            _rentalPriceLabel = new MirLabel
+            _rentalPriceLabel = new MirLabel("_rentalPriceLabel")
             {
                 Parent = this,
                 Location = new Point(60, 42),
