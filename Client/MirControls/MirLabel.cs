@@ -177,7 +177,6 @@ namespace Client.MirControls
 
         public MirLabel(string uniqueName):base(uniqueName)
         {
-            UniqueName = uniqueName;
             DrawControlTexture = true;
             _drawFormat = TextFormatFlags.WordBreak;
 

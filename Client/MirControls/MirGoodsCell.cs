@@ -17,7 +17,6 @@ namespace Client.MirControls
 
         public MirGoodsCell(string uniqueName) : base(uniqueName)
         {
-            UniqueName = uniqueName;
             Size = new Size(205, 32);
             BorderColour = Color.Lime;
 

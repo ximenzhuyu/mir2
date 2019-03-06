@@ -20,7 +20,6 @@ namespace Client.MirControls
 
         protected MirScene(string uniqueName) : base(uniqueName)
         {
-            UniqueName = uniqueName;
             DrawControlTexture = true;
             BackColour = Color.Magenta;
             Size = new Size(Settings.ScreenWidth, Settings.ScreenHeight);

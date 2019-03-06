@@ -14,7 +14,43 @@ namespace Client.MirControls
     public class MirControl : IDisposable
     {
         public static MirControl ActiveControl, MouseControl;
-        public string UniqueName { get; set; }
+
+        public string UniqueName
+        {
+            get
+            {
+                if (this is MirScene scene)
+                {
+                    return GetType().Name;
+                }
+
+                if (Parent == null) return "";
+                var properties = Parent.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+
+                var fields = Parent.GetType()
+                    .GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
+                foreach (var propertyInfo in properties)
+                {
+                    if (propertyInfo.PropertyType != this.GetType()) continue;
+                    if (propertyInfo.GetValue(Parent, null) == this)
+                    {
+                        return propertyInfo.Name;
+                    }
+                }
+
+                foreach (var fieldInfo in fields)
+                {
+                    if (fieldInfo.FieldType != GetType()) continue;
+                    if (fieldInfo.GetValue(Parent) == this)
+                    {
+                        return fieldInfo.Name;
+                    }
+                }
+
+                return "";
+            }
+        }
+
         public bool OverrideConfigLoaded { get; set; } = false;
         public virtual Point DisplayLocation { get { return Parent == null ? Location : Parent.DisplayLocation.Add(Location); } }
         public Rectangle DisplayRectangle { get { return new Rectangle(DisplayLocation, Size); } }
@@ -33,6 +69,7 @@ namespace Client.MirControls
                 {
                     _uiConfigOverrideKey = UniqueName;
                     var parent = Parent;
+                    
                     while (parent != null)
                     {
                         if (_uiConfigOverrideKey.StartsWith("Common.")) break;
@@ -703,7 +740,7 @@ namespace Client.MirControls
 
         public MirControl(string uniqueName)
         {
-            UniqueName = uniqueName;
+            //UniqueName = uniqueName;
             Controls = new List<MirControl>();
             _opacity = 1F;
             _enabled = true;
