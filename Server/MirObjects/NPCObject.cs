@@ -24,7 +24,7 @@ namespace Server.MirObjects
         {
             if (objectID == 0) return null;
 
-            var obj = Envir.GetObject(objectID);
+            var obj = Envir.NPCs.SingleOrDefault(x => x.ObjectID == objectID);
 
             if (obj != null && obj is NPCObject)
             {
@@ -59,6 +59,8 @@ namespace Server.MirObjects
 
             Direction = (MirDirection)Envir.Random.Next(3);
             TurnTime = Envir.Time + Envir.Random.Next(100);
+
+            Envir.NPCs.Add(this);
 
             Spawned();
             LoadScript();
@@ -146,6 +148,11 @@ namespace Server.MirObjects
         public override bool IsAttackTarget(MonsterObject attacker)
         {
             return false;
+        }
+
+        public override Buff AddBuff(BuffType type, MapObject owner, int duration, Stats stat, bool visible = false, bool infinite = false, bool stackable = false, bool refreshStats = true, params int[] values)
+        {
+            throw new NotSupportedException();
         }
 
         public override int Attacked(PlayerObject attacker, int damage, DefenceType type = DefenceType.ACAgility, bool damageWeapon = true)
@@ -457,12 +464,12 @@ namespace Server.MirObjects
 
         public override MirDirection Direction { get; set; }
 
-        public override uint Health
+        public override int Health
         {
             get { throw new NotSupportedException(); }
         }
 
-        public override uint MaxHealth
+        public override int MaxHealth
         {
             get { throw new NotSupportedException(); }
         }

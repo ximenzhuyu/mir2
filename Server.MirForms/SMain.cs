@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using Server.MirEnvir;
 using Server.MirDatabase;
 using Server.MirForms.Systems;
+using Server.Database;
 
 namespace Server
 {
@@ -427,5 +428,18 @@ namespace Server
             form.ShowDialog();
         }
 
+        private void itemNEWToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ItemInfoFormNew form = new ItemInfoFormNew();
+
+            form.ShowDialog();
+        }
+
+        private void monsterExperimentalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MonsterInfoFormNew form = new MonsterInfoFormNew();
+
+            form.ShowDialog();
+        }
     }
 }

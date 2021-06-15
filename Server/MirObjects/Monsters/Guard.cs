@@ -76,13 +76,14 @@ namespace Server.MirObjects.Monsters
             ActionTime = Envir.Time + 500;
             AttackTime = Envir.Time + AttackSpeed;
 
-            int damage = GetAttackPower(MinDC, MaxDC);
+            int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
 
             if (Target.Race != ObjectType.Player) damage = int.MaxValue;
 
             if (damage == 0) return;
 
-            Target.Attacked(this, damage, DefenceType.AC);
+            DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + 300, Target, damage, DefenceType.AC);
+            ActionList.Add(action);
         }
     }
 }

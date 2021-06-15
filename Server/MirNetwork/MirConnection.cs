@@ -413,6 +413,9 @@ namespace Server.MirNetwork
                 case (short)ClientPacketIds.MarketGetBack:
                     MarketGetBack((C.MarketGetBack)p);
                     return;
+                case (short)ClientPacketIds.MarketSellNow:
+                    MarketSellNow((C.MarketSellNow)p);
+                    return;
                 case (short)ClientPacketIds.RequestUserName:
                     RequestUserName((C.RequestUserName)p);
                     return;
@@ -515,9 +518,6 @@ namespace Server.MirNetwork
                 case (short)ClientPacketIds.CombineItem:
                     CombineItem((C.CombineItem)p);
                     break;
-                case (short)ClientPacketIds.SetConcentration:
-                    SetConcentration((C.SetConcentration)p);
-                    break;
                 case (short)ClientPacketIds.AwakeningNeedMaterials:
                     AwakeningNeedMaterials((C.AwakeningNeedMaterials)p);
                     break;
@@ -556,6 +556,9 @@ namespace Server.MirNetwork
                     break;
                 case (short)ClientPacketIds.MailCost:
                     MailCost((C.MailCost)p);
+                    break;
+                case (short)ClientPacketIds.RequestIntelligentCreatureUpdates://IntelligentCreature
+                    RequestIntelligentCreatureUpdates((C.RequestIntelligentCreatureUpdates)p);
                     break;
                 case (short)ClientPacketIds.UpdateIntelligentCreature://IntelligentCreature
                     UpdateIntelligentCreature((C.UpdateIntelligentCreature)p);
@@ -1234,7 +1237,7 @@ namespace Server.MirNetwork
         {
             if (Stage != GameStage.Game) return;
 
-            Player.ConsignItem(p.UniqueID, p.Price);
+            Player.ConsignItem(p.UniqueID, p.Price, p.Type);
         }
         private void MarketSearch(C.MarketSearch p)
         {
@@ -1266,6 +1269,13 @@ namespace Server.MirNetwork
 
             Player.MarketBuy(p.AuctionID, p.BidPrice);
         }
+        private void MarketSellNow(C.MarketSellNow p)
+        {
+            if (Stage != GameStage.Game) return;
+
+            Player.MarketSellNow(p.AuctionID);
+        }
+
         private void MarketGetBack(C.MarketGetBack p)
         {
             if (Stage != GameStage.Game) return;
@@ -1494,7 +1504,7 @@ namespace Server.MirNetwork
 
             if (Player.ReincarnationHost != null && Player.ReincarnationHost.ReincarnationReady)
             {
-                Player.Revive((uint)Player.MaxHP / 2, true);
+                Player.Revive(Player.Stats[Stat.HP] / 2, true);
                 Player.ReincarnationHost = null;
                 return;
             }
@@ -1514,13 +1524,6 @@ namespace Server.MirNetwork
             if (Stage != GameStage.Game) return;
 
             Player.CombineItem(p.IDFrom, p.IDTo);
-        }
-
-        private void SetConcentration(C.SetConcentration p)
-        {
-            if (Stage != GameStage.Game) return;
-
-            Player.ConcentrateInterrupted = p.Interrupted;
         }
 
         private void Awakening(C.Awakening p)
@@ -1607,6 +1610,13 @@ namespace Server.MirNetwork
             uint cost = Player.GetMailCost(p.ItemsIdx, p.Gold, p.Stamped);
 
             Enqueue(new S.MailCost { Cost = cost });
+        }
+
+        private void RequestIntelligentCreatureUpdates(C.RequestIntelligentCreatureUpdates p)
+        {
+            if (Stage != GameStage.Game) return;
+
+            Player.SendIntelligentCreatureUpdates = p.Update;
         }
 
         private void UpdateIntelligentCreature(C.UpdateIntelligentCreature p)//IntelligentCreature

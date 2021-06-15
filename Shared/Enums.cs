@@ -1,5 +1,17 @@
 ﻿using System;
 
+public enum MouseCursor : byte
+{
+    None,
+    Default,
+    Attack,
+    AttackRed,
+    NPCTalk,
+    TextPrompt,
+    Trash,
+    Upgrade
+}
+
 public enum PanelType : byte
 {
     Buy,
@@ -99,33 +111,8 @@ public enum ItemGrade : byte
     Mythical = 4,
 }
 
-public enum StatType : byte
-{
-    AC = 0,
-    MAC = 1,
-    DC = 2,
-    MC = 3,
-    SC = 4,
-    HP = 5,
-    MP = 6,
-    HP_Percent = 7,
-    MP_Percent = 8,
-    HP_Regen = 9,
-    MP_Regen = 10,
-    ASpeed = 11,
-    Luck = 12,
-    Strong = 13,
-    Accuracy = 14,
-    Agility = 15,
-    MagicResist = 16,
-    PoisonResist = 17,
-    PoisonAttack = 18,
-    PoisonRegen = 19,
-    Freezing = 20,
-    Holy = 21,
-    Durability = 22,
-    Unknown = 23
-}
+
+
 public enum RefinedValue : byte
 {
     None = 0,
@@ -234,7 +221,7 @@ public enum Monster : ushort
     WoomaWarrior = 31,
     FlamingWooma = 32,
     WoomaGuardian = 33,
-    WoomaTaurus = 34,
+    WoomaTaurus = 34, //BOSS
     WhimperingBee = 35,
     GiantWorm = 36,
     Centipede = 37,
@@ -268,7 +255,7 @@ public enum Monster : ushort
     ZumaStatue = 65,
     ZumaGuardian = 66,
     RedThunderZuma = 67,
-    ZumaTaurus = 68,
+    ZumaTaurus = 68, //BOSS
     DigOutZombie = 69,
     ClZombie = 70,
     NdZombie = 71,
@@ -293,7 +280,7 @@ public enum Monster : ushort
     BoneSpearman = 90,
     BoneBlademan = 91,
     BoneArcher = 92,
-    BoneLord = 93,
+    BoneLord = 93, //BOSS
     Minotaur = 94,
     IceMinotaur = 95,
     ElectricMinotaur = 96,
@@ -301,7 +288,7 @@ public enum Monster : ushort
     FireMinotaur = 98,
     RightGuard = 99,
     LeftGuard = 100,
-    MinotaurKing = 101,
+    MinotaurKing = 101, //BOSS
     FrostTiger = 102,
     Sheep = 103,
     Wolf = 104,
@@ -326,7 +313,7 @@ public enum Monster : ushort
     OmaGuard = 123,
     YinDevilNode = 124,
     YangDevilNode = 125,
-    OmaKing = 126,
+    OmaKing = 126, //BOSS
     BlackFoxman = 127,
     RedFoxman = 128,
     WhiteFoxman = 129,
@@ -334,7 +321,7 @@ public enum Monster : ushort
     GuardianRock = 131,
     ThunderElement = 132,
     CloudElement = 133,
-    GreatFoxSpirit = 134,
+    GreatFoxSpirit = 134, //BOSS
     HedgeKekTal = 135,
     BigHedgeKekTal = 136,
     RedFrogSpider = 137,
@@ -354,181 +341,181 @@ public enum Monster : ushort
     HalloweenScythe = 151,
     GhastlyLeecher = 152,
     CyanoGhast = 153,
-    MutatedManworm = 154,
+    MutatedManworm = 154, //EFFECT 4
     CrazyManworm = 155,
     MudPile = 156,
     TailedLion = 157,
-    Behemoth = 158,//done BOSS
-    DarkDevourer = 159,//done
-    PoisonHugger = 160,//done
-    Hugger = 161,//done
-    MutatedHugger = 162,//done
-    DreamDevourer = 163,//done
-    Treasurebox = 164,//done
-    SnowPile = 165,//done
-    Snowman = 166,//done
-    SnowTree = 167,//done
-    GiantEgg = 168,//done
-    RedTurtle = 169,//done
-    GreenTurtle = 170,//done
-    BlueTurtle = 171,//done
-    Catapult1 = 172, //not added frames
-    Catapult2 = 173, //not added frames
+    Behemoth = 158, //BOSS
+    DarkDevourer = 159,
+    PoisonHugger = 160,
+    Hugger = 161,
+    MutatedHugger = 162,
+    DreamDevourer = 163,
+    Treasurebox = 164,
+    SnowPile = 165,
+    Snowman = 166,
+    SnowTree = 167,
+    GiantEgg = 168,
+    RedTurtle = 169,
+    GreenTurtle = 170,
+    BlueTurtle = 171,
+    Catapult1 = 172, //SPECIAL
+    Catapult2 = 173, //SPECIAL
     OldSpittingSpider = 174,
-    SiegeRepairman = 175, //not added frames
-    BlueSanta = 176,//done
-    BattleStandard = 177,//done
+    SiegeRepairman = 175, //SPECIAL
+    BlueSanta = 176,
+    BattleStandard = 177,
     Blank2 = 178,
-    RedYimoogi = 179,//done
-    LionRiderMale = 180, //frames not added
-    LionRiderFemale = 181, //frames not added
-    Tornado = 182,//done
-    FlameTiger = 183,//done
-    WingedTigerLord = 184,//done BOSS
-    TowerTurtle = 185,//done
-    FinialTurtle = 186,//done
-    TurtleKing = 187,//done BOSS
-    DarkTurtle = 188,//done
-    LightTurtle = 189,//done  
-    DarkSwordOma = 190,//done
-    DarkAxeOma = 191,//done
-    DarkCrossbowOma = 192,//done
-    DarkWingedOma = 193,//done
-    BoneWhoo = 194,//done
-    DarkSpider = 195,//done
-    ViscusWorm = 196,//done
-    ViscusCrawler = 197,//done
-    CrawlerLave = 198,//done
-    DarkYob = 199,//done
+    RedYimoogi = 179,
+    LionRiderMale = 180, //Not Monster - Skin / Transform
+    LionRiderFemale = 181, //Not Monster - Skin / Transform
+    Tornado = 182,
+    FlameTiger = 183,
+    WingedTigerLord = 184, //BOSS
+    TowerTurtle = 185,
+    FinialTurtle = 186,
+    TurtleKing = 187, //BOSS
+    DarkTurtle = 188,
+    LightTurtle = 189,  
+    DarkSwordOma = 190,
+    DarkAxeOma = 191,
+    DarkCrossbowOma = 192,
+    DarkWingedOma = 193,
+    BoneWhoo = 194,
+    DarkSpider = 195, // USE AI 8
+    ViscusWorm = 196,
+    ViscusCrawler = 197,
+    CrawlerLave = 198,
+    DarkYob = 199,
 
-    FlamingMutant = 200,//FINISH
-    StoningStatue = 201,//FINISH BOSS
-    FlyingStatue = 202,//FINISH
-    ValeBat = 203,//done
-    Weaver = 204,//done
-    VenomWeaver = 205,//done
-    CrackingWeaver = 206,//done
-    ArmingWeaver = 207,//done
-    CrystalWeaver = 208,//done
-    FrozenZumaStatue = 209,//done
-    FrozenZumaGuardian = 210,//done
-    FrozenRedZuma = 211,//done
-    GreaterWeaver = 212,//done
-    SpiderWarrior = 213,//done
-    SpiderBarbarian = 214,//done
-    HellSlasher = 215,//done
-    HellPirate = 216,//done
-    HellCannibal = 217,//done
-    HellKeeper = 218, //done BOSS
-    HellBolt = 219, //done
-    WitchDoctor = 220,//done
-    ManectricHammer = 221,//done
-    ManectricClub = 222,//done
-    ManectricClaw = 223,//done
-    ManectricStaff = 224,//done
-    NamelessGhost = 225,//done
-    DarkGhost = 226,//done
-    ChaosGhost = 227,//done
-    ManectricBlest = 228,//done
-    ManectricKing = 229,//done
+    FlamingMutant = 200,
+    StoningStatue = 201, //BOSS
+    FlyingStatue = 202,
+    ValeBat = 203,
+    Weaver = 204,
+    VenomWeaver = 205,
+    CrackingWeaver = 206,
+    ArmingWeaver = 207,
+    CrystalWeaver = 208,
+    FrozenZumaStatue = 209,
+    FrozenZumaGuardian = 210,
+    FrozenRedZuma = 211,
+    GreaterWeaver = 212,
+    SpiderWarrior = 213,
+    SpiderBarbarian = 214,
+    HellSlasher = 215,
+    HellPirate = 216,
+    HellCannibal = 217,
+    HellKeeper = 218, //BOSS
+    HellBolt = 219, 
+    WitchDoctor = 220,
+    ManectricHammer = 221,
+    ManectricClub = 222,
+    ManectricClaw = 223,
+    ManectricStaff = 224,
+    NamelessGhost = 225,
+    DarkGhost = 226,
+    ChaosGhost = 227,
+    ManectricBlest = 228,
+    ManectricKing = 229,
     Blank3 = 230,
-    IcePillar = 231,//done
-    FrostYeti = 232,//done
-    ManectricSlave = 233,//done
-    TrollHammer = 234,//done
-    TrollBomber = 235,//done
-    TrollStoner = 236,//done
-    TrollKing = 237,//done BOSS
-    FlameSpear = 238,//done
-    FlameMage = 239,//done
-    FlameScythe = 240,//done
-    FlameAssassin = 241,//done
-    FlameQueen = 242, //finish BOSS
-    HellKnight1 = 243,//done
-    HellKnight2 = 244,//done
-    HellKnight3 = 245,//done
-    HellKnight4 = 246,//done
-    HellLord = 247,//done BOSS
-    WaterGuard = 248,//done
+    IcePillar = 231,
+    FrostYeti = 232,
+    ManectricSlave = 233,
+    TrollHammer = 234,
+    TrollBomber = 235,
+    TrollStoner = 236,
+    TrollKing = 237, //BOSS
+    FlameSpear = 238,
+    FlameMage = 239,
+    FlameScythe = 240,
+    FlameAssassin = 241,
+    FlameQueen = 242, //BOSS
+    HellKnight1 = 243,
+    HellKnight2 = 244,
+    HellKnight3 = 245,
+    HellKnight4 = 246,
+    HellLord = 247, //BOSS
+    WaterGuard = 248,
     IceGuard = 249,
     ElementGuard = 250,
     DemonGuard = 251,
     KingGuard = 252,
-    Snake10 = 253,//done
-    Snake11 = 254,//done
-    Snake12 = 255,//done
-    Snake13 = 256,//done
-    Snake14 = 257,//done
-    Snake15 = 258,//done
-    Snake16 = 259,//done
-    Snake17 = 260,//done
+    Snake10 = 253,
+    Snake11 = 254,
+    Snake12 = 255,
+    Snake13 = 256,
+    Snake14 = 257,
+    Snake15 = 258,
+    Snake16 = 259,
+    Snake17 = 260,
 
-    DeathCrawler = 261,
-    BurningZombie = 262,
-    MudZombie = 263,
-    FrozenZombie = 264,
+    DeathCrawler = 261, 
+    BurningZombie = 262, 
+    MudZombie = 263, 
+    FrozenZombie = 264, 
     UndeadWolf = 265,
-    Demonwolf = 266,
-    WhiteMammoth = 267,
-    DarkBeast = 268,
-    LightBeast = 269,
-    BloodBaboon = 270,
+    DemonWolf = 266, 
+    WhiteMammoth = 267, 
+    DarkBeast = 268, 
+    LightBeast = 269,//AI 112
+    BloodBaboon = 270, //AI 112
     HardenRhino = 271,
-    AncientBringer = 272,
+    AncientBringer = 272, 
     FightingCat = 273,
-    FireCat = 274,
-    CatWidow = 275,
-    StainHammerCat = 276,
-    BlackHammerCat = 277,
-    StrayCat = 278,
-    CatShaman = 279,
+    FireCat = 274, //AI 44
+    CatWidow = 275, //AI 112
+    StainHammerCat = 276, 
+    BlackHammerCat = 277, 
+    StrayCat = 278, 
+    CatShaman = 279, 
     Jar1 = 280,
     Jar2 = 281,
-    SeedingsGeneral = 282,
+    SeedingsGeneral = 282, 
     RestlessJar = 283,
-    GeneralJinmYo = 284,
+    GeneralMeowMeow = 284, //BOSS
     Bunny = 285,
     Tucson = 286,
-    TucsonFighter = 287,
-    TucsonMage = 288,
-    TucsonWarrior = 289,
-    Armadillo = 290,
-    ArmadilloElder = 291,
-    TucsonEgg = 292,
+    TucsonFighter = 287, //AI 44
+    TucsonMage = 288, 
+    TucsonWarrior = 289, 
+    Armadillo = 290, 
+    ArmadilloElder = 291, 
+    TucsonEgg = 292, //EFFECT 0/1
     PlaguedTucson = 293,
-    SandSnail = 294,
-    CannibalTentacles = 295,
-    TucsonGeneral = 296,
-    GasToad = 297,
-    Mantis = 298,
-    SwampWarrior = 299,
+    SandSnail = 294, 
+    CannibalTentacles = 295, 
+    TucsonGeneral = 296, //BOSS
+    GasToad = 297, 
+    Mantis = 298, 
+    SwampWarrior = 299, 
 
-    AssassinBird = 300,
+    AssassinBird = 300, 
     RhinoWarrior = 301,
-    RhinoPriest = 302,
-    SwampSlime = 303,
-    RockGuard = 304,
-    MudWarrior = 305,
-    SmallPot = 306,
+    RhinoPriest = 302, 
+    ElephantMan = 303, 
+    StoneGolem = 304,
+    EarthGolem = 305,
+    TreeGuardian = 306, 
     TreeQueen = 307,
-    ShellFighter = 308,
-    DarkBaboon = 309,
-    TwinHeadBeast = 310,
-    OmaCannibal = 311,
-    OmaBlest = 312,
-    OmaSlasher = 313,
-    OmaAssassin = 314,
-    OmaMage = 315,
+    PeacockSpider = 308,
+    DarkBaboon = 309, //AI 112
+    TwinHeadBeast = 310, //AI 112
+    OmaCannibal = 311, 
+    OmaBlest = 312, 
+    OmaSlasher = 313, 
+    OmaAssassin = 314, 
+    OmaMage = 315, 
     OmaWitchDoctor = 316,
-    LightningBead = 317,
-    HealingBead = 318,
-    PowerUpBead = 319,
-    DarkOmaKing = 320,
-    CaveMage = 321,
-    Mandrill = 322,
+    LightningBead = 317, // Minion of DarkOmaKing
+    HealingBead = 318, // Minion of DarkOmaKing
+    PowerUpBead = 319, // Minion of DarkOmaKing
+    DarkOmaKing = 320, //TODO - BOSS AI
+    CaveStatue = 321,
+    Mandrill = 322, // EFFECT 7, AI 65
     PlagueCrab = 323,
     CreeperPlant = 324,
-    FloatingWraith = 325,
+    FloatingWraith = 325, //AI 8
     ArmedPlant = 326,
     AvengerPlant = 327,
     Nadz = 328,
@@ -536,61 +523,61 @@ public enum Monster : ushort
     AvengingWarrior = 330,
     AxePlant = 331,
     WoodBox = 332,
-    ClawBeast = 333,
-    KillerPlant = 334,
+    ClawBeast = 333, //AI 8
+    DarkCaptain = 334, //BOSS - Needs power up bead attack adding
     SackWarrior = 335,
-    WereTiger = 336,
+    WereTiger = 336, //AI 112
     KingHydrax = 337,
     Hydrax = 338,
     HornedMage = 339,
-    Basiloid = 340,
-    HornedArcher = 341,
-    ColdArcher = 342,
-    HornedWarrior = 343,
-    FloatingRock = 344,
-    ScalyBeast = 345,
+    BlueSoul = 340, //TODO
+    HornedArcher = 341, // Incomplete AI (DG) - Need to code the buffs.
+    ColdArcher = 342, // Done (DG) - //TODO - check wemade file for arrow issue
+    HornedWarrior = 343, // TODO - HAS BUFF MECHANIC
+    FloatingRock = 344, // Done (DG)
+    ScalyBeast = 345, //Done
     HornedSorceror = 346,
     BoulderSpirit = 347,
     HornedCommander = 348,
-    MoonStone = 349,
 
+    MoonStone = 349,
     SunStone = 350,
     LightningStone = 351,
-    Turtlegrass = 352,
-    Mantree = 353,
-    Bear = 354,
-    Leopard = 355,
+    Turtlegrass = 352, // Done (DG)
+    ManTree = 353, //Done (DG)
+    Bear = 354, //Done (DG)
+    Leopard = 355, // Basic mob (No AI or spell animations) (DG)
     ChieftainArcher = 356,
-    ChieftainSword = 357,
+    ChieftainSword = 357, //TODO - BOSS AI
     StoningSpider = 358, //Archer Spell mob (not yet coded)
     VampireSpider = 359, //Archer Spell mob
     SpittingToad = 360, //Archer Spell mob
     SnakeTotem = 361, //Archer Spell mob
     CharmedSnake = 362, //Archer Spell mob
-    FrozenSoldier = 363,
-    FrozenFighter = 364,
-    FrozenArcher = 365,
-    FrozenKnight = 366,
-    FrozenGolem = 367,
-    IcePhantom = 368,
-    SnowWolf = 369,
-    SnowWolfKing = 370,
-    WaterDragon = 371,
-    BlackTortoise = 372,
-    Manticore = 373,
-    DragonWarrior = 374,
-    DragonArcher = 375,
-    Kirin = 376,
+    FrozenSoldier = 363, // Basic mob (No AI or spell animations) (DG)
+    FrozenFighter = 364, // Done (DG)
+    FrozenArcher = 365, //Done (DG) - Use AI 8 (AxeSkeleton)
+    FrozenKnight = 366, // Done (DG)
+    FrozenGolem = 367, // Done (DG) - Basic Attack1 mob
+    IcePhantom = 368, //Done (DG) - //TODO - AI needs revisiting (blue explosion and snakes)
+    SnowWolf = 369, // Done (DG)
+    SnowWolfKing = 370, //TODO - BOSS AI
+    WaterDragon = 371, //TODO - BOSS AI
+    BlackTortoise = 372, //Done (DG) //TODO - figure out what the blue flashes are for (Critical hits??)
+    Manticore = 373, //TODO - BOSS AI
+    DragonWarrior = 374, //Done (DG)
+    DragonArcher = 375, //TODO - Wind Arrow spell and Tornado (minion?)    
+    Kirin = 376, // Done (jxtulong)
     Guard3 = 377,
     ArcherGuard3 = 378,
     Bunny2 = 379,
-    FrozenMiner = 380,
-    FrozenAxeman = 381,
-    FrozenMagician = 382,
-    SnowYeti = 383,
-    IceCrystalSoldier = 384,
-    DarkWraith = 385,
-    DarkSpirit = 386,
+    FrozenMiner = 380, // Done (jxtulong)
+    FrozenAxeman = 381, // Done (jxtulong)
+    FrozenMagician = 382, // Done (jxtulong)
+    SnowYeti = 383, // Done (jxtulong)
+    IceCrystalSoldier = 384, // Done (jxtulong)
+    DarkWraith = 385, // Done (jxtulong)
+    DarkSpirit = 386, // Use AI 8 (AxeSkeleton)
     CrystalBeast = 387,
     RedOrb = 388,
     BlueOrb = 389,
@@ -599,11 +586,11 @@ public enum Monster : ushort
     WhiteOrb = 392,
     FatalLotus = 393,
     AntCommander = 394,
-    CargoBoxwithlogo = 395,
-    Doe = 396,
+    CargoBoxwithlogo = 395, // Done - Use CargoBox AI.
+    Doe = 396, // TELEPORT = EFFECT 9
     Reindeer = 397, //frames not added
     AngryReindeer = 398,
-    CargoBox = 399,
+    CargoBox = 399, // Done - Basically a Pinata.
 
     Ram1 = 400,
     Ram2 = 401,
@@ -973,7 +960,9 @@ public enum PoisonType : ushort
     Paralysis = 32,
     DelayedExplosion = 64,
     Bleeding = 128,
-    LRParalysis = 256
+    LRParalysis = 256,
+    Blindness = 512,
+    Dazed = 1024
 }
 
 [Flags]
@@ -1004,7 +993,7 @@ public enum SpecialItemMode : short
     None = 0,
     Paralize = 0x0001,
     Teleport = 0x0002,
-    Clearring = 0x0004,
+    ClearRing = 0x0004,
     Protection = 0x0008,
     Revival = 0x0010,
     Muscle = 0x0020,
@@ -1212,6 +1201,8 @@ public enum Spell : byte
     Blink = 151,
     Portal = 152,
     BattleCry = 153,
+    FireBounce = 154,
+    MeteorShower = 155,
 
     //Map Events
     DigOutZombie = 200,
@@ -1219,7 +1210,17 @@ public enum Spell : byte
     MapLightning = 202,
     MapLava = 203,
     MapQuake1 = 204,
-    MapQuake2 = 205
+    MapQuake2 = 205,
+    GeneralMeowMeowThunder = 206,
+    StoneGolemQuake = 207,
+    EarthGolemPile = 208,
+    TreeQueenRoot = 209,
+    TreeQueenMassRoots = 210,
+    TreeQueenGroundRoots = 211,
+    TucsonGeneralRock = 212,
+    FlyingStatueIceTornado = 213,
+    DarkOmaKingNuke = 214,
+    HornedSorcererDustTornado = 215,
 }
 
 public enum SpellEffect : byte
@@ -1251,7 +1252,12 @@ public enum SpellEffect : byte
     TurtleKing,
     Behemoth,
     Stunned,
-    IcePillar
+    IcePillar,
+    KingGuard,
+    KingGuard2,    
+    DeathCrawlerBreath,
+    FlamingMutantWeb,
+    Tester    
 }
 
 
@@ -1284,6 +1290,15 @@ public enum BuffType : byte
     PetEnhancer,
     ImmortalSkin,
     MagicShield,
+    ElementalBarrier,
+
+    //monster
+    HornedArcherBuff = 50,
+    ColdArcherBuff,
+    GeneralMeowMeowShield,
+    RhinoPriestDebuff,
+    PowerBeadBuff,
+    HornedWarriorShield,
 
     //special
     GameMaster = 100,
@@ -1299,6 +1314,8 @@ public enum BuffType : byte
     Guild,
     Prison,
     Rested,
+    Skill,
+    ClearRing,
 
     //stats
     Impact = 200,
@@ -1310,7 +1327,14 @@ public enum BuffType : byte
     Defence,
     MagicDefence,
     WonderDrug,
-    Knapsack
+    Knapsack,
+}
+
+public enum BuffStackType : byte
+{
+    Reset,
+    Duration,
+    Stat
 }
 
 public enum DefenceType : byte
@@ -1345,6 +1369,7 @@ public enum ServerPacketIds : short
     StartGameDelay,
     MapInformation,
     UserInformation,
+    UserSlotsRefresh,
     UserLocation,
     ObjectPlayer,
     ObjectRemove,
@@ -1427,6 +1452,7 @@ public enum ServerPacketIds : short
     CraftItem,
     RepairItem,
     ItemRepaired,
+    ItemSlotSizeChanged,
     NewMagic,
     RemoveMagic,
     MagicLeveled,
@@ -1435,6 +1461,7 @@ public enum ServerPacketIds : short
     MagicCast,
     ObjectMagic,
     ObjectEffect,
+    ObjectProjectile,
     RangeAttack,
     Pushed,
     ObjectPushed,
@@ -1512,9 +1539,7 @@ public enum ServerPacketIds : short
     CombineItem,
     ItemUpgraded,
     SetConcentration,
-    SetObjectConcentration,
     SetElemental,
-    SetObjectElemental,
     RemoveDelayedExplosion,
     ObjectDeco,
     ObjectSneaking,
@@ -1635,6 +1660,7 @@ public enum ClientPacketIds : short
     MarketPage,
     MarketBuy,
     MarketGetBack,
+    MarketSellNow,
     RequestUserName,
     RequestChatItem,
     EditGuildMember,
@@ -1671,7 +1697,6 @@ public enum ClientPacketIds : short
     CancelReincarnation,
     CombineItem,
 
-    SetConcentration,
     AwakeningNeedMaterials,
     AwakeningLockedItem,
     Awakening,
@@ -1689,6 +1714,7 @@ public enum ClientPacketIds : short
 
     UpdateIntelligentCreature,
     IntelligentCreaturePickup,
+    RequestIntelligentCreatureUpdates,
 
     AddFriend,
     RemoveFriend,

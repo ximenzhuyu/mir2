@@ -15,7 +15,6 @@ namespace Launcher
 {
     public partial class AMain : Form
     {
-
         long _totalBytes, _completedBytes, _currentBytes;
         private int _fileCount, _currentCount;
 
@@ -178,10 +177,21 @@ namespace Launcher
             {
                 if (info != null && (Path.GetExtension(old.FileName).ToLower() == ".dll" || Path.GetExtension(old.FileName).ToLower() == ".exe"))
                 {
-                    string oldFilename = Path.Combine(Path.GetDirectoryName(old.FileName), ("Old" + Path.GetFileName(old.FileName)));
+                    string oldFilename = Path.Combine(Path.GetDirectoryName(old.FileName), ("Old__" + Path.GetFileName(old.FileName)));
 
-                    File.Move(Settings.P_Client + old.FileName, oldFilename);
-                    Restart = true;
+                    try
+                    {
+                        File.Move(Settings.P_Client + old.FileName, oldFilename);
+                    }
+                    catch (UnauthorizedAccessException ex)
+                    {
+                        SaveError(ex.ToString());
+                    }
+                    finally
+                    {
+                        //Might cause an infinite loop if it can never gain access
+                        Restart = true;
+                    }
                 }
 
                 DownloadList.Enqueue(old);
@@ -193,8 +203,10 @@ namespace Launcher
         {
             string fileName = info.FileName.Replace(@"\", "/");
 
-            if (fileName != "PList.gz")
+            if (fileName != "PList.gz" && (info.Compressed != info.Length || info.Compressed == 0))
+            {
                 fileName += ".gz";
+            }
 
             try
             {
@@ -219,11 +231,20 @@ namespace Launcher
                                 _currentBytes = 0;
                                 _stopwatch.Stop();
 
-                            if (!Directory.Exists(Settings.P_Client + Path.GetDirectoryName(info.FileName)))
-                                Directory.CreateDirectory(Settings.P_Client + Path.GetDirectoryName(info.FileName));
+                                byte[] raw = e.Result;
 
-                            File.WriteAllBytes(Settings.P_Client + info.FileName, e.Result);
-                            File.SetLastWriteTime(Settings.P_Client + info.FileName, info.Creation);
+                                if (info.Compressed > 0 && info.Compressed != info.Length)
+                                {
+                                    raw = Decompress(e.Result);
+                                }
+
+                                if (!Directory.Exists(Settings.P_Client + Path.GetDirectoryName(info.FileName)))
+                                {
+                                    Directory.CreateDirectory(Settings.P_Client + Path.GetDirectoryName(info.FileName));
+                                }
+
+                                File.WriteAllBytes(Settings.P_Client + info.FileName, raw);
+                                File.SetLastWriteTime(Settings.P_Client + info.FileName, info.Creation);
                             }
                             BeginDownload();
                         };
@@ -313,12 +334,7 @@ namespace Launcher
         {
             if (Settings.P_BrowserAddress != "") Main_browser.Navigate(new Uri(Settings.P_BrowserAddress));
 
-            var files = Directory.GetFiles(Settings.P_Client).Where(x => Path.GetFileName(x).StartsWith("Old"));
-
-            foreach (var oldFilename in files)
-            {
-                File.Delete(oldFilename);
-            }
+            RepairOldFiles();
 
             Launch_pb.Enabled = false;
             ProgressCurrent_pb.Width = 5;
@@ -495,7 +511,7 @@ namespace Launcher
                     {
                         Program.Restart = true;
 
-                        MoveOldClientToCurrent();
+                        MoveOldFilesToCurrent();
 
                         Close();
                     }
@@ -554,16 +570,33 @@ namespace Launcher
 
         private void AMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-            MoveOldClientToCurrent();
+            MoveOldFilesToCurrent();
         }
 
-        private void MoveOldClientToCurrent()
+        private void RepairOldFiles()
         {
-            var files = Directory.GetFiles(Settings.P_Client).Where(x => Path.GetFileName(x).StartsWith("Old"));
+            var files = Directory.GetFiles(Settings.P_Client, "*", SearchOption.AllDirectories).Where(x => Path.GetFileName(x).StartsWith("Old__"));
 
             foreach (var oldFilename in files)
             {
-                string originalFilename = Path.Combine(Path.GetDirectoryName(oldFilename), (Path.GetFileName(oldFilename).Substring(3)));
+                if (!File.Exists(oldFilename.Replace("Old__", "")))
+                {
+                    File.Move(oldFilename, oldFilename.Replace("Old__", ""));
+                }
+                else
+                {
+                    File.Delete(oldFilename);
+                }
+            }
+        }
+
+        private void MoveOldFilesToCurrent()
+        {
+            var files = Directory.GetFiles(Settings.P_Client, "*", SearchOption.AllDirectories).Where(x => Path.GetFileName(x).StartsWith("Old__"));
+
+            foreach (var oldFilename in files)
+            {
+                string originalFilename = Path.Combine(Path.GetDirectoryName(oldFilename), (Path.GetFileName(oldFilename).Replace("Old__", "")));
 
                 if (!File.Exists(originalFilename) && File.Exists(oldFilename))
                     File.Move(oldFilename, originalFilename);
