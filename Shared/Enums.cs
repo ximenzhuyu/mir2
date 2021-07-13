@@ -341,7 +341,7 @@ public enum Monster : ushort
     HalloweenScythe = 151,
     GhastlyLeecher = 152,
     CyanoGhast = 153,
-    MutatedManworm = 154, //EFFECT 4
+    MutatedManworm = 154,
     CrazyManworm = 155,
     MudPile = 156,
     TailedLion = 157,
@@ -359,13 +359,13 @@ public enum Monster : ushort
     RedTurtle = 169,
     GreenTurtle = 170,
     BlueTurtle = 171,
-    Catapult1 = 172, //SPECIAL
-    Catapult2 = 173, //SPECIAL
+    Catapult1 = 172, //SPECIAL TODO
+    Catapult2 = 173, //SPECIAL TODO
     OldSpittingSpider = 174,
-    SiegeRepairman = 175, //SPECIAL
+    SiegeRepairman = 175, //SPECIAL TODO
     BlueSanta = 176,
     BattleStandard = 177,
-    Blank2 = 178,
+    Blank1 = 178,
     RedYimoogi = 179,
     LionRiderMale = 180, //Not Monster - Skin / Transform
     LionRiderFemale = 181, //Not Monster - Skin / Transform
@@ -382,12 +382,11 @@ public enum Monster : ushort
     DarkCrossbowOma = 192,
     DarkWingedOma = 193,
     BoneWhoo = 194,
-    DarkSpider = 195, // USE AI 8
+    DarkSpider = 195, //AI 8
     ViscusWorm = 196,
     ViscusCrawler = 197,
     CrawlerLave = 198,
     DarkYob = 199,
-
     FlamingMutant = 200,
     StoningStatue = 201, //BOSS
     FlyingStatue = 202,
@@ -418,7 +417,7 @@ public enum Monster : ushort
     ChaosGhost = 227,
     ManectricBlest = 228,
     ManectricKing = 229,
-    Blank3 = 230,
+    Blank2 = 230,
     IcePillar = 231,
     FrostYeti = 232,
     ManectricSlave = 233,
@@ -449,7 +448,6 @@ public enum Monster : ushort
     Snake15 = 258,
     Snake16 = 259,
     Snake17 = 260,
-
     DeathCrawler = 261, 
     BurningZombie = 262, 
     MudZombie = 263, 
@@ -507,12 +505,12 @@ public enum Monster : ushort
     OmaAssassin = 314, 
     OmaMage = 315, 
     OmaWitchDoctor = 316,
-    LightningBead = 317, // Minion of DarkOmaKing
-    HealingBead = 318, // Minion of DarkOmaKing
-    PowerUpBead = 319, // Minion of DarkOmaKing
-    DarkOmaKing = 320, //TODO - BOSS AI
+    LightningBead = 317, //Effect 0, AI 149
+    HealingBead = 318, //Effect 1, AI 149
+    PowerUpBead = 319, //Effect 2, AI 14
+    DarkOmaKing = 320, //BOSS
     CaveStatue = 321,
-    Mandrill = 322, // EFFECT 7, AI 65
+    Mandrill = 322,
     PlagueCrab = 323,
     CreeperPlant = 324,
     FloatingWraith = 325, //AI 8
@@ -524,49 +522,49 @@ public enum Monster : ushort
     AxePlant = 331,
     WoodBox = 332,
     ClawBeast = 333, //AI 8
-    DarkCaptain = 334, //BOSS - Needs power up bead attack adding
+    DarkCaptain = 334, //BOSS
     SackWarrior = 335,
     WereTiger = 336, //AI 112
     KingHydrax = 337,
     Hydrax = 338,
     HornedMage = 339,
-    BlueSoul = 340, //TODO
-    HornedArcher = 341, // Incomplete AI (DG) - Need to code the buffs.
-    ColdArcher = 342, // Done (DG) - //TODO - check wemade file for arrow issue
-    HornedWarrior = 343, // TODO - HAS BUFF MECHANIC
-    FloatingRock = 344, // Done (DG)
-    ScalyBeast = 345, //Done
+    BlueSoul = 340,
+    HornedArcher = 341,
+    ColdArcher = 342,
+    HornedWarrior = 343,
+    FloatingRock = 344,
+    ScalyBeast = 345,
     HornedSorceror = 346,
     BoulderSpirit = 347,
-    HornedCommander = 348,
+    HornedCommander = 348, //BOSS
 
     MoonStone = 349,
     SunStone = 350,
     LightningStone = 351,
-    Turtlegrass = 352, // Done (DG)
-    ManTree = 353, //Done (DG)
-    Bear = 354, //Done (DG)
-    Leopard = 355, // Basic mob (No AI or spell animations) (DG)
+    Turtlegrass = 352,
+    ManTree = 353,
+    Bear = 354,  //Effect 1, AI 112
+    Leopard = 355,
     ChieftainArcher = 356,
-    ChieftainSword = 357, //TODO - BOSS AI
+    ChieftainSword = 357, //BOSS TODO
     StoningSpider = 358, //Archer Spell mob (not yet coded)
     VampireSpider = 359, //Archer Spell mob
     SpittingToad = 360, //Archer Spell mob
     SnakeTotem = 361, //Archer Spell mob
     CharmedSnake = 362, //Archer Spell mob
-    FrozenSoldier = 363, // Basic mob (No AI or spell animations) (DG)
-    FrozenFighter = 364, // Done (DG)
-    FrozenArcher = 365, //Done (DG) - Use AI 8 (AxeSkeleton)
-    FrozenKnight = 366, // Done (DG)
-    FrozenGolem = 367, // Done (DG) - Basic Attack1 mob
-    IcePhantom = 368, //Done (DG) - //TODO - AI needs revisiting (blue explosion and snakes)
-    SnowWolf = 369, // Done (DG)
-    SnowWolfKing = 370, //TODO - BOSS AI
-    WaterDragon = 371, //TODO - BOSS AI
-    BlackTortoise = 372, //Done (DG) //TODO - figure out what the blue flashes are for (Critical hits??)
-    Manticore = 373, //TODO - BOSS AI
+    FrozenSoldier = 363,
+    FrozenFighter = 364, //AI 44
+    FrozenArcher = 365, //AI 8
+    FrozenKnight = 366,
+    FrozenGolem = 367,
+    IcePhantom = 368, //TODO - AI needs revisiting (blue explosion and snakes)
+    SnowWolf = 369,
+    SnowWolfKing = 370, //BOSS
+    WaterDragon = 371,
+    BlackTortoise = 372,
+    Manticore = 373, //TODO
     DragonWarrior = 374, //Done (DG)
-    DragonArcher = 375, //TODO - Wind Arrow spell and Tornado (minion?)    
+    DragonArcher = 375, //TODO - Wind Arrow spell
     Kirin = 376, // Done (jxtulong)
     Guard3 = 377,
     ArcherGuard3 = 378,
@@ -606,10 +604,10 @@ public enum Monster : ushort
     GlacierBeast = 411,
     GlacierWarrior = 412,
     ShardGuardian = 413,
-    WarriorScroll = 414,
-    TaoistScroll = 415,
-    WizardScroll = 416,
-    AssassinScroll = 417,
+    WarriorScroll = 414, // Use AI "HoodedSummonerScrolls" - Info.Effect = 0
+    TaoistScroll = 415, // Use AI "HoodedSummonerScrolls" - Info.Effect = 1
+    WizardScroll = 416, // Use AI "HoodedSummonerScrolls" - Info.Effect = 2
+    AssassinScroll = 417, // Use AI "HoodedSummonerScrolls" - Info.Effect = 3
     HoodedSummoner = 418, //Summons Scrolls
     HoodedIceMage = 419,
     HoodedPriest = 420,
@@ -1221,6 +1219,8 @@ public enum Spell : byte
     FlyingStatueIceTornado = 213,
     DarkOmaKingNuke = 214,
     HornedSorcererDustTornado = 215,
+    HornedCommanderRockFall = 216,
+    HornedCommanderRockSpike = 217
 }
 
 public enum SpellEffect : byte
@@ -1265,7 +1265,7 @@ public enum BuffType : byte
 {
     None = 0,
 
-    //magics
+    //Magics
     TemporalFlux,
     Hiding,
     Haste,
@@ -1292,15 +1292,16 @@ public enum BuffType : byte
     MagicShield,
     ElementalBarrier,
 
-    //monster
+    //Monster
     HornedArcherBuff = 50,
     ColdArcherBuff,
     GeneralMeowMeowShield,
     RhinoPriestDebuff,
     PowerBeadBuff,
     HornedWarriorShield,
+    HornedCommanderShield,
 
-    //special
+    //Special
     GameMaster = 100,
     General,
     Exp,
@@ -1317,7 +1318,7 @@ public enum BuffType : byte
     Skill,
     ClearRing,
 
-    //stats
+    //Stats
     Impact = 200,
     Magic,
     Taoist,
@@ -1330,11 +1331,24 @@ public enum BuffType : byte
     Knapsack,
 }
 
+[Flags]
+public enum BuffProperty : byte
+{
+    None = 0,
+    RemoveOnDeath = 1,
+    RemoveOnExit = 2,
+    Debuff = 4,
+    PauseInSafeZone = 8
+}
+
 public enum BuffStackType : byte
 {
-    Reset,
-    Duration,
-    Stat
+    None,
+    ResetDuration,
+    StackDuration,
+    StackStat,
+    StackStatAndDuration,
+    Infinite
 }
 
 public enum DefenceType : byte
@@ -1480,6 +1494,7 @@ public enum ServerPacketIds : short
     ObjectRangeAttack,
     AddBuff,
     RemoveBuff,
+    PauseBuff,
     ObjectHidden,
     RefreshItem,
     ObjectSpell,
@@ -1593,7 +1608,8 @@ public enum ServerPacketIds : short
     PlaySound,
     SetTimer,
     ExpireTimer,
-    UpdateNotice
+    UpdateNotice,
+    Roll
 }
 
 public enum ClientPacketIds : short

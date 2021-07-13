@@ -82,7 +82,7 @@ namespace Server.MirObjects.Monsters
                         [Stat.MinAC] = 100
                     };
 
-                    AddBuff(BuffType.GeneralMeowMeowShield, this, ShieldUpDuration, stats, visible: true);                 
+                    AddBuff(BuffType.GeneralMeowMeowShield, this, ShieldUpDuration, stats);                 
 
                     if (Envir.Time > ThunderAttackTime)
                     {
@@ -157,7 +157,7 @@ namespace Server.MirObjects.Monsters
                             Value = Envir.Random.Next(Stats[Stat.MinMC], Stats[Stat.MaxMC]),
                             ExpireTime = Envir.Time + 1000,
                             TickSpeed = 500,
-                            Caster = null,
+                            Caster = this,
                             CurrentLocation = targets[i].CurrentLocation,
                             CurrentMap = CurrentMap,
                             Direction = MirDirection.Up

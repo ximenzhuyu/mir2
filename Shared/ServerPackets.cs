@@ -3450,6 +3450,7 @@ namespace ServerPackets
         public Point Target;
         public byte Type;
         public Spell Spell;
+        public byte Level;
 
         protected override void ReadPacket(BinaryReader reader)
         {
@@ -3460,6 +3461,7 @@ namespace ServerPackets
             Target = new Point(reader.ReadInt32(), reader.ReadInt32());
             Type = reader.ReadByte();
             Spell = (Spell)reader.ReadByte();
+            Level = reader.ReadByte();
         }
 
         protected override void WritePacket(BinaryWriter writer)
@@ -3473,6 +3475,7 @@ namespace ServerPackets
             writer.Write(Target.Y);
             writer.Write(Type);
             writer.Write((byte)Spell);
+            writer.Write(Level);
         }
     }
     public sealed class AddBuff : Packet
@@ -3508,6 +3511,28 @@ namespace ServerPackets
             writer.Write(ObjectID);
         }
     }
+    public sealed class PauseBuff : Packet
+    {
+        public override short Index { get { return (short)ServerPacketIds.PauseBuff; } }
+
+        public BuffType Type;
+        public uint ObjectID;
+        public bool Paused;
+
+        protected override void ReadPacket(BinaryReader reader)
+        {
+            Type = (BuffType)reader.ReadByte();
+            ObjectID = reader.ReadUInt32();
+            Paused = reader.ReadBoolean();
+        }
+        protected override void WritePacket(BinaryWriter writer)
+        {
+            writer.Write((byte)Type);
+            writer.Write(ObjectID);
+            writer.Write(Paused);
+        }
+    }
+
     public sealed class ObjectHidden : Packet
     {
         public override short Index { get { return (short)ServerPacketIds.ObjectHidden; } }
@@ -5848,6 +5873,31 @@ namespace ServerPackets
         protected override void WritePacket(BinaryWriter writer)
         {
             Notice.Save(writer);
+        }
+    }
+
+    public sealed class Roll : Packet
+    {
+        public override short Index { get { return (short)ServerPacketIds.Roll; } }
+
+        public int Type;
+        public string Page;
+        public int Result;
+        public bool AutoRoll;
+
+        protected override void ReadPacket(BinaryReader reader)
+        {
+            Type = reader.ReadInt32();
+            Page = reader.ReadString();
+            Result = reader.ReadInt32();
+            AutoRoll = reader.ReadBoolean();
+        }
+        protected override void WritePacket(BinaryWriter writer)
+        {
+            writer.Write(Type);
+            writer.Write(Page);
+            writer.Write(Result);
+            writer.Write(AutoRoll);
         }
     }
 }

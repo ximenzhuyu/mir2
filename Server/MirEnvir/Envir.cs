@@ -54,7 +54,7 @@ namespace Server.MirEnvir
         public static object LoadLock = new object();
 
         public const int MinVersion = 60;
-        public const int Version = 87;
+        public const int Version = 88;
         public const int CustomVersion = 0;
         public static readonly string DatabasePath = Path.Combine(".", "Server.MirDB");
         public static readonly string AccountPath = Path.Combine(".", "Server.MirADB");
@@ -399,10 +399,10 @@ namespace Server.MirEnvir
 
         private string CanStartEnvir()
         {
+            if (StartPoints.Count == 0) return "Cannot start server without atleast 1 Map and StartPoint.";
+
             if (Settings.EnforceDBChecks)
             {
-                if (StartPoints.Count == 0) return "Cannot start server without start points";
-
                 if (GetMonsterInfo(Settings.SkeletonName, true) == null) return "Cannot start server without mob: " + Settings.SkeletonName;
                 if (GetMonsterInfo(Settings.ShinsuName, true) == null) return "Cannot start server without mob: " + Settings.ShinsuName;
                 if (GetMonsterInfo(Settings.BugBatName, true) == null) return "Cannot start server without mob: " + Settings.BugBatName;
@@ -446,6 +446,13 @@ namespace Server.MirEnvir
                 if (GetMonsterInfo(Settings.GeneralMeowMeowMob3, true) == null) return "Cannot start server without mob: " + Settings.GeneralMeowMeowMob3;
                 if (GetMonsterInfo(Settings.GeneralMeowMeowMob4, true) == null) return "Cannot start server without mob: " + Settings.GeneralMeowMeowMob4;
                 if (GetMonsterInfo(Settings.KingHydraxMob, true) == null) return "Cannot start server without mob: " + Settings.KingHydraxMob;
+                if (GetMonsterInfo(Settings.HornedCommanderMob, true) == null) return "Cannot start server without mob: " + Settings.HornedCommanderMob;
+                if (GetMonsterInfo(Settings.HornedCommanderBombMob, true) == null) return "Cannot start server without mob: " + Settings.HornedCommanderBombMob;
+                if (GetMonsterInfo(Settings.SnowWolfKingMob, true) == null) return "Cannot start server without mob: " + Settings.SnowWolfKingMob;
+                if (GetMonsterInfo(Settings.ScrollMob1, true) == null) return "Cannot start server without mob: " + Settings.ScrollMob1;
+                if (GetMonsterInfo(Settings.ScrollMob2, true) == null) return "Cannot start server without mob: " + Settings.ScrollMob2;
+                if (GetMonsterInfo(Settings.ScrollMob3, true) == null) return "Cannot start server without mob: " + Settings.ScrollMob3;
+                if (GetMonsterInfo(Settings.ScrollMob4, true) == null) return "Cannot start server without mob: " + Settings.ScrollMob4;
 
                 if (GetItemInfo(Settings.RefineOreName) == null) return "Cannot start server without item: " + Settings.RefineOreName;
             }
@@ -1895,6 +1902,12 @@ namespace Server.MirEnvir
 
             LoadDB();
 
+            BuffInfoList.Clear();
+            foreach (var buff in BuffInfo.Load())
+                BuffInfoList.Add(buff);
+
+            MessageQueue.Enqueue($"{BuffInfoList.Count} Buffs Loaded.");
+
             RecipeInfoList.Clear();
             foreach (var recipe in Directory.GetFiles(Settings.RecipePath, "*.txt")
                 .Select(path => Path.GetFileNameWithoutExtension(path))
@@ -2943,6 +2956,7 @@ namespace Server.MirEnvir
             }
             return null;
         }
+
         public ItemInfo GetItemInfo(string name)
         {
             for (var i = 0; i < ItemInfoList.Count; i++)
@@ -2953,6 +2967,7 @@ namespace Server.MirEnvir
             }
             return null;
         }
+
         public QuestInfo GetQuestInfo(int index)
         {
             return QuestInfoList.FirstOrDefault(info => info.Index == index);
@@ -2967,6 +2982,19 @@ namespace Server.MirEnvir
                 return info;
             }
             return null;
+        }
+
+        public BuffInfo GetBuffInfo(BuffType type)
+        {
+            for (int i = 0; i < BuffInfoList.Count; i++)
+            {
+                var info = BuffInfoList[i];
+                if (info.Type != type) continue;
+
+                return info;
+            }
+
+            throw new NotImplementedException($"{type} has not been implemented.");
         }
 
         public void MessageAccount(AccountInfo account, string message, ChatType type)

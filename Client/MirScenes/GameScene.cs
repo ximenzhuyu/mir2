@@ -117,6 +117,7 @@ namespace Client.MirScenes
 
         public TimerDialog TimerControl;
         public CompassDialog CompassControl;
+        public RollDialog RollControl;
 
 
         public static List<ItemInfo> ItemInfoList = new List<ItemInfo>();
@@ -125,8 +126,6 @@ namespace Client.MirScenes
         public static List<ClientQuestInfo> QuestInfoList = new List<ClientQuestInfo>();
         public static List<GameShopItem> GameShopInfoList = new List<GameShopItem>();
         public static List<ClientRecipeInfo> RecipeInfoList = new List<ClientRecipeInfo>();
-
-        public List<ClientBuff> Buffs = new List<ClientBuff>();
 
         public static UserItem[] Storage = new UserItem[80];
         public static UserItem[] GuildStorage = new UserItem[112];
@@ -262,10 +261,12 @@ namespace Client.MirScenes
             ItemRentalDialog = new ItemRentalDialog { Parent = this, Visible = false };
 
             BuffsDialog = new BuffDialog { Parent = this, Visible = true };
+
             KeyboardLayoutDialog = new KeyboardLayoutDialog { Parent = this, Visible = false };
 
             TimerControl = new TimerDialog { Parent = this, Visible = false };
             CompassControl = new CompassDialog { Parent = this, Visible = false };
+            RollControl = new RollDialog { Parent = this, Visible = false };
 
             for (int i = 0; i < OutputLines.Length; i++)
                 OutputLines[i] = new MirLabel
@@ -759,6 +760,8 @@ namespace Client.MirScenes
 
         public void UseSpell(int key)
         {
+            RollControl.Setup(0, "Test", CMain.Random.Next(1, 7), false);
+
             if (User.RidingMount || User.Fishing) return;
 
             if (!User.HasClassWeapon && User.Weapon >= 0)
@@ -783,7 +786,7 @@ namespace Client.MirScenes
             switch (magic.Spell)
             {
                 case Spell.CounterAttack:
-                    if ((CMain.Time < magic.CastTime + magic.Delay) && magic.CastTime != 0)
+                    if ((CMain.Time < magic.CastTime + magic.Delay))
                     {
                         if (CMain.Time >= OutputDelay)
                         {
@@ -1439,6 +1442,9 @@ namespace Client.MirScenes
                 case (short)ServerPacketIds.RemoveBuff:
                     RemoveBuff((S.RemoveBuff)p);
                     break;
+                case (short)ServerPacketIds.PauseBuff:
+                    PauseBuff((S.PauseBuff)p);
+                    break;
                 case (short)ServerPacketIds.ObjectHidden:
                     ObjectHidden((S.ObjectHidden)p);
                     break;
@@ -1776,6 +1782,9 @@ namespace Client.MirScenes
                     break;
                 case (short)ServerPacketIds.UpdateNotice:
                     ShowNotice((S.UpdateNotice)p);
+                    break;
+                case (short)ServerPacketIds.Roll:
+                    Roll((S.Roll)p);
                     break;
                 default:
                     base.ProcessPacket(p);
@@ -2480,8 +2489,7 @@ namespace Client.MirScenes
             {
                 if (MapControl.Objects[i].ObjectID != p.ObjectID) continue;
 
-                PlayerObject player = MapControl.Objects[i] as PlayerObject;
-                if (player != null)
+                if (MapControl.Objects[i] is PlayerObject player)
                 {
                     player.TransformType = p.TransformType;
                 }
@@ -2794,7 +2802,7 @@ namespace Client.MirScenes
                 if (ob.ObjectID != p.ObjectID) continue;
                 if (ob.Race == ObjectType.Player)
                 {
-                    action = new QueuedAction { Action = MirAction.Attack1, Direction = p.Direction, Location = p.Location, Params = new List<object>() }; //FAR Close up attack
+                    action = new QueuedAction { Action = MirAction.Attack1, Direction = p.Direction, Location = p.Location, Params = new List<object>() };
                 }
                 else
                 {
@@ -3304,6 +3312,7 @@ namespace Client.MirScenes
                 User.BlindCount = 0;
             }
         }
+
         private void ObjectPoisoned(S.ObjectPoisoned p)
         {
             for (int i = MapControl.Objects.Count - 1; i >= 0; i--)
@@ -3356,17 +3365,17 @@ namespace Client.MirScenes
                 {
                     case 1: //Yimoogi
                         {
-                            effect = new Effect(Libraries.Magic2, 1300, 10, 500, ob);
+                            effect = new Effect(Libraries.Magic2, 1300, 10, 500, ob.CurrentLocation);
                             break;
                         }
                     case 2: //RedFoxman
                         {
-                            effect = new Effect(Libraries.Monsters[(ushort)Monster.RedFoxman], 243, 10, 500, ob);
+                            effect = new Effect(Libraries.Monsters[(ushort)Monster.RedFoxman], 243, 10, 500, ob.CurrentLocation);
                             break;
                         }
                     case 4: //MutatedManWorm
                         {
-                            effect = new Effect(Libraries.Monsters[(ushort)Monster.MutatedManworm], 272, 6, 500, ob);
+                            effect = new Effect(Libraries.Monsters[(ushort)Monster.MutatedManworm], 272, 6, 500, ob.CurrentLocation);
 
                             SoundManager.PlaySound(((ushort)Monster.MutatedManworm) * 10 + 7);
                             playDefaultSound = false;
@@ -3374,52 +3383,68 @@ namespace Client.MirScenes
                         }
                     case 5: //WitchDoctor
                         {
-                            effect = new Effect(Libraries.Monsters[(ushort)Monster.WitchDoctor], 328, 20, 1000, ob);
+                            effect = new Effect(Libraries.Monsters[(ushort)Monster.WitchDoctor], 328, 20, 1000, ob.CurrentLocation);
                             SoundManager.PlaySound(((ushort)Monster.WitchDoctor) * 10 + 7);
                             playDefaultSound = false;
                             break;
                         }
                     case 6: //TurtleKing
                         {
-                            effect = new Effect(Libraries.Monsters[(ushort)Monster.TurtleKing], 946, 10, 500, ob);
+                            effect = new Effect(Libraries.Monsters[(ushort)Monster.TurtleKing], 946, 10, 500, ob.CurrentLocation);
                             break;
                         }
                     case 7: //Mandrill
                         {
-                            effect = new Effect(Libraries.Monsters[(ushort)Monster.Mandrill], 280, 10, 1000, ob);
+                            effect = new Effect(Libraries.Monsters[(ushort)Monster.Mandrill], 280, 10, 1000, ob.CurrentLocation);
+                            SoundManager.PlaySound(((ushort)Monster.Mandrill) * 10 + 6);
+                            playDefaultSound = false;
                             break;
                         }
                     case 8: //DarkCaptain
                         {
-                            ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.DarkCaptain], 1224, 10, 1000, ob));
+                            ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.DarkCaptain], 1224, 10, 1000, ob.CurrentLocation));
                             SoundManager.PlaySound(((ushort)Monster.DarkCaptain) * 10 + 8);
                             playDefaultSound = false;
                             break;
                         }
                     case 9: //Doe
                         {
-                            ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Doe], 208, 10, 1000, ob));
+                            effect = new Effect(Libraries.Monsters[(ushort)Monster.Doe], 208, 10, 1000, ob.CurrentLocation);
                             SoundManager.PlaySound(((ushort)Monster.Doe) * 10 + 7);
                             playDefaultSound = false;
                             break;
                         }
                     case 10: //HornedCommander
                         {
-                            ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HornedCommander], 928, 10, 1000, ob));
+                            MapControl.Effects.Add(effect = new Effect(Libraries.Monsters[(ushort)Monster.HornedCommander], 928, 10, 1000, ob.CurrentLocation));
+                            SoundManager.PlaySound(8455);
+                            playDefaultSound = false;
+                            break;
+                        }
+                    case 11: //SnowWolfKing
+                        {
+                            MapControl.Effects.Add(effect = new Effect(Libraries.Monsters[(ushort)Monster.SnowWolfKing], 561, 10, 1000, ob.CurrentLocation));
+                            SoundManager.PlaySound(8455);
+                            playDefaultSound = false;
                             break;
                         }
                     default:
                         {
-                            effect = new Effect(Libraries.Magic, 250, 10, 500, ob);
+                            effect = new Effect(Libraries.Magic, 250, 10, 500, ob.CurrentLocation);
                             break;
                         }
                 }
 
-                if (effect != null)
-                {
-                    effect.Complete += (o, e) => ob.Remove();
-                    ob.Effects.Add(effect);
-                }
+                //Doesn't seem to have ever worked properly - Meant to remove object after animation complete, however due to server mechanics will always
+                //instantly remove object and never play TeleportOut animation. Changing to a MapEffect - not ideal as theres no delay.
+
+                MapControl.Effects.Add(effect);
+
+                //if (effect != null)
+                //{
+                //    effect.Complete += (o, e) => ob.Remove();
+                //    ob.Effects.Add(effect);
+                //}
 
                 if (playDefaultSound)
                 {
@@ -3453,7 +3478,6 @@ namespace Client.MirScenes
                     case 4: //MutatedManWorm
                         {
                             ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.MutatedManworm], 278, 7, 500, ob));
-
                             SoundManager.PlaySound(((ushort)Monster.MutatedManworm) * 10 + 7);
                             playDefaultSound = false;
                             break;
@@ -3473,6 +3497,8 @@ namespace Client.MirScenes
                     case 7: //Mandrill
                         {
                             ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mandrill], 290, 10, 1000, ob));
+                            SoundManager.PlaySound(((ushort)Monster.Mandrill) * 10 + 6);
+                            playDefaultSound = false;
                             break;
                         }
                     case 8: //DarkCaptain
@@ -3492,6 +3518,15 @@ namespace Client.MirScenes
                     case 10: //HornedCommander
                         {
                             ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HornedCommander], 928, 10, 1000, ob));
+                            SoundManager.PlaySound(8455);
+                            playDefaultSound = false;
+                            break;
+                        }
+                    case 11: //SnowWolfKing
+                        {
+                            ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.SnowWolfKing], 571, 10, 1000, ob));
+                            SoundManager.PlaySound(8455);
+                            playDefaultSound = false;
                             break;
                         }
                     default:
@@ -4311,6 +4346,7 @@ namespace Client.MirScenes
                 action.Params.Add(p.Target);
                 action.Params.Add(p.Spell);
                 action.Params.Add(new List<uint>());
+                action.Params.Add(p.Level);
 
                 ob.ActionFeed.Add(action);
                 return;
@@ -4321,21 +4357,25 @@ namespace Client.MirScenes
         {
             ClientBuff buff = p.Buff;
 
-            buff.ExpireTime += CMain.Time;
+            if (!buff.Paused)
+            {
+                buff.ExpireTime += CMain.Time;
+            }
 
             if (buff.ObjectID == User.ObjectID)
             {
-                for (int i = 0; i < Buffs.Count; i++)
+                for (int i = 0; i < BuffsDialog.Buffs.Count; i++)
                 {
-                    if (Buffs[i].Type != buff.Type) continue;
+                    if (BuffsDialog.Buffs[i].Type != buff.Type) continue;
 
-                    Buffs[i] = buff;
+                    BuffsDialog.Buffs[i] = buff;
                     User.RefreshStats();
                     return;
                 }
-                
-                Buffs.Add(buff);
+
+                BuffsDialog.Buffs.Add(buff);
                 BuffsDialog.CreateBuff(buff);
+
                 User.RefreshStats();     
             }
 
@@ -4360,11 +4400,11 @@ namespace Client.MirScenes
 
         private void RemoveBuff(S.RemoveBuff p)
         {
-            for (int i = 0; i < Buffs.Count; i++)
+            for (int i = 0; i < BuffsDialog.Buffs.Count; i++)
             {
-                if (Buffs[i].Type != p.Type || User.ObjectID != p.ObjectID) continue;
+                if (BuffsDialog.Buffs[i].Type != p.Type || User.ObjectID != p.ObjectID) continue;
 
-                switch (Buffs[i].Type)
+                switch (BuffsDialog.Buffs[i].Type)
                 {
                     case BuffType.SwiftFeet:
                         User.Sprint = false;
@@ -4374,8 +4414,8 @@ namespace Client.MirScenes
                         break;
                 }
 
-                Buffs.RemoveAt(i);
                 BuffsDialog.RemoveBuff(i);
+                BuffsDialog.Buffs.RemoveAt(i);
             }
 
             if (User.ObjectID == p.ObjectID)
@@ -4393,6 +4433,30 @@ namespace Client.MirScenes
                 ob.RemoveBuffEffect(p.Type);
                 return;
             }
+        }
+
+        private void PauseBuff(S.PauseBuff p)
+        {
+            for (int i = 0; i < BuffsDialog.Buffs.Count; i++)
+            {
+                if (BuffsDialog.Buffs[i].Type != p.Type || User.ObjectID != p.ObjectID) continue;
+
+                if (BuffsDialog.Buffs[i].Paused == p.Paused) return;
+
+                BuffsDialog.Buffs[i].Paused = p.Paused;
+
+                if (p.Paused)
+                {
+                    BuffsDialog.Buffs[i].ExpireTime -= CMain.Time;
+                }
+                else
+                {
+                    BuffsDialog.Buffs[i].ExpireTime += CMain.Time;
+                }
+            }
+
+            if (User.ObjectID == p.ObjectID)
+                User.RefreshStats();
         }
 
         private void ObjectHidden(S.ObjectHidden p)
@@ -5211,7 +5275,7 @@ namespace Client.MirScenes
                 }
             }
 
-            ClientBuff buff = Buffs.FirstOrDefault(e => e.Type == BuffType.Guild);
+            ClientBuff buff = BuffsDialog.Buffs.FirstOrDefault(e => e.Type == BuffType.Guild);
 
             if (GuildDialog.EnabledBuffs.Any(e => e.Active))
             {
@@ -5219,7 +5283,7 @@ namespace Client.MirScenes
                 {
                     buff = new ClientBuff { Type = BuffType.Guild, ObjectID = User.ObjectID, Caster = "Guild", Infinite = true, Values = new int[0] };
 
-                    Buffs.Add(buff);
+                    BuffsDialog.Buffs.Add(buff);
                     BuffsDialog.CreateBuff(buff);
                 }
 
@@ -6163,6 +6227,10 @@ namespace Client.MirScenes
                 else if (realItem.Type == ItemType.Potion && realItem.Shape == 4)
                 {
                     text = string.Format("Exp + {0}% ", minValue + addValue);
+                }
+                else if (realItem.Type == ItemType.Potion && realItem.Shape == 5)
+                {
+                    text = string.Format("Drop + {0}% ", minValue + addValue);
                 }
                 else
                 {
@@ -8772,6 +8840,11 @@ namespace Client.MirScenes
             GameScene.Scene.TimerControl.ExpireTimer(p.Key);
         }
 
+        private void Roll(S.Roll p)
+        {
+            GameScene.Scene.RollControl.Setup(p.Type, p.Page, p.Result, p.AutoRoll);
+        }
+
         public void ShowNotice(S.UpdateNotice p)
         {
             NoticeDialog.Update(p.Notice);
@@ -9128,7 +9201,20 @@ namespace Client.MirScenes
             if (MapObject.MouseObject != null && !(MapObject.MouseObject is ItemObject))
                 MapObject.MouseObject.DrawName();
 
-            int offSet = 0;
+            int offSet = 0; 
+            
+            if (Settings.DisplayBodyName)
+            {
+                for (int i = 0; i < Objects.Count; i++)
+                {
+                    MonsterObject ob = Objects[i] as MonsterObject;
+                    if (ob == null) continue;
+
+                    if (!ob.MouseOver(MouseLocation)) continue;
+                    ob.DrawName();
+                }
+            }
+
             for (int i = 0; i < Objects.Count; i++)
             {
                 ItemObject ob = Objects[i] as ItemObject;
@@ -10191,7 +10277,7 @@ namespace Client.MirScenes
                 return;
             }
 
-            if ((CMain.Time <= magic.CastTime + magic.Delay) && magic.CastTime > 0)
+            if ((CMain.Time <= magic.CastTime + magic.Delay))
             {
                 if (CMain.Time >= OutputDelay)
                 {

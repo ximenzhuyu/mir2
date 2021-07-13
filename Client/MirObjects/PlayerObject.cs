@@ -1365,7 +1365,6 @@ namespace Client.MirObjects
 
                             if (magic != null) SpellLevel = magic.Level;
 
-
                             GameScene.AttackTime = CMain.Time + User.AttackSpeed;
                             MapControl.NextAction = CMain.Time + 2500;
                             break;
@@ -1380,7 +1379,7 @@ namespace Client.MirObjects
                         //    MapControl.NextAction = CMain.Time;
                         //    break;
 
-                        case MirAction.AttackRange1: //ArcherTest
+                        case MirAction.AttackRange1:
                             {
                                 GameScene.AttackTime = CMain.Time + User.AttackSpeed + 200;
 
@@ -2700,8 +2699,8 @@ namespace Client.MirObjects
                                                             int exIdx = 0;
                                                             if (this == User)
                                                             {
-                                                                if (GameScene.Scene.Buffs.Any(x => x.Type == BuffType.VampireShot)) exIdx = 20;
-                                                                if (GameScene.Scene.Buffs.Any(x => x.Type == BuffType.PoisonShot)) exIdx = 10;
+                                                                if (GameScene.Scene.BuffsDialog.Buffs.Any(x => x.Type == BuffType.VampireShot)) exIdx = 20;
+                                                                if (GameScene.Scene.BuffsDialog.Buffs.Any(x => x.Type == BuffType.PoisonShot)) exIdx = 10;
                                                             }
                                                             else
                                                             {

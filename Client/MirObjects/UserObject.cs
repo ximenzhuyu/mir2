@@ -103,8 +103,7 @@ namespace Client.MirObjects
             Magics = info.Magics;
             for (int i = 0; i < Magics.Count; i++ )
             {
-                if (Magics[i].CastTime > 0)
-                    Magics[i].CastTime = CMain.Time - Magics[i].CastTime;
+                Magics[i].CastTime += CMain.Time;
             }
 
             IntelligentCreatures = info.IntelligentCreatures;//IntelligentCreature
@@ -581,6 +580,8 @@ namespace Client.MirObjects
 
         private void RefreshSkills()
         {
+            int[] spiritSwordLvPlus = { 0, 3, 5, 8 };
+            int[] slayingLvPlus = {5, 6, 7, 8};
             for (int i = 0; i < Magics.Count; i++)
             {
                 ClientMagic magic = Magics[i];
@@ -588,14 +589,17 @@ namespace Client.MirObjects
                 {
                     case Spell.Fencing:
                         Stats[Stat.Accuracy] += magic.Level * 3;
-                        Stats[Stat.MaxAC] += (magic.Level + 1) * 3;
+                        //Stats[Stat.MaxAC] += (magic.Level + 1) * 3;
                         break;
-                    case Spell.FatalSword:
+                    case Spell.Slaying:
+                    // case Spell.FatalSword:
                         Stats[Stat.Accuracy] += magic.Level;
+                        Stats[Stat.MaxDC] += slayingLvPlus[magic.Level];
                         break;
                     case Spell.SpiritSword:
-                        Stats[Stat.Accuracy] += magic.Level;
-                        Stats[Stat.MaxDC] += (int)(Stats[Stat.MaxSC] * (magic.Level + 1) * 0.1F);
+                        Stats[Stat.Accuracy] += spiritSwordLvPlus[magic.Level];
+                        // Stats[Stat.Accuracy] += magic.Level;
+                        // Stats[Stat.MaxDC] += (int)(Stats[Stat.MaxSC] * (magic.Level + 1) * 0.1F);
                         break;
                 }
             }
@@ -605,9 +609,9 @@ namespace Client.MirObjects
         {
             TransformType = -1;
 
-            for (int i = 0; i < GameScene.Scene.Buffs.Count; i++)
+            for (int i = 0; i < GameScene.Scene.BuffsDialog.Buffs.Count; i++)
             {
-                ClientBuff buff = GameScene.Scene.Buffs[i];
+                ClientBuff buff = GameScene.Scene.BuffsDialog.Buffs[i];
 
                 Stats.Add(buff.Stats);
 
@@ -617,10 +621,11 @@ namespace Client.MirObjects
                         Sprint = true;
                         break;
                     case BuffType.Transform:
+                        if (buff.Paused) continue;
                         TransformType = (short)buff.Values[0];
+                        FastRun = true;
                         break;
                 }
-
             }
         }
 

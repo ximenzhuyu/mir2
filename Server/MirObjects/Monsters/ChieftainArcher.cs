@@ -1,15 +1,27 @@
-﻿using Server.MirDatabase;
-using System.Collections.Generic;
+﻿using System;
+using System.Drawing;
+using Server.MirDatabase;
+using Server.MirEnvir;
 using S = ServerPackets;
+using System.Collections.Generic;
 
 namespace Server.MirObjects.Monsters
 {
-    public class WhiteFoxman : MonsterObject
-    {
-        public long FearTime, TeleportTime;
-        public byte AttackRange = 6;
+    //TODO - Has a retreat Animation, can't get motion accurate
 
-        protected internal WhiteFoxman(MonsterInfo info)
+    public class ChieftainArcher : MonsterObject
+    {
+        public long FearTime;
+
+        protected virtual byte AttackRange
+        {
+            get
+            {
+                return 6;
+            }
+        }
+
+        protected internal ChieftainArcher(MonsterInfo info)
             : base(info)
         {
         }
@@ -29,50 +41,43 @@ namespace Server.MirObjects.Monsters
 
             ShockTime = 0;
 
+            byte level = (byte)Envir.Random.Next(0, 3);
+
             Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
+            Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 0, Level = level });
 
             ActionTime = Envir.Time + 300;
             AttackTime = Envir.Time + AttackSpeed;
 
-            if (Envir.Random.Next(8) != 0)
+            int damage = 0;
+
+            switch (level)
             {
-                Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID });
-
-                int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
-                if (damage == 0) return;
-
-                int delay = Functions.MaxDistance(CurrentLocation, Target.CurrentLocation) * 50 + 500; //50 MS per Step
-
-                DelayedAction action = new DelayedAction(DelayedType.RangeDamage, Envir.Time + delay, Target, damage, DefenceType.MACAgility, false);
-                ActionList.Add(action);
+                case 0:
+                default:
+                    damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+                    break;
+                case 1:
+                    damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
+                    break;
+                case 2:
+                    damage = GetAttackPower(Stats[Stat.MinSC], Stats[Stat.MaxSC]);
+                    break;
             }
-            else
-            {
-                Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 1 });
 
-                DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + 300, Target);
-                ActionList.Add(action);
-            }
-        }
+            if (damage == 0) return;
 
-        protected override void CompleteAttack(IList<object> data)
-        {
-            MapObject target = (MapObject)data[0];
+            int delay = Functions.MaxDistance(CurrentLocation, Target.CurrentLocation) * 50 + 500;
 
-            if (target == null || !target.IsAttackTarget(this) || target.CurrentMap != CurrentMap || target.Node == null) return;
-
-            int levelgap = 50 - target.Level;
-
-            if (Envir.Random.Next(20) < 4 + levelgap) {
-                PoisonTarget(target, 1, 5, PoisonType.Slow, 1000);
-            }
+            DelayedAction action = new DelayedAction(DelayedType.RangeDamage, Envir.Time + delay, Target, damage, DefenceType.ACAgility, level);
+            ActionList.Add(action);
         }
 
         protected override void ProcessTarget()
         {
             if (Target == null || !CanAttack) return;
 
-            if (InAttackRange() && (Envir.Time < FearTime))
+            if (InAttackRange() && Envir.Time < FearTime)
             {
                 Attack();
                 return;
@@ -118,6 +123,23 @@ namespace Server.MirObjects.Monsters
                         break;
                 }
 
+            }
+        }
+
+        protected override void CompleteRangeAttack(IList<object> data)
+        {
+            MapObject target = (MapObject)data[0];
+            int damage = (int)data[1];
+            DefenceType defence = (DefenceType)data[2];
+            byte level = (byte)data[3];
+
+            if (target == null || !target.IsAttackTarget(this) || target.CurrentMap != CurrentMap || target.Node == null) return;
+
+            if (target.Attacked(this, damage, defence) <= 0) return;
+
+            if (level == 2)
+            {
+                target.Pushed(this, Direction, 1);
             }
         }
     }
