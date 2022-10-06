@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using C = ClientPackets;
@@ -23,6 +24,8 @@ namespace Client.MirScenes.Dialogs
         public CreatureButton[] CreatureButtons;
         public int SelectedCreatureSlot = -1;
         public MirControl HoverLabelParent = null;
+
+        private readonly Regex CreatureNameReg = new Regex(@"^[A-Za-z0-9]{" + Globals.MinCharacterNameLength + "," + Globals.MaxCharacterNameLength + "}$");
 
         private MirAnimatedControl CreatureImage;
         public long SwitchAnimTime;
@@ -454,11 +457,20 @@ namespace Client.MirScenes.Dialogs
                 inputBox.InputTextBox.Text = GameScene.User.IntelligentCreatures[selectedCreature].CustomName;
                 inputBox.OKButton.Click += (o1, e1) =>
                 {
-                    Update();//refresh changes
-                    GameScene.User.IntelligentCreatures[selectedCreature].CustomName = inputBox.InputTextBox.Text;
-                    Network.Enqueue(new C.UpdateIntelligentCreature { Creature = GameScene.User.IntelligentCreatures[selectedCreature] });
-                    inputBox.Dispose();
+                    if (!CreatureNameReg.IsMatch(inputBox.InputTextBox.Text))
+                    {
+                        MirMessageBox failedMessage = new MirMessageBox(string.Format("Creature name must be between {0} and {1} characters.", Globals.MinCharacterNameLength, Globals.MaxCharacterNameLength), MirMessageBoxButtons.OK);
+                        failedMessage.Show();
+                    }
+                    else
+                    {
+                        Update();//refresh changes
+                        GameScene.User.IntelligentCreatures[selectedCreature].CustomName = inputBox.InputTextBox.Text;
+                        Network.Enqueue(new C.UpdateIntelligentCreature { Creature = GameScene.User.IntelligentCreatures[selectedCreature] });
+                        inputBox.Dispose();
+                    }
                 };
+
                 inputBox.Show();
                 CreatureRenameButton.Visible = false;
                 return;
@@ -719,16 +731,28 @@ namespace Client.MirScenes.Dialogs
             int selectedCreature = BeforeAfterDraw();
             if (selectedCreature < 0) return;
 
+            var rules = GameScene.User.IntelligentCreatures[selectedCreature].CreatureRules;
+
+            var semi = rules.SemiAutoPickupEnabled ? string.Format("{0}x{0} {1}{2}{3}", rules.AutoPickupRange, rules.AutoPickupEnabled ? "auto/" : "", rules.SemiAutoPickupEnabled ? "semi-auto" : "", rules.MousePickupEnabled ? ", " : "") : "";
+            var mouse = rules.SemiAutoPickupEnabled ? string.Format("{0}x{0} mouse", rules.MousePickupRange) : "";
+
             CreatureName.Text = GameScene.User.IntelligentCreatures[selectedCreature].CustomName;
-            CreatureInfo.Text = GameScene.User.IntelligentCreatures[selectedCreature].CreatureRules.Info;
-            CreatureInfo1.Text = GameScene.User.IntelligentCreatures[selectedCreature].CreatureRules.Info1;
-            CreatureInfo2.Text = GameScene.User.IntelligentCreatures[selectedCreature].CreatureRules.Info2;
+            CreatureInfo.Text = string.Format("Can pickup items ({0}{1}).", semi, mouse);
+            CreatureInfo1.Text = rules.CanProduceBlackStone ? "Can produce BlackStones." : "";
+            CreatureInfo2.Text = rules.CanProduceBlackStone ? "Can produce Pearls, used to buy Creature items." : "";
+
             //Expire
-            if (GameScene.User.IntelligentCreatures[selectedCreature].ExpireTime == -9999)
+            if (GameScene.User.IntelligentCreatures[selectedCreature].Expire == DateTime.MinValue)
+            {
                 CreatureDeadline.Text = string.Format(GameLanguage.ExpireNever);
+            }
             else
-                CreatureDeadline.Text = string.Format(GameLanguage.Expire, Functions.PrintTimeSpanFromSeconds(GameScene.User.IntelligentCreatures[selectedCreature].ExpireTime));
-            //
+            {
+                var seconds = (GameScene.User.IntelligentCreatures[selectedCreature].Expire - CMain.Now).TotalSeconds;
+
+                CreatureDeadline.Text = string.Format(GameLanguage.Expire, Functions.PrintTimeSpanFromSeconds(seconds));
+            }
+
             if (GameScene.User.IntelligentCreatures[selectedCreature].MaintainFoodTime == 0)
                 CreatureMaintainFoodBuff.Text = "0";
             else
@@ -809,6 +833,8 @@ namespace Client.MirScenes.Dialogs
             AnimSwitched = false;
             AnimNeedSwitch = false;
             Visible = false;
+
+            Network.Enqueue(new C.RequestIntelligentCreatureUpdates { Update = false });
         }
         public override void Show()
         {
@@ -826,6 +852,7 @@ namespace Client.MirScenes.Dialogs
                 CreatureButtons[0].SelectButton();
             }
 
+            Network.Enqueue(new C.RequestIntelligentCreatureUpdates { Update = true });
 
             Visible = true;
             showing = true;
@@ -835,6 +862,7 @@ namespace Client.MirScenes.Dialogs
             RefreshDialog();
         }
     }
+
     public sealed class CreatureButton : MirControl
     {
         public MirImageControl SelectionImage;
@@ -1243,7 +1271,7 @@ namespace Client.MirScenes.Dialogs
     }
     public sealed class IntelligentCreatureOptionsGradeDialog : MirImageControl
     {
-        private string[] GradeStrings = { "All", "Common", "Rare", "Mythical", "Legendary" };
+        private string[] GradeStrings = { "All", "Common", "Rare", "Mythical", "Legendary", "Heroic" };
 
         public MirButton NextButton, PrevButton;
         public MirLabel GradeLabel;
@@ -1326,6 +1354,8 @@ namespace Client.MirScenes.Dialogs
                     return Color.DarkOrange;
                 case ItemGrade.Mythical:
                     return Color.Plum;
+                case ItemGrade.Heroic:
+                    return Color.Red;
                 default:
                     return Color.White;
             }

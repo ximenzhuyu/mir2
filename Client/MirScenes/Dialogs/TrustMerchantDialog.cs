@@ -26,7 +26,7 @@ namespace Client.MirScenes.Dialogs
         public static long SearchTime, MarketTime;
 
         public MirTextBox SearchTextBox, PriceTextBox;
-        public MirButton FindButton, RefreshButton, MailButton, BuyButton, CloseButton, NextButton, BackButton;
+        public MirButton FindButton, RefreshButton, MailButton, BuyButton, SellNowButton, CloseButton, NextButton, BackButton;
         public MirImageControl TitleLabel;
         public MirLabel ItemLabel, PriceLabel, SellerLabel, PageLabel;
         public MirLabel DateLabel, ExpireLabel;
@@ -428,6 +428,25 @@ namespace Client.MirScenes.Dialogs
                     }
                 }
             };
+
+            SellNowButton = new MirButton
+            {
+                Index = 700,
+                HoverIndex = 701,
+                PressedIndex = 702,
+                Library = Libraries.Title,
+                Location = new Point(324, 448),
+                Sound = SoundList.ButtonA,
+                Parent = this,
+            };
+            SellNowButton.Click += (o, e) =>
+            {
+                if (Selected == null || CMain.Time < MarketTime) return;
+
+                MarketTime = CMain.Time + 3000;
+                Network.Enqueue(new C.MarketSellNow { AuctionID = Selected.Listing.AuctionID });
+            };
+
             #endregion
 
             #region Search
@@ -528,7 +547,7 @@ namespace Client.MirScenes.Dialogs
             };
             SellItemButton.Click += (o, e) =>
             {
-                Network.Enqueue(new C.ConsignItem { UniqueID = SellItemSlot.UniqueID, Price = Amount });
+                Network.Enqueue(new C.ConsignItem { UniqueID = SellItemSlot.UniqueID, Price = Amount, Type = MarketType });
                 SellItemSlot = null;
                 PriceTextBox.Text = null;
                 SellItemButton.Enabled = false;
@@ -898,6 +917,17 @@ namespace Client.MirScenes.Dialogs
                 MailButton.Enabled = false;
                 MailButton.GrayScale = true;
             }
+
+            if (Selected != null && Selected.Listing.Seller == "Bid Met")
+            {
+                SellNowButton.Enabled = true;
+                SellNowButton.GrayScale = false;
+            }
+            else
+            {
+                SellNowButton.Enabled = false;
+                SellNowButton.GrayScale = true;
+            }
         }
 
         private void SearchTextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -996,6 +1026,7 @@ namespace Client.MirScenes.Dialogs
                     BuyButton.Index = 703;
                     BuyButton.HoverIndex = 704;
                     BuyButton.PressedIndex = 705;
+                    SellNowButton.Visible = false;
                     UpButton.Visible = true;
                     DownButton.Visible = true;
                     PositionBar.Visible = true;
@@ -1038,6 +1069,7 @@ namespace Client.MirScenes.Dialogs
                     BuyButton.Index = 706;
                     BuyButton.HoverIndex = 707;
                     BuyButton.PressedIndex = 708;
+                    SellNowButton.Visible = false;
                     UpButton.Visible = false;
                     DownButton.Visible = false;
                     PositionBar.Visible = false;
@@ -1086,6 +1118,7 @@ namespace Client.MirScenes.Dialogs
                     BuyButton.Index = 706;
                     BuyButton.HoverIndex = 707;
                     BuyButton.PressedIndex = 708;
+                    SellNowButton.Visible = true;
                     UpButton.Visible = false;
                     DownButton.Visible = false;
                     PositionBar.Visible = false;
@@ -1133,6 +1166,7 @@ namespace Client.MirScenes.Dialogs
                     BuyButton.Index = 703;
                     BuyButton.HoverIndex = 704;
                     BuyButton.PressedIndex = 705;
+                    SellNowButton.Visible = false;
                     UpButton.Visible = true;
                     DownButton.Visible = true;
                     PositionBar.Visible = true;
@@ -1420,7 +1454,7 @@ namespace Client.MirScenes.Dialogs
             {
                 Listing = listing;
                 NameLabel.Text = Listing.Item.FriendlyName;
-                PriceLabel.Text = Listing.Price.ToString("###,###,##0");
+                PriceLabel.Text = String.Format("{0:###,###,##0} {1}", Listing.Price, listing.ItemType == MarketItemType.Auction ? "Bid" : "");
 
                 NameLabel.ForeColour = GameScene.Scene.GradeNameColor(Listing.Item.Info.Grade);
                 if (NameLabel.ForeColour == Color.Yellow)

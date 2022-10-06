@@ -19,7 +19,47 @@ namespace Client.MirObjects
         public static List<MirLabel> LabelList = new List<MirLabel>();
 
         public static UserObject User;
+        public static UserHeroObject Hero;
+        public static HeroObject HeroObject;
         public static MapObject MouseObject, TargetObject, MagicObject;
+
+        private static uint mouseObjectID;
+        public static uint MouseObjectID
+        {
+            get { return mouseObjectID; }
+            set
+            {
+                if (mouseObjectID == value) return;
+                mouseObjectID = value;
+                MouseObject = MapControl.Objects.Find(x => x.ObjectID == value);
+            }
+        }
+
+        private static uint lastTargetObjectId, targetObjectID;
+        public static uint TargetObjectID
+        {
+            get { return targetObjectID; }
+            set
+            {
+                if (targetObjectID == value) return;
+                lastTargetObjectId = targetObjectID;
+                targetObjectID = value;
+                TargetObject = MapControl.Objects.Find(x => x.ObjectID == value);
+            }
+        }
+
+        private static uint magicObjectID;
+        public static uint MagicObjectID
+        {
+            get { return magicObjectID; }
+            set
+            {
+                if (magicObjectID == value) return;
+                magicObjectID = value;
+                MagicObject = MapControl.Objects.Find(x => x.ObjectID == value);
+            }
+        }
+
         public abstract ObjectType Race { get; }
         public abstract bool Blocking { get; }
 
@@ -32,13 +72,37 @@ namespace Client.MirObjects
         public long DeadTime;
         public byte AI;
         public bool InTrapRock;
+        public int JumpDistance;
 
         public bool Blend = true;
 
-        
+        public long BlindTime;
+        public byte BlindCount;
 
-        public byte PercentHealth;
+        private byte percentHealth;
+        public virtual byte PercentHealth
+        {
+            get { return percentHealth; }
+            set
+            {
+                if (percentHealth == value) return;
+
+                percentHealth = value;
+            }
+        }
         public long HealthTime;
+
+        private byte percentMana;
+        public virtual byte PercentMana
+        {
+            get { return percentMana; }
+            set
+            {
+                if (percentMana == value) return;
+
+                percentMana = value;
+            }
+        }
 
         public List<QueuedAction> ActionFeed = new List<QueuedAction>();
         public QueuedAction NextAction
@@ -59,8 +123,10 @@ namespace Client.MirObjects
         public int Light, DrawY;
         public long NextMotion, NextMotion2;
         public MirAction CurrentAction;
+        public byte CurrentActionLevel;
         public bool SkipFrames;
-        
+        public FrameLoop FrameLoop = null;
+
         //Sound
         public int StruckWeapon;
 
@@ -74,6 +140,8 @@ namespace Client.MirObjects
             get { return new Point(0, 0); }
         }
 
+        protected MapObject() { }
+
         protected MapObject(uint objectID)
         {
             ObjectID = objectID;
@@ -86,18 +154,23 @@ namespace Client.MirObjects
             }
 
             MapControl.Objects.Add(this);
+
+            RestoreTargetStates();
         }
         public void Remove()
         {
-            if (MouseObject == this) MouseObject = null;
-            if (TargetObject == this) TargetObject = null;
-            if (MagicObject == this) MagicObject = null;
+            if (MouseObject == this) MouseObjectID = 0;
+            if (TargetObject == this) TargetObjectID = 0;
+            if (MagicObject == this) MagicObjectID = 0;
 
             if (this == User.NextMagicObject)
                 User.ClearMagic();
 
             MapControl.Objects.Remove(this);
             GameScene.Scene.MapControl.RemoveObject(this);
+
+            if (ObjectID == Hero?.ObjectID)
+                HeroObject = null;
 
             if (ObjectID != GameScene.NPCID) return;
 
@@ -108,6 +181,24 @@ namespace Client.MirObjects
         public abstract void Process();
         public abstract void Draw();
         public abstract bool MouseOver(Point p);
+
+        private void RestoreTargetStates()
+        {
+            if (MouseObjectID == ObjectID)
+                MouseObject = this;
+
+            if (TargetObjectID == ObjectID)
+                TargetObject = this;
+
+            if (MagicObjectID == ObjectID)
+                MagicObject = this;
+
+            /*if (TargetObject == null)
+            {
+                if (lastTargetObjectId == ObjectID)
+                    TargetObject = this;
+            }*/
+        }
 
         public void AddBuffEffect(BuffType type)
         {
@@ -163,8 +254,39 @@ namespace Client.MirObjects
                     Effects.Add(new BuffEffect(Libraries.Magic3, 230, 6, 1200, this, true, type) { Repeat = true });
                     break;
 				case BuffType.GameMaster:
-					Effects.Add(new BuffEffect(Libraries.CHumEffect[5], 0, 1416, 1200, this, true, type) { Repeat = true });
+					Effects.Add(new BuffEffect(Libraries.CHumEffect[5], 0, 1, 1200, this, true, type) { Repeat = true });
 					break;
+                case BuffType.GeneralMeowMeowShield:
+                    Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.GeneralMeowMeow], 529, 7, 700, this, true, type) { Repeat = true, Light = 1 });
+                    MirSounds.SoundManager.PlaySound(8322);
+                    break;
+                case BuffType.PowerBeadBuff:
+                    Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.PowerUpBead], 64, 6, 600, this, true, type) { Blend = true, Repeat = true });
+                    break;
+                case BuffType.HornedArcherBuff:
+                    Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedArcher], 468, 6, 600, this, true, type) { Repeat = false });
+                    effect.Complete += (o, e) =>
+                    {
+                        Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedArcher], 474, 3, 1000, this, true, type) { Blend = true, Repeat = true });
+                    };
+                    break;
+                case BuffType.ColdArcherBuff:
+                    Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedArcher], 477, 7, 700, this, true, type) { Repeat = false });
+                    effect.Complete += (o, e) =>
+                    {
+                        Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedArcher], 484, 3, 1000, this, true, type) { Blend = true, Repeat = true });
+                    };
+                    break;
+                case BuffType.HornedWarriorShield:
+                    Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedWarrior], 912, 18, 1800, this, true, type) { Repeat = true });
+                    break;
+                case BuffType.HornedCommanderShield:
+                    Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedCommander], 1173, 1, 100, this, true, type) { Repeat = false, Light = 1 });
+                    effect.Complete += (o, e) =>
+                    {
+                        Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedCommander], 1174, 16, 1600, this, true, type) { Repeat = true, Light = 1 });
+                    };
+                    break;
             }
         }
         public void RemoveBuffEffect(BuffType type)
@@ -193,6 +315,22 @@ namespace Client.MirObjects
                     if (ob != null) ob.Sneaking = false;
                     break;
             }
+        }
+
+        public Color ApplyDrawColour()
+        {
+            Color drawColour = DrawColour;
+            if (drawColour == Color.Gray)
+            {
+                drawColour = Color.White;
+                DXManager.SetGrayscale(true);
+            }
+            return drawColour;
+        }
+
+        public virtual Missile CreateProjectile(int baseIndex, MLibrary library, bool blend, int count, int interval, int skip, int lightDistance = 6, bool direction16 = true, Color? lightColour = null, uint targetID = 0)
+        {
+            return null;
         }
 
         public void Chat(string text)
@@ -299,6 +437,11 @@ namespace Client.MirObjects
                 Damage info = Damages[i];
                 if (CMain.Time > info.ExpireTime)
                 {
+                    if (info.DamageLabel != null)
+                    {
+                        info.DamageLabel.Dispose();
+                    }
+
                     Damages.RemoveAt(i);
                 }
                 else
@@ -307,22 +450,22 @@ namespace Client.MirObjects
                 }
             }
         }
+        public virtual bool ShouldDrawHealth()
+        {
+            return false;
+        }
         public void DrawHealth()
         {
             string name = Name;
-
             if (Name.Contains("(")) name = Name.Substring(Name.IndexOf("(") + 1, Name.Length - Name.IndexOf("(") - 2);
 
             if (Dead) return;
-            if (Race != ObjectType.Player && Race != ObjectType.Monster) return;
+            if (Race != ObjectType.Player && Race != ObjectType.Monster && Race != ObjectType.Hero) return;
 
             if (CMain.Time >= HealthTime)
             {
-                if (Race == ObjectType.Monster && !Name.EndsWith(string.Format("({0})", User.Name)) && !GroupDialog.GroupList.Contains(name)) return;
-                if (Race == ObjectType.Player && this != User && !GroupDialog.GroupList.Contains(Name)) return;
-                if (this == User && GroupDialog.GroupList.Count == 0) return;
+                if (!ShouldDrawHealth()) return;
             }
-
 
             Libraries.Prguse2.Draw(0, DisplayRectangle.X + 8, DisplayRectangle.Y - 64);
             int index = 1;
@@ -334,6 +477,9 @@ namespace Client.MirObjects
                     break;
                 case ObjectType.Monster:
                     if (GroupDialog.GroupList.Contains(name) || name == User.Name) index = 11;
+                    break;
+                case ObjectType.Hero:
+                    if (GroupDialog.GroupList.Contains(name) || name == GameScene.Hero.Name) index = 11;
                     break;
             }
 
@@ -347,51 +493,56 @@ namespace Client.MirObjects
             {
                 if (Poison.HasFlag(PoisonType.Green))
                 {
-                    DXManager.Sprite.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 2, 2), Vector3.Zero, new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 3)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
-                    DXManager.Sprite.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 2, 2), Vector3.Zero, new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 3)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.Green);
-
+                    DXManager.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 6, 6), new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
+                    DXManager.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 4, 4), new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.Green);
                     poisoncount++;
                 }
                 if (Poison.HasFlag(PoisonType.Red))
                 {
-                    DXManager.Sprite.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 2, 2), Vector3.Zero, new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 3)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
-                    DXManager.Sprite.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 2, 2), Vector3.Zero, new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 3)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.Red);
+                    DXManager.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 6, 6), new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
+                    DXManager.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 4, 4), new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.Red);
                     poisoncount++;
                 }
                 if (Poison.HasFlag(PoisonType.Bleeding))
                 {
-                    DXManager.Sprite.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 2, 2), Vector3.Zero, new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 3)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
-                    DXManager.Sprite.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 2, 2), Vector3.Zero, new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 3)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.DarkRed);
+                    DXManager.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 6, 6), new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
+                    DXManager.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 4, 4), new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.DarkRed);
                     poisoncount++;
                 }
                 if (Poison.HasFlag(PoisonType.Slow))
                 {
-                    DXManager.Sprite.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 2, 2), Vector3.Zero, new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 3)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
-                    DXManager.Sprite.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 2, 2), Vector3.Zero, new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 3)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.Purple);
+                    DXManager.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 6, 6), new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
+                    DXManager.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 4, 4), new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.Purple);
                     poisoncount++;
                 }
-                if (Poison.HasFlag(PoisonType.Stun))
+                if (Poison.HasFlag(PoisonType.Stun) || Poison.HasFlag(PoisonType.Dazed))
                 {
-                    DXManager.Sprite.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 2, 2), Vector3.Zero, new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 3)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
-                    DXManager.Sprite.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 2, 2), Vector3.Zero, new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 3)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.Yellow);
+                    DXManager.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 6, 6), new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
+                    DXManager.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 4, 4), new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.Yellow);
+                    poisoncount++;
+                }
+                if (Poison.HasFlag(PoisonType.Blindness))
+                {
+                    DXManager.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 6, 6), new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
+                    DXManager.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 4, 4), new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.MediumVioletRed);
                     poisoncount++;
                 }
                 if (Poison.HasFlag(PoisonType.Frozen))
                 {
-                    DXManager.Sprite.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 2, 2), Vector3.Zero, new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 3)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
-                    DXManager.Sprite.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 2, 2), Vector3.Zero, new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 3)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.Blue);
+                    DXManager.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 6, 6), new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
+                    DXManager.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 4, 4), new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.Blue);
                     poisoncount++;
                 }
                 if (Poison.HasFlag(PoisonType.Paralysis) || Poison.HasFlag(PoisonType.LRParalysis))
                 {
-                    DXManager.Sprite.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 2, 2), Vector3.Zero, new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 3)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
-                    DXManager.Sprite.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 2, 2), Vector3.Zero, new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 3)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.Gray);
+                    DXManager.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 6, 6), new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
+                    DXManager.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 4, 4), new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.Gray);
                     poisoncount++;
                 }
                 if (Poison.HasFlag(PoisonType.DelayedExplosion))
                 {
-                    DXManager.Sprite.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 2, 2), Vector3.Zero, new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 3)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
-                    DXManager.Sprite.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 2, 2), Vector3.Zero, new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 3)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.Orange);
+                    DXManager.Draw(DXManager.PoisonDotBackground, new Rectangle(0, 0, 6, 6), new Vector3((float)(DisplayRectangle.X + 7 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 21), 0.0F), Color.Black);
+                    DXManager.Draw(DXManager.RadarTexture, new Rectangle(0, 0, 4, 4), new Vector3((float)(DisplayRectangle.X + 8 + (poisoncount * 5)), (float)(DisplayRectangle.Y - 20), 0.0F), Color.Orange);
                     poisoncount++;
                 }
             }
@@ -401,6 +552,28 @@ namespace Client.MirObjects
 
         public abstract void DrawEffects(bool effectsEnabled);
 
+        protected void LoopFrame(int start, int frameCount, int frameInterval, int duration)
+        {
+            if (FrameLoop == null)
+            {
+                FrameLoop = new FrameLoop
+                {
+                    Start = start,
+                    End = start + frameCount - 1,
+                    Loops = (duration / (frameInterval * frameCount)) - 1 //Remove 1 count as we've already done a loop before this is checked
+                };
+            }
+        }
+    }
+
+    public class FrameLoop
+    {
+        public MirAction Action { get; set; }
+        public int Start { get; set; }
+        public int End { get; set; }
+        public int Loops { get; set; }
+
+        public int CurrentCount { get; set; }
     }
 
 }

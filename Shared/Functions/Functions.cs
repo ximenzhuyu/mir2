@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.RegularExpressions;
 
 public static class Functions
@@ -202,7 +204,10 @@ public static class Functions
         return source.Y < dest.Y ? MirDirection.Down : MirDirection.Up;
     }
 
-
+    public static MirDirection ShiftDirection(MirDirection dir, int i)
+    {
+        return (MirDirection)(((int)dir + i + 8) % 8);
+    }
 
     public static Size Add(this Size p1, Size p2)
     {
@@ -430,5 +435,23 @@ public static class Functions
             offset += array.Length;
         }
         return rv;
+    }
+    public static byte[] SerializeToBytes<T>(T item)
+    {
+        var formatter = new BinaryFormatter();
+        using (var stream = new MemoryStream())
+        {
+            formatter.Serialize(stream, item);
+            stream.Seek(0, SeekOrigin.Begin);
+            return stream.ToArray();
+        }
+    }
+    public static object DeserializeFromBytes(byte[] bytes)
+    {
+        var formatter = new BinaryFormatter();
+        using (var stream = new MemoryStream(bytes))
+        {
+            return formatter.Deserialize(stream);
+        }
     }
 }

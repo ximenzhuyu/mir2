@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using SlimDX.DirectSound;
 
 namespace Client.MirSounds
@@ -10,7 +11,10 @@ namespace Client.MirSounds
         private static readonly List<ISoundLibrary> Sounds = new List<ISoundLibrary>();
         private static readonly Dictionary<int, string> IndexList = new Dictionary<int, string>();
 
+        private static readonly List<KeyValuePair<long, int>> DelayList = new List<KeyValuePair<long, int>>();
+
         public static ISoundLibrary Music;
+        private static long _checkSoundTime;
 
         private static int _vol;
         public static int Vol
@@ -34,6 +38,21 @@ namespace Client.MirSounds
                 _musicVol = value;
             }
         }
+
+        public static void ProcessDelayedSounds()
+        {
+            if (DelayList.Count == 0) return;
+
+            var sounds = DelayList.Where(x => x.Key <= CMain.Time).ToList();
+
+            foreach (var sound in sounds)
+            {
+                DelayList.Remove(sound);
+
+                PlaySound(sound.Value);
+            }
+        }
+
 
         public static void Create()
         {
@@ -78,11 +97,19 @@ namespace Client.MirSounds
             }
         }
 
-        public static void PlaySound(int index, bool loop = false)
+        public static void PlaySound(int index, bool loop = false, int delay = 0)
         {
+            if (delay > 0)
+            {
+                DelayList.Add(new KeyValuePair<long, int>(CMain.Time + delay, index));
+                return;
+            }
+
             if (Device == null) return;
             
             if (_vol <= -3000) return;
+
+            CheckSoundTimeOut();
 
             for (int i = 0; i < Sounds.Count; i++)
             {
@@ -106,9 +133,7 @@ namespace Client.MirSounds
                 else if (index < 10000)
                 {
                     filename = string.Format("{0:000}-{1:0}", index/10, index%10);
-
-                    var sound = GetSound(index, filename, loop);
-
+                    
                     Sounds.Add(GetSound(index, filename, loop));
                 }
             }
@@ -128,6 +153,29 @@ namespace Client.MirSounds
             for (int i = 0; i < Sounds.Count; i++)
                 Sounds[i].Dispose();
             Sounds.Clear();
+        }
+
+        static void CheckSoundTimeOut()
+        {
+            if (CMain.Time >= _checkSoundTime)
+            {
+                _checkSoundTime = CMain.Time + 30 * 1000;
+
+                for (int i = Sounds.Count - 1; i >= 0; i--)
+                {
+                    var sound = Sounds[i];
+
+                    if (!sound.IsPlaying())
+                    {
+                        if (CMain.Time >= sound.ExpireTime)
+                        {
+                            sound.Dispose();
+                            Sounds.RemoveAt(i);
+                            continue;
+                        }
+                    }
+                }
+            }
         }
 
         static ISoundLibrary GetSound(int index, string fileName, bool loop)

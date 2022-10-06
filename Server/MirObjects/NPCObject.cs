@@ -24,7 +24,7 @@ namespace Server.MirObjects
         {
             if (objectID == 0) return null;
 
-            var obj = Envir.GetObject(objectID);
+            var obj = Envir.NPCs.SingleOrDefault(x => x.ObjectID == objectID);
 
             if (obj != null && obj is NPCObject)
             {
@@ -59,6 +59,8 @@ namespace Server.MirObjects
 
             Direction = (MirDirection)Envir.Random.Next(3);
             TurnTime = Envir.Time + Envir.Random.Next(100);
+
+            Envir.NPCs.Add(this);
 
             Spawned();
             LoadScript();
@@ -131,11 +133,11 @@ namespace Server.MirObjects
             throw new NotSupportedException();
         }
 
-        public override bool IsAttackTarget(PlayerObject attacker)
+        public override bool IsAttackTarget(HumanObject attacker)
         {
             return false;
         }
-        public override bool IsFriendlyTarget(PlayerObject ally)
+        public override bool IsFriendlyTarget(HumanObject ally)
         {
             throw new NotSupportedException();
         }
@@ -148,7 +150,12 @@ namespace Server.MirObjects
             return false;
         }
 
-        public override int Attacked(PlayerObject attacker, int damage, DefenceType type = DefenceType.ACAgility, bool damageWeapon = true)
+        public override Buff AddBuff(BuffType type, MapObject owner, int duration, Stats stats, bool refreshStats = true, bool updateOnly = false, params int[] values)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override int Attacked(HumanObject attacker, int damage, DefenceType type = DefenceType.ACAgility, bool damageWeapon = true)
         {
             throw new NotSupportedException();
         }
@@ -163,7 +170,7 @@ namespace Server.MirObjects
             throw new NotSupportedException();
         }
 
-        public override void SendHealth(PlayerObject player)
+        public override void SendHealth(HumanObject player)
         {
             throw new NotSupportedException();
         }
@@ -216,7 +223,7 @@ namespace Server.MirObjects
             {
                 VisTime = Envir.Time + (Settings.Minute);
 
-                if (Info.DayofWeek != "" && Info.DayofWeek != DateTime.Now.DayOfWeek.ToString())
+                if (Info.DayofWeek != "" && Info.DayofWeek != Envir.Now.DayOfWeek.ToString())
                 {
                     if (Visible) Hide();
                 }
@@ -224,7 +231,7 @@ namespace Server.MirObjects
                 {
                     int StartTime = ((Info.HourStart * 60) + Info.MinuteStart);
                     int FinishTime = ((Info.HourEnd * 60) + Info.MinuteEnd);
-                    int CurrentTime = ((DateTime.Now.Hour * 60) + DateTime.Now.Minute);
+                    int CurrentTime = ((Envir.Now.Hour * 60) + Envir.Now.Minute);
 
                     if (Info.TimeVisible)
                     {
@@ -296,10 +303,9 @@ namespace Server.MirObjects
 
             for (int i = 0; i < Buffs.Count; i++)
             {
-                if (Buffs[i].ExpireTime >= time && Buffs[i].ExpireTime > Envir.Time) continue;
-                time = Buffs[i].ExpireTime;
+                if (Buffs[i].NextTime >= time && Buffs[i].NextTime > Envir.Time) continue;
+                time = Buffs[i].NextTime;
             }
-
 
             if (OperateTime <= Envir.Time || time < OperateTime)
                 OperateTime = time;
@@ -457,12 +463,12 @@ namespace Server.MirObjects
 
         public override MirDirection Direction { get; set; }
 
-        public override uint Health
+        public override int Health
         {
             get { throw new NotSupportedException(); }
         }
 
-        public override uint MaxHealth
+        public override int MaxHealth
         {
             get { throw new NotSupportedException(); }
         }

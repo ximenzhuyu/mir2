@@ -1,7 +1,6 @@
 ﻿public static class Globals
 {
     public const string ProductCodename = "Crystal";
-    public const string ProductVersion = "Release";
 
     public const int
 
@@ -19,9 +18,13 @@
 
         MaxGroup = 15,
 
+        MaxPets = 5,
+
         MaxAttackRange = 9,
 
         MaxDragonLevel = 13,
+
+        ClassWeaponCount = 100,
 
         FlagIndexCount = 1999,
 
@@ -43,4 +46,19 @@
                       MaxStartingBid = 50000;
 
     public static int[] FishingRodShapes = new int[] { 49, 50 };
+
+    public static Spell[] RangedSpells = new Spell[]
+    {
+        Spell.FireBall,
+        Spell.ThunderBolt,
+        Spell.FireBang,
+        Spell.FireWall,
+        Spell.FrostCrunch,
+        Spell.Vampirism,
+        Spell.FlameDisruptor,
+        Spell.IceStorm,
+        Spell.MeteorStrike,
+        Spell.Blizzard,
+        Spell.SoulFireBall
+    };
 }

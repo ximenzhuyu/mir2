@@ -265,6 +265,7 @@ namespace Client.MirControls
                 Size = Size,
                 Visible = Visible,
                 Tag = this,
+                Cursor = CMain.Cursors[(byte)MouseCursor.TextPrompt]
             };
 
             CaretPen = new Pen(ForeColour, 1);
@@ -296,11 +297,11 @@ namespace Client.MirControls
         {
             if (!Settings.FullScreen) return;
 
-            if (Size.Width == 0 || Size.Height == 0)
+            if (Size.IsEmpty)
                 return;
 
-            if (ControlTexture != null && !ControlTexture.Disposed && TextureSize != Size)
-                ControlTexture.Dispose();
+            if (TextureSize != Size)
+                DisposeTexture();
 
             if (ControlTexture == null || ControlTexture.Disposed)
             {

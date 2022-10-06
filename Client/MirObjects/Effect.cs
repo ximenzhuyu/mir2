@@ -28,6 +28,7 @@ namespace Client.MirObjects
         public bool Blend = true;
         public float Rate = 1F;
         public Point DrawLocation;
+        public Point DrawOffset = Point.Empty;
         public bool Repeat;
         public long RepeatUntil;
 
@@ -81,6 +82,7 @@ namespace Client.MirObjects
                 if (Played != null)
                     Played(this, EventArgs.Empty);
             }
+
             if (CMain.Time <= NextFrame) return;
 
             if (Owner != null && Owner.SkipFrames) CurrentFrame++;
@@ -99,9 +101,8 @@ namespace Client.MirObjects
             else NextFrame = Start + (Duration / Count) * (CurrentFrame + 1);
 
             GameScene.Scene.MapControl.TextureValid = false;
-
-
         }
+
         public virtual void Remove()
         {
             if (Owner != null)
@@ -125,6 +126,7 @@ namespace Client.MirObjects
             {
                 DrawLocation = new Point((Source.X - MapObject.User.Movement.X + MapControl.OffSetX) * MapControl.CellWidth,
                                          (Source.Y - MapObject.User.Movement.Y + MapControl.OffSetY) * MapControl.CellHeight);
+                DrawLocation.Offset(DrawOffset);
                 DrawLocation.Offset(MapObject.User.OffSetMove);
             }
 

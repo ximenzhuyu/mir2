@@ -73,7 +73,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=2.0.9.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.9\lib\net45\log4net.dll</HintPath>
+      <HintPath>..\packages\log4net.2.0.10\lib\net45\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -82,6 +82,7 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -104,6 +105,12 @@
       <Name>Server.Library</Name>
       <Private>True</Private>
     </ProjectReference>
+    <Compile Include="Account\ChangePasswordDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Account\ChangePasswordDialog.Designer.cs">
+      <DependentUpon>ChangePasswordDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Account\PlayerInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,11 +129,23 @@
     <Compile Include="Database\GameShop.designer.cs">
       <DependentUpon>GameShop.cs</DependentUpon>
     </Compile>
+    <Compile Include="Database\ItemInfoFormNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Database\ItemInfoFormNew.Designer.cs">
+      <DependentUpon>ItemInfoFormNew.cs</DependentUpon>
+    </Compile>
     <Compile Include="Database\MagicInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Database\MagicInfoForm.Designer.cs">
       <DependentUpon>MagicInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Database\MonsterInfoFormNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Database\MonsterInfoFormNew.Designer.cs">
+      <DependentUpon>MonsterInfoFormNew.cs</DependentUpon>
     </Compile>
     <Compile Include="Systems\ConquestInfoForm.cs">
       <SubType>Form</SubType>
@@ -265,6 +284,9 @@
     <EmbeddedResource Include="Account\AccountInfoForm.resx">
       <DependentUpon>AccountInfoForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Account\ChangePasswordDialog.resx">
+      <DependentUpon>ChangePasswordDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Account\PlayerInfoForm.resx">
       <DependentUpon>PlayerInfoForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -277,8 +299,14 @@
     <EmbeddedResource Include="Database\GameShop.resx">
       <DependentUpon>GameShop.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Database\ItemInfoFormNew.resx">
+      <DependentUpon>ItemInfoFormNew.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Database\MagicInfoForm.resx">
       <DependentUpon>MagicInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Database\MonsterInfoFormNew.resx">
+      <DependentUpon>MonsterInfoFormNew.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Systems\ConquestInfoForm.resx">
       <DependentUpon>ConquestInfoForm.cs</DependentUpon>

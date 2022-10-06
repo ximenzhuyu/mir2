@@ -7,7 +7,7 @@ using S = ServerPackets;
 public abstract class Packet
 {
     public static bool IsServer;
-
+    public virtual bool Observable => true;
     public abstract short Index { get; }
 
     public static Packet ReceivePacket(byte[] rawBytes, out byte[] extra)
@@ -144,12 +144,24 @@ public abstract class Packet
                 return new C.DepositTradeItem();
             case (short)ClientPacketIds.RetrieveTradeItem:
                 return new C.RetrieveTradeItem();
+            case (short)ClientPacketIds.TakeBackHeroItem:
+                return new C.TakeBackHeroItem();
+            case (short)ClientPacketIds.TransferHeroItem:
+                return new C.TransferHeroItem();
             case (short)ClientPacketIds.DropGold:
                 return new C.DropGold();
             case (short)ClientPacketIds.PickUp:
                 return new C.PickUp();
+            case (short)ClientPacketIds.RequestMapInfo:
+                return new C.RequestMapInfo();
+            case (short)ClientPacketIds.TeleportToNPC:
+                return new C.TeleportToNPC();
+            case (short)ClientPacketIds.SearchMap:
+                return new C.SearchMap();
             case (short)ClientPacketIds.Inspect:
                 return new C.Inspect();
+            case (short)ClientPacketIds.Observe:
+                return new C.Observe();
             case (short)ClientPacketIds.ChangeAMode:
                 return new C.ChangeAMode();
             case (short)ClientPacketIds.ChangePMode:
@@ -188,6 +200,16 @@ public abstract class Packet
                 return new C.DelMember();
             case (short)ClientPacketIds.GroupInvite:
                 return new C.GroupInvite();
+            case (short)ClientPacketIds.NewHero:
+                return new C.NewHero();
+            case (short)ClientPacketIds.SetAutoPotValue:
+                return new C.SetAutoPotValue();
+            case (short)ClientPacketIds.SetAutoPotItem:
+                return new C.SetAutoPotItem();
+            case (short)ClientPacketIds.SetHeroBehaviour:
+                return new C.SetHeroBehaviour();
+            case (short)ClientPacketIds.ChangeHero:
+                return new C.ChangeHero();
             case (short)ClientPacketIds.TownRevive:
                 return new C.TownRevive();
             case (short)ClientPacketIds.SpellToggle:
@@ -204,6 +226,8 @@ public abstract class Packet
                 return new C.MarketBuy();
             case (short)ClientPacketIds.MarketGetBack:
                 return new C.MarketGetBack();
+            case (short)ClientPacketIds.MarketSellNow:
+                return new C.MarketSellNow();
             case (short)ClientPacketIds.RequestUserName:
                 return new C.RequestUserName();
             case (short)ClientPacketIds.RequestChatItem:
@@ -272,8 +296,6 @@ public abstract class Packet
                 return new C.CancelReincarnation();
             case (short)ClientPacketIds.CombineItem:
                 return new C.CombineItem();
-            case (short)ClientPacketIds.SetConcentration:
-                return new C.SetConcentration();
             case (short)ClientPacketIds.AwakeningNeedMaterials:
                 return new C.AwakeningNeedMaterials();
             case (short)ClientPacketIds.AwakeningLockedItem:
@@ -300,9 +322,11 @@ public abstract class Packet
                 return new C.MailLockedItem();
             case (short)ClientPacketIds.MailCost:
                 return new C.MailCost();
-            case (short)ClientPacketIds.UpdateIntelligentCreature://IntelligentCreature
+            case (short)ClientPacketIds.RequestIntelligentCreatureUpdates:
+                return new C.RequestIntelligentCreatureUpdates();
+            case (short)ClientPacketIds.UpdateIntelligentCreature:
                 return new C.UpdateIntelligentCreature();
-            case (short)ClientPacketIds.IntelligentCreaturePickup://IntelligentCreature
+            case (short)ClientPacketIds.IntelligentCreaturePickup:
                 return new C.IntelligentCreaturePickup();
             case (short)ClientPacketIds.AddFriend:
                 return new C.AddFriend();
@@ -389,12 +413,22 @@ public abstract class Packet
                 return new S.StartGameDelay();
             case (short)ServerPacketIds.MapInformation:
                 return new S.MapInformation();
+            case (short)ServerPacketIds.NewMapInfo:
+                return new S.NewMapInfo();
+            case (short)ServerPacketIds.WorldMapSetup:
+                return new S.WorldMapSetupInfo();
+            case (short)ServerPacketIds.SearchMapResult:
+                return new S.SearchMapResult();
             case (short)ServerPacketIds.UserInformation:
                 return new S.UserInformation();
+            case (short)ServerPacketIds.UserSlotsRefresh:
+                return new S.UserSlotsRefresh();
             case (short)ServerPacketIds.UserLocation:
                 return new S.UserLocation();
             case (short)ServerPacketIds.ObjectPlayer:
                 return new S.ObjectPlayer();
+            case (short)ServerPacketIds.ObjectHero:
+                return new S.ObjectHero();
             case (short)ServerPacketIds.ObjectRemove:
                 return new S.ObjectRemove();
             case (short)ServerPacketIds.ObjectTurn:
@@ -409,6 +443,8 @@ public abstract class Packet
                 return new S.ObjectChat();
             case (short)ServerPacketIds.NewItemInfo:
                 return new S.NewItemInfo();
+            case (short)ServerPacketIds.NewHeroInfo:
+                return new S.NewHeroInfo();
             case (short)ServerPacketIds.NewChatItem:
                 return new S.NewChatItem();
             case (short)ServerPacketIds.MoveItem:
@@ -423,6 +459,10 @@ public abstract class Packet
                 return new S.RemoveSlotItem();
             case (short)ServerPacketIds.TakeBackItem:
                 return new S.TakeBackItem();
+            case (short)ServerPacketIds.TakeBackHeroItem:
+                return new S.TakeBackHeroItem();
+            case (short)ServerPacketIds.TransferHeroItem:
+                return new S.TransferHeroItem();
             case (short)ServerPacketIds.StoreItem:
                 return new S.StoreItem();
             case (short)ServerPacketIds.DepositRefineItem:
@@ -451,6 +491,8 @@ public abstract class Packet
                 return new S.LogOutSuccess();
             case (short)ServerPacketIds.LogOutFailed:
                 return new S.LogOutFailed();
+            case (short)ServerPacketIds.ReturnToLogin:
+                return new S.ReturnToLogin();
             case (short)ServerPacketIds.TimeOfDay:
                 return new S.TimeOfDay();
             case (short)ServerPacketIds.ChangeAMode:
@@ -485,6 +527,8 @@ public abstract class Packet
                 return new S.DuraChanged();
             case (short)ServerPacketIds.HealthChanged:
                 return new S.HealthChanged();
+            case (short)ServerPacketIds.HeroHealthChanged:
+                return new S.HeroHealthChanged();
             case (short)ServerPacketIds.DeleteItem:
                 return new S.DeleteItem();
             case (short)ServerPacketIds.Death:
@@ -499,8 +543,12 @@ public abstract class Packet
                 return new S.ObjectGuildNameChanged();
             case (short)ServerPacketIds.GainExperience:
                 return new S.GainExperience();
+            case (short)ServerPacketIds.GainHeroExperience:
+                return new S.GainHeroExperience();
             case (short)ServerPacketIds.LevelChanged:
                 return new S.LevelChanged();
+            case (short)ServerPacketIds.HeroLevelChanged:
+                return new S.HeroLevelChanged();
             case (short)ServerPacketIds.ObjectLeveled:
                 return new S.ObjectLeveled();
             case (short)ServerPacketIds.ObjectHarvest:
@@ -553,6 +601,10 @@ public abstract class Packet
                 return new S.RepairItem();
             case (short)ServerPacketIds.ItemRepaired:
                 return new S.ItemRepaired();
+            case (short)ServerPacketIds.ItemSlotSizeChanged:
+                return new S.ItemSlotSizeChanged();
+            case (short)ServerPacketIds.ItemSealChanged:
+                return new S.ItemSealChanged();
             case (short)ServerPacketIds.NewMagic:
                 return new S.NewMagic();
             case (short)ServerPacketIds.MagicLeveled:
@@ -565,6 +617,8 @@ public abstract class Packet
                 return new S.MagicCast();
             case (short)ServerPacketIds.ObjectMagic:
                 return new S.ObjectMagic();
+            case (short)ServerPacketIds.ObjectProjectile:
+                return new S.ObjectProjectile();
             case (short)ServerPacketIds.ObjectEffect:
                 return new S.ObjectEffect();
             case (short)ServerPacketIds.RangeAttack:
@@ -587,6 +641,10 @@ public abstract class Packet
                 return new S.GroupInvite();
             case (short)ServerPacketIds.AddMember:
                 return new S.AddMember();
+            case (short)ServerPacketIds.GroupMembersMap:
+                return new S.GroupMembersMap();
+            case (short)ServerPacketIds.SendMemberLocation:
+                return new S.SendMemberLocation();
             case (short)ServerPacketIds.Revived:
                 return new S.Revived();
             case (short)ServerPacketIds.ObjectRevived:
@@ -595,14 +653,20 @@ public abstract class Packet
                 return new S.SpellToggle();
             case (short)ServerPacketIds.ObjectHealth:
                 return new S.ObjectHealth();
+            case (short)ServerPacketIds.ObjectMana:
+                return new S.ObjectMana();
             case (short)ServerPacketIds.MapEffect:
                 return new S.MapEffect();
+            case (short)ServerPacketIds.AllowObserve:
+                return new S.AllowObserve();
             case (short)ServerPacketIds.ObjectRangeAttack:
                 return new S.ObjectRangeAttack();
             case (short)ServerPacketIds.AddBuff:
                 return new S.AddBuff();
             case (short)ServerPacketIds.RemoveBuff:
                 return new S.RemoveBuff();
+            case (short)ServerPacketIds.PauseBuff:
+                return new S.PauseBuff();
             case (short)ServerPacketIds.ObjectHidden:
                 return new S.ObjectHidden();
             case (short)ServerPacketIds.RefreshItem:
@@ -637,6 +701,8 @@ public abstract class Packet
                 return new S.RemoveMagic();
             case (short)ServerPacketIds.BaseStatsInfo:
                 return new S.BaseStatsInfo();
+            case (short)ServerPacketIds.HeroBaseStatsInfo:
+                return new S.HeroBaseStatsInfo();
             case (short)ServerPacketIds.UserName:
                 return new S.UserName();
             case (short)ServerPacketIds.ChatItemStats:
@@ -661,6 +727,26 @@ public abstract class Packet
                 return new S.GuildStorageList();
             case (short)ServerPacketIds.GuildRequestWar:
                 return new S.GuildRequestWar();
+            case (short)ServerPacketIds.HeroCreateRequest:
+                return new S.HeroCreateRequest();
+            case (short)ServerPacketIds.NewHero:
+                return new S.NewHero();
+            case (short)ServerPacketIds.HeroInformation:
+                return new S.HeroInformation();
+            case (short)ServerPacketIds.UpdateHeroSpawnState:
+                return new S.UpdateHeroSpawnState();
+            case (short)ServerPacketIds.UnlockHeroAutoPot:
+                return new S.UnlockHeroAutoPot();
+            case (short)ServerPacketIds.SetAutoPotValue:
+                return new S.SetAutoPotValue();
+            case (short)ServerPacketIds.SetAutoPotItem:
+                return new S.SetAutoPotItem();
+            case (short)ServerPacketIds.SetHeroBehaviour:
+                return new S.SetHeroBehaviour();
+            case (short)ServerPacketIds.ManageHeroes:
+                return new S.ManageHeroes();
+            case (short)ServerPacketIds.ChangeHero:
+                return new S.ChangeHero();
             case (short)ServerPacketIds.DefaultNPC:
                 return new S.DefaultNPC();
             case (short)ServerPacketIds.NPCUpdate:
@@ -725,12 +811,8 @@ public abstract class Packet
                 return new S.ItemUpgraded();
             case (short)ServerPacketIds.SetConcentration:
                 return new S.SetConcentration();
-            case (short)ServerPacketIds.SetObjectConcentration:
-                return new S.SetObjectConcentration();
             case (short)ServerPacketIds.SetElemental:
                 return new S.SetElemental();
-            case (short)ServerPacketIds.SetObjectElemental:
-                return new S.SetObjectElemental();
             case (short)ServerPacketIds.RemoveDelayedExplosion:
                 return new S.RemoveDelayedExplosion();
             case (short)ServerPacketIds.ObjectDeco:
@@ -837,6 +919,10 @@ public abstract class Packet
                 return new S.ExpireTimer();
             case (short)ServerPacketIds.UpdateNotice:
                 return new S.UpdateNotice();
+            case (short)ServerPacketIds.Roll:
+                return new S.Roll();
+            case (short)ServerPacketIds.SetCompass:
+                return new S.SetCompass();
             default:
                 return null;
         }

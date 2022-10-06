@@ -45,6 +45,7 @@ public class GameLanguage
                          Guild = "Guild ({0})",
                          Expire = "Expire: {0}",
                          ExpireNever = "Expire: Never",
+                         ExpirePaused = "Expire: Paused",
                          Never = "Never",
                          Trade = "Trade ({0})",
                          Size = "Size",
@@ -64,6 +65,11 @@ public class GameLanguage
                          YouGained2 = "You gained {0:###,###,###} {1}",
 
                          ExperienceGained = "Experience Gained {0}",
+
+                         HeroInventory = "Hero Inventory ({0})",
+                         HeroCharacter = "Hero Character ({0})",
+                         HeroSkills = "Hero Skills ({0})",
+                         HeroExperienceGained = "Hero Experience Gained {0}",
 
                          ItemDescription = "Item Description",
                          RequiredLevel = "Required Level : {0}",
@@ -210,11 +216,14 @@ public class GameLanguage
                          ItemTypePets = "Pets",
                          ItemTypeTransform = "Transform",
                          ItemTypeDeco = "Deco",
+                         ItemTypeMonsterSpawn = "SpawnEgg",
+                         ItemTypeSealedHero = "SealedHero",
 
                          ItemGradeCommon = "Common",
                          ItemGradeRare = "Rare",
                          ItemGradeLegendary = "Legendary",
                          ItemGradeMythical = "Mythical",
+                         ItemGradeHeroic = "Heroic",
                          NoAccountID = "The AccountID does not exist.",
                          IncorrectPasswordAccountID = "Incorrect Password and AccountID combination.",
                          GroupSwitch = "Allow/Disallow Group Requests",
@@ -260,7 +269,7 @@ public class GameLanguage
 
                          NotFemale = "You are not Female.",
                          NotMale = "You are not Male.",
-                         NotInGuild = "You are not in a guild",
+                         NotInGuild = "You are not in a guild.",
                          NoMentorship = "You don't currently have a Mentorship to cancel.",
                          NoBagSpace = "You do not have enough space.";
 
@@ -322,6 +331,7 @@ public class GameLanguage
         GameLanguage.GameMaster = reader.ReadString("Language", "GameMaster", GameLanguage.GameMaster);
         GameLanguage.Expire = reader.ReadString("Language", "Expire", GameLanguage.Expire);
         GameLanguage.ExpireNever = reader.ReadString("Language", "ExpireNever", GameLanguage.ExpireNever);
+        GameLanguage.ExpirePaused = reader.ReadString("Language", "ExpirePaused", GameLanguage.ExpirePaused);
         GameLanguage.Never = reader.ReadString("Language", "Never", GameLanguage.Never);
 
         GameLanguage.PatchErr = reader.ReadString("Language", "PatchErr", GameLanguage.PatchErr);
@@ -338,8 +348,13 @@ public class GameLanguage
 
         GameLanguage.YouGained = reader.ReadString("Language", "YouGained", GameLanguage.YouGained);
         GameLanguage.YouGained2 = reader.ReadString("Language", "YouGained2", GameLanguage.YouGained2);
-        GameLanguage.ExperienceGained = reader.ReadString("Language", "ExperienceGained", GameLanguage.ExperienceGained);
+        GameLanguage.ExperienceGained = reader.ReadString("Language", "ExperienceGained", GameLanguage.ExperienceGained);        
         GameLanguage.LevelUp = reader.ReadString("Language", "LevelUp", GameLanguage.LevelUp);
+
+        GameLanguage.HeroInventory = reader.ReadString("Language", "HeroInventory", GameLanguage.HeroInventory);
+        GameLanguage.HeroCharacter = reader.ReadString("Language", "HeroCharacter", GameLanguage.HeroCharacter);
+        GameLanguage.HeroSkills = reader.ReadString("Language", "HeroSkills", GameLanguage.HeroSkills);
+        GameLanguage.HeroExperienceGained = reader.ReadString("Language", "HeroExperienceGained", GameLanguage.HeroExperienceGained);
 
         GameLanguage.ItemDescription = reader.ReadString("Language", "ItemDescription", GameLanguage.ItemDescription);
         GameLanguage.RequiredLevel = reader.ReadString("Language", "RequiredLevel", GameLanguage.RequiredLevel);
@@ -483,11 +498,13 @@ public class GameLanguage
         GameLanguage.ItemTypeAwakening = reader.ReadString("Language", "ItemTypeAwakening", GameLanguage.ItemTypeAwakening);
         GameLanguage.ItemTypePets = reader.ReadString("Language", "ItemTypePets", GameLanguage.ItemTypePets);
         GameLanguage.ItemTypeTransform = reader.ReadString("Language", "ItemTypeTransform", GameLanguage.ItemTypeTransform);
+        GameLanguage.ItemTypeSealedHero = reader.ReadString("Language", "ItemTypeSealedHero", GameLanguage.ItemTypeSealedHero);
 
         GameLanguage.ItemGradeCommon = reader.ReadString("Language", "ItemGradeCommon", GameLanguage.ItemGradeCommon);
         GameLanguage.ItemGradeRare = reader.ReadString("Language", "ItemGradeRare", GameLanguage.ItemGradeRare);
         GameLanguage.ItemGradeLegendary = reader.ReadString("Language", "ItemGradeLegendary", GameLanguage.ItemGradeLegendary);
         GameLanguage.ItemGradeMythical = reader.ReadString("Language", "ItemGradeMythical", GameLanguage.ItemGradeMythical);
+        GameLanguage.ItemGradeHeroic = reader.ReadString("Language", "ItemGradeHeroic", GameLanguage.ItemGradeHeroic);
 
         GameLanguage.NoAccountID = reader.ReadString("Language", "NoAccountID", GameLanguage.NoAccountID);
         GameLanguage.IncorrectPasswordAccountID = reader.ReadString("Language", "IncorrectPasswordAccountID", GameLanguage.IncorrectPasswordAccountID);
@@ -559,6 +576,7 @@ public class GameLanguage
 
         reader.Write("Language", "Expire", GameLanguage.Expire);
         reader.Write("Language", "ExpireNever", GameLanguage.ExpireNever);
+        reader.Write("Language", "ExpirePaused", GameLanguage.ExpirePaused);
         reader.Write("Language", "Never", GameLanguage.Never);
         reader.Write("Language", "PatchErr", GameLanguage.PatchErr);
         reader.Write("Language", "LastOnline", GameLanguage.LastOnline);
@@ -574,8 +592,13 @@ public class GameLanguage
 
         reader.Write("Language", "YouGained", GameLanguage.YouGained);
         reader.Write("Language", "YouGained2", GameLanguage.YouGained2);
-        reader.Write("Language", "ExperienceGained", GameLanguage.ExperienceGained);
+        reader.Write("Language", "ExperienceGained", GameLanguage.ExperienceGained);        
         reader.Write("Language", "LevelUp", GameLanguage.LevelUp);
+
+        reader.Write("Language", "HeroInventory", GameLanguage.Inventory);
+        reader.Write("Language", "HeroCharacter", GameLanguage.Character);
+        reader.Write("Language", "HeroSkills", GameLanguage.Skills);
+        reader.Write("Language", "HeroExperienceGained", GameLanguage.HeroExperienceGained);
 
         reader.Write("Language", "ItemDescription", GameLanguage.ItemDescription);
         reader.Write("Language", "RequiredLevel", GameLanguage.RequiredLevel);
@@ -711,11 +734,13 @@ public class GameLanguage
         reader.Write("Language", "ItemTypeAwakening", GameLanguage.ItemTypeAwakening);
         reader.Write("Language", "ItemTypePets", GameLanguage.ItemTypePets);
         reader.Write("Language", "ItemTypeTransform", GameLanguage.ItemTypeTransform);
+        reader.Write("Language", "ItemTypeSealedHero", GameLanguage.ItemTypeSealedHero);
 
         reader.Write("Language", "ItemGradeCommon", GameLanguage.ItemGradeCommon);
         reader.Write("Language", "ItemGradeRare", GameLanguage.ItemGradeRare);
         reader.Write("Language", "ItemGradeLegendary", GameLanguage.ItemGradeLegendary);
         reader.Write("Language", "ItemGradeMythical", GameLanguage.ItemGradeMythical);
+        reader.Write("Language", "ItemGradeHeroic", GameLanguage.ItemGradeHeroic);
 
         reader.Write("Language", "NoAccountID", GameLanguage.NoAccountID);
         reader.Write("Language", "IncorrectPasswordAccountID", GameLanguage.IncorrectPasswordAccountID);

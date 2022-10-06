@@ -20,7 +20,10 @@ namespace LibraryEditor
         private Image _originalImage;
 
         protected bool ImageTabActive = true;
+        protected bool MaskTabActive = false;
         protected bool FrameTabActive = false;
+
+        protected string ViewMode = "Image";
 
         [DllImport("user32.dll")]
         private static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
@@ -159,7 +162,14 @@ namespace LibraryEditor
             OffSetXTextBox.Text = _selectedImage.X.ToString();
             OffSetYTextBox.Text = _selectedImage.Y.ToString();
 
-            ImageBox.Image = _selectedImage.Image;
+            if (ViewMode == "Image")
+            {
+                ImageBox.Image = _selectedImage.Image;
+            }
+            else
+            {
+                ImageBox.Image = _selectedImage.MaskImage;
+            }
 
             // Keep track of what image/s are selected.
             if (PreviewListView.SelectedIndices.Count > 1)
@@ -539,7 +549,7 @@ namespace LibraryEditor
                         short.TryParse(placements[1], out y);
                 }
 
-                _library.InsertImage(index, image, x, y);
+                _library.InsertImage(index, image, x, y, checkboxRemoveBlackOnImport.Checked);
 
                 toolStripProgressBar.Value++;
             }
@@ -776,7 +786,15 @@ namespace LibraryEditor
             try
             {
                 PreviewListView.RedrawItems(0, PreviewListView.Items.Count - 1, true);
-                ImageBox.Image = _library.Images[PreviewListView.SelectedIndices[0]].Image;
+
+                if (ViewMode == "Image")
+                {
+                    ImageBox.Image = _library.Images[PreviewListView.SelectedIndices[0]].Image;
+                }
+                else
+                {
+                    ImageBox.Image = _library.Images[PreviewListView.SelectedIndices[0]].MaskImage;
+                }
             }
             catch (Exception)
             {
@@ -957,10 +975,21 @@ namespace LibraryEditor
             {
                 case 0: //Images
                     ImageTabActive = true;
+                    MaskTabActive = false;
                     FrameTabActive = false;
+                    ImageBox.Location = new Point(0, 0);
+                    FrameAnimTimer.Stop();
                     break;
-                case 1: //Frames
+                case 1: //Masks
                     ImageTabActive = false;
+                    MaskTabActive = true;
+                    FrameTabActive = false;
+                    ImageBox.Location = new Point(0, 0);
+                    FrameAnimTimer.Stop();
+                    break;
+                case 2: //Frames
+                    ImageTabActive = false;
+                    MaskTabActive = false;
                     FrameTabActive = true;
                     break;
             }
@@ -1086,6 +1115,104 @@ namespace LibraryEditor
                 };
 
                 _library.Frames.Add(action, frame);
+            }
+        }
+
+        private void frameGridView_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            var row = frameGridView.Rows[e.RowIndex];
+
+            if (row == null) return;
+
+            var cells = row.Cells;
+
+            if (cells["FrameAction"].Value == null) return;
+
+            var frame = new Frame(cells["FrameStart"].Value.ValueOrDefault<int>(),
+                                        cells["FrameCount"].Value.ValueOrDefault<int>(),
+                                        cells["FrameSkip"].Value.ValueOrDefault<int>(),
+                                        cells["FrameInterval"].Value.ValueOrDefault<int>(),
+                                        cells["FrameEffectStart"].Value.ValueOrDefault<int>(),
+                                        cells["FrameEffectCount"].Value.ValueOrDefault<int>(),
+                                        cells["FrameEffectSkip"].Value.ValueOrDefault<int>(),
+                                        cells["FrameEffectInterval"].Value.ValueOrDefault<int>())
+            {
+                Reverse = cells["FrameReverse"].Value.ValueOrDefault<bool>(),
+                Blend = cells["FrameBlend"].Value.ValueOrDefault<bool>()
+            };
+
+            if (frame.Interval == 0) return;
+
+            _drawFrame = frame;
+
+            FrameAnimTimer.Interval = frame.Interval;
+            FrameAnimTimer.Start();
+        }
+
+        private Frame _drawFrame;
+        private int _currentFrame;
+        private MirDirection _currentDirection;
+
+        private void FrameAnimTimer_Tick(object sender, EventArgs e)
+        {
+            if (_drawFrame == null) return;
+
+            try
+            {
+                if (_currentFrame >= _drawFrame.Count - 1)
+                {
+                    _currentFrame = 0;
+                    MirDirection[] arr = (MirDirection[])Enum.GetValues(typeof(MirDirection));
+                    int j = Array.IndexOf<MirDirection>(arr, _currentDirection) + 1;
+                    _currentDirection = (arr.Length == j) ? arr[0] : arr[j];
+                }
+
+                var drawFrame = _drawFrame.Start + (_drawFrame.OffSet * (byte)_currentDirection) + _currentFrame;
+
+                _selectedImage = _library.GetMImage(drawFrame);
+
+                if (ViewMode == "Image")
+                {
+                    ImageBox.Location = new Point(250 + _selectedImage.X, 250 + _selectedImage.Y);
+                    ImageBox.Image = _selectedImage.Image;
+                }
+                else
+                {
+                    ImageBox.Location = new Point(250 + _selectedImage.X, 250 + _selectedImage.Y);
+                    ImageBox.Image = _selectedImage.MaskImage;
+                }
+
+                _currentFrame++;
+            }
+            catch { }
+        }
+
+        private void PreviewListViewMask_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RButtonViewMode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (RButtonImage.Checked)
+            {
+                ViewMode = "Image";
+            }
+            else if (RButtonOverlay.Checked)
+            {
+                ViewMode = "Overlay";
+            }
+
+            if (_selectedImage != null)
+            {
+                if (ViewMode == "Image")
+                {
+                    ImageBox.Image = _selectedImage.Image;
+                }
+                else
+                {
+                    ImageBox.Image = _selectedImage.MaskImage;
+                }
             }
         }
 

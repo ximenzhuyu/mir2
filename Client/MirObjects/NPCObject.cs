@@ -10,7 +10,7 @@ using S = ServerPackets;
 
 namespace Client.MirObjects
 {
-    class NPCObject : MapObject
+    public class NPCObject : MapObject
     {
         public override ObjectType Race
         {
@@ -74,7 +74,7 @@ namespace Client.MirObjects
             Light = 10;
             BaseIndex = 0;
 
-            SetAction();
+            SetAction(true);
         }
 
         public void LoadLibrary()
@@ -145,13 +145,18 @@ namespace Client.MirObjects
                     DrawColour = Color.Purple;
                     break;
                 case PoisonType.Stun:
+                case PoisonType.Dazed:
                     DrawColour = Color.Yellow;
+                    break;
+                case PoisonType.Blindness:
+                    DrawColour = Color.MediumVioletRed;
                     break;
                 case PoisonType.Frozen:
                     DrawColour = Color.Blue;
                     break;
                 case PoisonType.Paralysis:
                 case PoisonType.LRParalysis:
+                //case PoisonType.FlamingMutantWeb:
                     DrawColour = Color.Gray;
                     break;
             }
@@ -226,7 +231,7 @@ namespace Client.MirObjects
             return ++EffectFrameIndex;
         }
 
-        public virtual void SetAction()
+        public virtual void SetAction(bool randomStartFrame = false)
         {
             if (ActionFeed.Count == 0)
             {
@@ -236,8 +241,19 @@ namespace Client.MirObjects
                     CurrentAction = MirAction.Standing;
 
                 Frames.TryGetValue(CurrentAction, out Frame);
-                FrameIndex = 0;
-                EffectFrameIndex = 0;
+
+                if (randomStartFrame)
+                {
+                    var frameIndex = new Random().Next(Frame.Count);
+
+                    FrameIndex = frameIndex;
+                    EffectFrameIndex = Math.Min(Frame.EffectCount, frameIndex);
+                }
+                else
+                {
+                    FrameIndex = 0;
+                    EffectFrameIndex = 0;
+                }
 
                 if (MapLocation != CurrentLocation)
                 {
